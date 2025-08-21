@@ -1,0 +1,3411 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>brixo mart</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      height:100%;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background:#f9f9f9;
+    }
+    
+    /* Main layout */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header styles */
+    .header-section {
+      background: white;
+    }
+    
+    .topbar{
+      width:100%;
+      background:#ffffff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 16px;
+      border-bottom:1px solid rgba(0,0,0,0.04);
+      gap:12px;
+    }
+    .left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .hamburger{
+      width:28px;
+      height:28px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      border-radius:6px;
+      cursor:pointer;
+      gap:4px;
+      background:none;
+      border:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hamburger span{
+      width:20px;
+      height:2px;
+      background:#222;
+      border-radius:2px;
+    }
+    .logo{
+      font-weight:700;
+      font-size:26px;
+      color:#4CAF50;
+      letter-spacing:0.5px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .actions{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      position:relative;
+    }
+    .icon-btn{
+      width:36px;
+      height:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:none;
+      background:none;
+      cursor:pointer;
+      padding:0;
+      position:relative;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+    .icon-btn:active {
+      background-color: transparent !important;
+    }
+    .icon-btn:hover{
+      background:none;
+    }
+    svg{
+      display:block;
+      width:22px;
+      height:22px;
+    }
+    
+    /* Menu Styles */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 280px;
+      height: 100%;
+      background: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      transition: left 0.3s ease;
+      padding-top: 20px;
+    }
+    .menu.active {
+      left: 0;
+    }
+    .menu-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #4CAF50;
+      margin-bottom: 10px;
+    }
+    .menu-item {
+      padding: 15px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #333;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: #4CAF50;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    .overlay.active {
+      display: block;
+    }
+    
+    /* Address Bar */
+    .address-bar {
+        display:flex;
+        align-items:center;
+        padding:10px 15px;
+        background: linear-gradient(to bottom, #A8E6CF, #fdf6f0);
+        font-size:14px;
+        gap:8px;
+        cursor:pointer;
+    }
+    .address-bar svg { flex-shrink:0; }
+    .address-text { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+    /* Home Page Search Bar */
+    .home-search {
+        display:flex;
+        align-items:center;
+        background:white;
+        border:1px solid rgba(107,114,128,0.3);
+        border-radius:8px;
+        overflow:hidden;
+        max-width:90%;
+        margin:10px auto;
+        height:46px;
+        padding:0 12px;
+        gap:8px;
+        box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    .home-search svg { flex-shrink:0; display:block; }
+    .home-search input { flex:1; height:100%; border:none; outline:none; padding:0 4px; font-size:14px; color:#6B7280; }
+
+    /* Popup Overlay */
+    .popup-overlay {
+        position:fixed; top:0; left:0;
+        width:100%; height:100%;
+        background: rgba(0,0,0,0.5);
+        display:none;
+        align-items:flex-end;
+        justify-content:center;
+        z-index:1001;
+    }
+
+    /* Popup Box */
+    .popup-box {
+        background:#fff;
+        width:100%; max-width:500px;
+        border-top-left-radius:16px;
+        border-top-right-radius:16px;
+        padding:20px;
+        box-shadow:0 -2px 10px rgba(0,0,0,0.2);
+        animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp { from{transform:translateY(100%);} to{transform:translateY(0);} }
+    .popup-header { font-size:16px; font-weight:bold; margin-bottom:15px; }
+
+    .popup-search {
+        display:flex;
+        align-items:center;
+        background:white;
+        border:1px solid rgba(107,114,128,0.3);
+        border-radius:8px;
+        overflow:hidden;
+        margin-bottom:10px;
+        height:46px;
+        padding:0 12px;
+        gap:8px;
+        box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    .popup-search svg { flex-shrink:0; display:block; }
+    .popup-search input { flex:1; height:100%; border:none; outline:none; padding:0 4px; font-size:14px; color:#6B7280; }
+
+    /* Suggestions list */
+    .suggestions { max-height:150px; overflow-y:auto; border:1px solid #ccc; border-radius:5px; margin-bottom:10px; }
+    .suggestions div { padding:8px; cursor:pointer; }
+    .suggestions div:hover, .suggestions .active { background:#eee; }
+
+    /* Use current location */
+    .use-location { display:flex; align-items:center; gap:10px; color:green; font-weight:bold; cursor:pointer; padding:10px 0; }
+
+    /* Confirm button */
+    .confirm-btn { width:100%; padding:12px; background:green; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
+    
+    /* Slider Styles */
+    .swiper {  
+        width: 100%;  
+        margin-top: 10px;
+    }  
+
+    .swiper-slide {  
+        display: flex;  
+        justify-content: center;  
+        align-items: center;  
+        background: #fff;  
+    }  
+
+    .slide-container {  
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center;  
+        width: 95%;  
+        max-width: 1100px;  
+        height: 200px;  
+        border-radius: 20px;  
+        overflow: hidden;  
+        background: #fff;  
+        border: 1px solid #ddd;  
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }  
+
+    .slide-left {  
+        flex: 1;  
+        background: #fff;  
+        color: #000;  
+        padding: 20px;  
+        display: flex;  
+        flex-direction: column;  
+        justify-content: center;  
+    }  
+
+    .slide-left h2 {  
+        font-size: 20px;  
+        font-weight: 700;  
+        margin: 0;  
+    }  
+
+    .slide-left .price {  
+        font-size: 18px;  
+        font-weight: 700;  
+        margin: 5px 0;  
+    }  
+
+    .slide-left p {  
+        font-size: 14px;  
+        margin: 5px 0 0;  
+    }  
+
+    .slide-left small {  
+        font-size: 10px;  
+        opacity: 0.6;  
+        margin-top: auto;  
+    }  
+
+    .slide-right {  
+        flex: 1;  
+        background: linear-gradient(90deg, #fbe9e7, #e8f5e9);  
+        display: flex;  
+        flex-direction: column;  
+        align-items: center;  
+        justify-content: center;  
+        padding: 10px;  
+    }  
+
+    .slide-right h3 {  
+        font-size: 32px;  
+        font-weight: 500;  
+        margin: 0;  
+        background: linear-gradient(to right, orange, green);  
+        -webkit-background-clip: text;  
+        -webkit-text-fill-color: transparent;  
+    }  
+
+    .slide-right p {  
+        color: #2e7d32;  
+        font-size: 14px;  
+        text-align: center;  
+        margin: 5px 0;  
+    }  
+
+    .sale-badge {  
+        background: #ffeb3b;  
+        color: #000;  
+        font-size: 12px;  
+        font-weight: bold;  
+        padding: 4px 8px;  
+        border-radius: 4px;  
+        margin-bottom: 10px;  
+    }  
+
+    /* Dots styling */  
+    .swiper-pagination {  
+        position: relative;  
+        margin-top: 15px;  
+    }  
+
+    .swiper-pagination-bullet-active {  
+        background: #4CAF50 !important;
+    }  
+
+    /* Category Navigation Styles */
+    .category-container {
+        margin-top: 10px;  /* Reduced from 20px to bring it closer to slider */
+        padding: 0 10px;
+    }
+    .category-section {
+  background: white;
+  border-radius: 12px;
+  margin: 12px 0; /* Reduced from 16px */
+  padding: 12px; /* Reduced from 16px */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.section-title {
+  font-size: 15px; /* Reduced from larger size */
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px; /* Reduced spacing */
+  padding: 0 4px; /* Added small padding */
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 8px; /* Reduced from 12px */
+}
+
+.category-card {
+  background: white;
+  border-radius: 6px; /* Reduced from 8px */
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.category-name {
+  padding: 8px 4px; /* Reduced from 12px 4px */
+  font-size: 12px; /* Reduced from 13px */
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+    
+
+    .category-bar {  
+        display: flex;  
+        overflow-x: auto;  
+        padding: 10px 0;  /* Reduced padding to make it more compact */
+        background: #fff;  
+        scrollbar-width: none; /* Firefox */
+        -webkit-tap-highlight-color: transparent;
+    }  
+
+    .category-bar::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .category {  
+        flex: 0 0 auto;  
+        width: 70px;  /* Slightly reduced width */
+        text-align: center;  
+        padding: 5px 0;  
+        cursor: pointer;  
+        margin: 0 5px;
+    }  
+
+    .category-icon {  
+        display: flex;  
+        justify-content: center;  
+        align-items: center;  
+        height: 40px;  /* Reduced size */
+        width: 40px;   /* Reduced size */
+        margin: 0 auto;  
+        border-radius: 10px;  
+        background: #f5f5f5;
+        transition: all 0.3s ease;
+    }  
+
+    .category.active .category-icon {  
+        background-color: #e6f7e6;
+        transform: scale(1.05);
+    }  
+
+    .category img {  
+        width: 24px;  /* Reduced icon size */
+        height: 24px; /* Reduced icon size */
+        object-fit: contain;  
+    }  
+
+    .category svg {
+        width: 24px;
+        height: 24px;
+        filter: drop-shadow(0 0 2px rgba(76, 175, 80, 0.5));
+    }
+
+    .category span {  
+        display: block;  
+        margin-top: 6px;  /* Reduced margin */
+        font-size: 12px;  /* Smaller font */
+        color: #333;  
+        font-weight: 500;
+    }  
+
+    .category.active span {  
+        color: #4CAF50;
+        font-weight: 600;
+    }
+
+    /* Section Heading */
+    .section-heading {
+        padding: 10px 15px 5px;  /* Reduced padding */
+        font-size: 16px;  /* Smaller heading */
+        font-weight: 600;
+        color: #333;
+    }
+    
+    @media (max-width:420px){
+      .logo{font-size:22px}
+      .hamburger{width:26px;height:26px}
+    }
+    
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Product Listing Styles */
+    .container {
+      padding: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .category-section {
+      background: white;
+      border-radius: 12px;
+      margin: 16px 0;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 12px;
+    }
+
+    .category-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid #f0f0f0;
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .category-image-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background: #f5f5f5;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .category-image {
+      width: 100%;
+      height: auto;
+      max-height: 60px;
+      object-fit: contain;
+    }
+
+    .category-name {
+      padding: 12px 4px;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Product Listing Page Styles */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .product-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .product-image-container {
+      width: 100%;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .wishlist {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform .18s ease, filter .18s ease;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+      background: white;
+      border-radius: 50%;
+      z-index: 5;
+      border: none;
+    }
+
+    .wishlist:active { transform: scale(.96); }
+
+    .wishlist svg {
+      width: 20px;
+      height: 20px;
+      fill: transparent;
+      stroke: #8b8b8b;
+      stroke-width: 1.4;
+      transition: fill .18s ease, stroke .18s ease, transform .22s cubic-bezier(.2,.8,.2,1));
+      transform-origin: center;
+    }
+
+    .wishlist:hover svg { transform: scale(1.08); stroke: #ff6b6b; }
+
+    .wishlist.active svg {
+      fill: #ff6b6b;
+      stroke: #ff6b6b;
+      transform: scale(1.06);
+    }
+
+    .product-info {
+      margin-top: 10px;
+    }
+
+    .product-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 36px;
+    }
+
+    .product-price {
+      font-size: 14px;
+      color: #2e7d32;
+      font-weight: 600;
+    }
+
+    .bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 5px;
+    }
+
+    .discount-text {
+      font-size: 12px;
+      color: red;
+      font-weight: 600;
+    }
+
+    .add-btn {
+      background: #fff;
+      color: #2e7d32;
+      border: 1.5px solid #2e7d32;
+      border-radius: 6px;
+      text-align: center;
+      padding: 5px 0;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      width: 60px;
+      transition: 0.3s;
+    }
+
+    .add-btn:hover {
+      background: #f5fff5;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border: 1.5px solid #2e7d32;
+      color: #2e7d32;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      width: 60px;
+      height: 28px;
+    }
+
+    .qty-control button {
+      background: none;
+      border: none;
+      color: #2e7d32;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 18px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Product Detail Page Styles */
+    #product-detail-page {
+      background: white;
+      min-height: 100vh;
+      padding-top: 20px;
+    }
+    
+    .product-detail-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    
+    .product-detail {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .product-detail-image-container {
+      width: 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .product-detail-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .product-detail-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .product-detail-price {
+      font-size: 20px;
+      color: #2e7d32;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .product-detail-description {
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .product-detail-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .product-detail-qty {
+      display: flex;
+      align-items: center;
+    }
+
+    .product-detail-qty button {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-detail-qty span {
+      margin: 0 15px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .add-to-cart-btn {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .add-to-cart-btn:hover {
+      background: #1b5e20;
+    }
+
+    /* Related Products Section */
+    .related-products {
+      margin-top: 30px;
+      padding: 0 16px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .related-products h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .related-products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    /* Navigation */
+    .back-button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+      cursor: pointer;
+      color: #2e7d32;
+      font-weight: 600;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 16px;
+    }
+
+    .back-button svg {
+      margin-right: 8px;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+      grid-column: 1 / -1;
+    }
+
+    /* Hidden class for toggling views */
+    .hidden {
+      display: none;
+    }
+
+    /* Full screen products page */
+    .full-screen-products {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 100;
+      overflow-y: auto;
+      padding: 15px;
+    }
+
+    /* Hide other elements when products page is open */
+    .products-page-open #header-section > *:not(.topbar),
+    .products-page-open .swiper,
+    .products-page-open .category-container {
+      display: none;
+    }
+
+    /* Wishlist Popup Styles */
+    .wishlist-popup {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1002;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      animation: fadeInOut 2.5s ease-in-out;
+    }
+
+    .wishlist-popup svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; bottom: 0; }
+      10% { opacity: 1; bottom: 20px; }
+      90% { opacity: 1; bottom: 20px; }
+      100% { opacity: 0; bottom: 0; }
+    }
+
+    /* Wishlist Page Styles */
+    #wishlist-page {
+      background: white;
+      min-height: 100vh;
+      padding-top: 20px;
+    }
+
+    .wishlist-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .wishlist-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .wishlist-header h2 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .wishlist-count {
+      background: #4CAF50;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    /* Cart Page Styles */
+    #cart-page {
+      background: white;
+      min-height: 100vh;
+      padding-top: 20px;
+    }
+
+    .cart-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .cart-header h2 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .cart-count {
+      background: #4CAF50;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .cart-items {
+      margin-bottom: 20px;
+    }
+
+    /* Cart Item Styles */
+    .cart-item {
+      display: flex;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+    }
+
+    .cart-item-image {
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .cart-item-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .cart-item-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .cart-item-size {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-price {
+      font-weight: 600;
+      color: #2e7d32;
+      margin-bottom: 8px;
+    }
+
+    .cart-item-original-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .remove-item {
+      color: #f44336;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+    }
+
+    .remove-item:hover {
+      background: #ffebee;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      border: 1px solid #2e7d32;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 28px;
+    }
+
+    .qty-control button {
+      background: none;
+      border: none;
+      width: 28px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: #2e7d32;
+      font-weight: bold;
+    }
+
+    .qty-control button:hover {
+      background: #f5f5f5;
+    }
+
+    .qty-control span {
+      width: 28px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Empty Cart Styles */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .empty-state svg {
+      opacity: 0.5;
+    }
+
+    .continue-shopping-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* Bill Details */
+    .bill-details {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .bill-label {
+      color: #666;
+    }
+
+    .bill-value {
+      font-weight: 600;
+    }
+
+    .saved {
+      color: #4CAF50;
+    }
+
+    .grand-total {
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .grand-total .bill-value {
+      color: #2e7d32;
+    }
+
+    .original-total {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 14px;
+      margin-left: 5px;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .checkout-btn:hover {
+      background: #3e8e41;
+    }
+
+    /* Toast Message */
+    .toast-message {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .toast-message.show {
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (min-width: 600px) {
+      .category-grid {
+        gap: 16px;
+      }
+      
+      .product-grid {
+        gap: 20px;
+      }
+      
+      .related-products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .section-title {
+        font-size: 20px;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .product-detail {
+        display: flex;
+        gap: 30px;
+      }
+      
+      .product-detail-image-container {
+        width: 50%;
+        max-width: 400px;
+        margin-bottom: 0;
+      }
+      
+      .product-detail-info {
+        width: 50%;
+      }
+      
+      .related-products-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .cart-item {
+        padding: 20px 0;
+      }
+      
+      .cart-item-image {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .related-products-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    /* For Chrome, Safari, Opera on mobile */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Remove focus outline on click */
+    :focus {
+      outline: none;
+    }
+
+    /* Categories Page Styles */
+    .categories-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 15px;
+      font-size: 20px;
+      font-weight: 600;
+      background: #fff;
+      color: #27ae60;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .categories-header .search-icon {
+      font-size: 20px;
+      color: #666;
+      cursor: pointer;
+    }
+
+    /* Section Title */
+    .categories-section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #27ae60;
+      margin: 20px 15px 10px;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .categories-section-title::before {
+      content: "◆";
+      margin-right: 8px;
+      color: #2ecc71;
+    }
+    .categories-section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #ddd;
+      margin-left: 10px;
+    }
+
+    /* Grid */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      padding: 0 15px 20px;
+    }
+    .categories-card {
+      background: #fff;
+      border-radius: 14px;
+      text-align: center;
+      padding: 12px 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .categories-card:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+    }
+    .categories-card img {
+      width: 100%;
+      height: 70px;
+      object-fit: contain;
+      margin-bottom: 8px;
+      border-radius: 10px;
+      background: #f9f9f9;
+    }
+    .categories-card p {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+
+    /* Search Overlay */
+    .search-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #fff;
+      display: none;
+      flex-direction: column;
+      z-index: 2000;
+    }
+    .search-overlay.active {
+      display: flex;
+    }
+    .search-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+      background: #fff;
+    }
+    .back-btn {
+      background: none;
+      border: 0;
+      cursor: pointer;
+      font-size: 20px;
+      color: #666;
+      padding: 6px;
+    }
+
+    /* Styled Search Bar */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid rgba(107,114,128,0.3);
+      padding-left: 12px;
+      height: 46px;
+      border-radius: 8px;
+      flex: 1;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .search-bar:focus-within {
+      border-color: #27ae60;
+      box-shadow: 0 0 0 3px rgba(39,174,96,.18);
+    }
+    .search-bar svg {
+      width: 20px; height: 20px; fill: #6B7280;
+    }
+    .search-bar input {
+      border: none;
+      background: transparent;
+      width: 100%;
+      font-size: 14px;
+      color: #333;
+      outline: none;
+    }
+    .search-bar input::placeholder {
+      color: #6B7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Header Section (hidden on product detail page) -->
+    <div id="header-section">
+      <header class="topbar" role="banner" aria-label="Top navigation">
+        <div class="left">
+          <button class="hamburger" id="menuToggle" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="logo" aria-hidden="true">brixo mart</div>
+        </div>
+        <nav class="actions" role="navigation" aria-label="Header actions">
+          <!-- Wishlist Icon -->
+          <button class="icon-btn" aria-label="Wishlist" onclick="showWishlist()">
+            <svg viewBox="0 0 24 24" fill="#ff5a5f" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 4.248c-3.148-5.402-12-3.056-12 2.944 0 4.418 6.582 9.76 12 14.808 5.418-5.048 12-10.39 12-14.808 0-6-8.852-8.346-12-2.944z"/>
+            </svg>
+          </button>
+          <!-- Cart Icon with green color -->
+          <button class="icon-btn" aria-label="Cart" onclick="showCart()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span id="cart-badge" style="position:absolute; top:-5px; right:-5px; background:#4CAF50; color:white; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold;">0</span>
+          </button>
+        </nav>
+      </header>
+
+      <!-- Address Bar -->
+      <div class="address-bar" id="addressBar">
+          <span id="addressIcon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24">
+                  <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/>
+              </svg>
+          </span>
+          <span class="address-text" id="currentAddress">Select your delivery location...</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#000" viewBox="0 0 24 24">
+              <path d="M9 6l6 6-6 6"/>
+          </svg>
+      </div>
+
+      <!-- Home Page Search Bar -->
+      <div class="home-search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6B7280" viewBox="0 0 30 30">
+              <path d="M13 3C7.489 3 3 7.489 3 13s4.489 10 10 10a9.95 9.95 0 0 0 6.322-2.264l5.971 5.971a1 1 0 1 0 1.414-1.414l-5.97-5.97A9.95 9.95 0 0 0 23 13c0-5.511-4.489-10-10-10m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8-8-3.57-8-8 3.57-8 8-8"/>
+          </svg>
+          <input type="text" placeholder="Search for products...">
+      </div>
+
+      <!-- Grocery Offers Slider -->
+      <div class="swiper">  
+          <div class="swiper-wrapper">  
+                
+              <!-- Slide 1 -->  
+              <div class="swiper-slide">  
+                  <div class="slide-container">  
+                      <div class="slide-left">  
+                          <h2>Fresh Vegetables</h2>  
+                          <div class="price">From ₹29/Kg*</div>  
+                          <p>Farm fresh and healthy.</p>  
+                          <small>*Prices may vary.</small>  
+                      </div>  
+                      <div class="slide-right">  
+                          <div class="sale-badge">BRIXO MART SALE</div>  
+                          <h3>Organic</h3>  
+                          <p>Direct from farms to your table</p>  
+                      </div>  
+                  </div>  
+              </div>  
+        
+              <!-- Slide 2 -->  
+              <div class="swiper-slide">  
+                  <div class="slide-container">  
+                      <div class="slide-left">  
+                          <h2>Daily Dairy</h2>  
+                          <div class="price">From ₹20/Litre*</div>  
+                          <p>Pure and fresh milk products.</p>  
+                          <small>*Prices may vary.</small>  
+                      </div>  
+                      <div class="slide-right">  
+                          <div class="sale-badge">BRIXO MART SALE</div>  
+                          <h3>100% Fresh</h3>  
+                          <p>Milk, butter, paneer & more</p>  
+                      </div>  
+                  </div>  
+              </div>  
+        
+              <!-- Slide 3 -->  
+              <div class="swiper-slide">  
+                  <div class="slide-container">  
+                      <div class="slide-left">  
+                          <h2>Bakery Delights</h2>  
+                          <div class="price">From ₹15*</div>  
+                          <p>Freshly baked everyday.</p>  
+                          <small>*Prices may vary.</small>  
+                      </div>  
+                      <div class="slide-right">  
+                          <div class="sale-badge">BRIXO MART SALE</div>  
+                          <h3>Hot & Soft</h3>  
+                          <p>Bread, cakes, pastries</p>  
+                      </div>  
+                  </div>  
+              </div>  
+        
+              <!-- Slide 4 -->  
+              <div class="swiper-slide">  
+                  <div class="slide-container">  
+                      <div class="slide-left">  
+                          <h2>Groceries</h2>  
+                          <div class="price">From ₹49*</div>  
+                          <p>Everything your kitchen needs.</p>  
+                          <small>*Prices may vary.</small>  
+                      </div>  
+                      <div class="slide-right">  
+                          <div class="sale-badge">BRIXO MART SALE</div>  
+                          <h3>All in One</h3>  
+                          <p>Rice, dal, oil & more</p>  
+                      </div>  
+                  </div>  
+              </div>  
+        
+              <!-- Slide 5 -->  
+              <div class="swiper-slide">  
+                  <div class="slide-container">  
+                      <div class="slide-left">  
+                          <h2>Snacks & Beverages</h2>  
+                          <div class="price">From ₹10*</div>  
+                          <p>Perfect for every occasion.</p>  
+                          <small>*Prices may vary.</small>  
+                      </div>  
+                      <div class="slide-right">  
+                          <div class="sale-badge">BRIXO MART SALE</div>  
+                          <h3>Taste</h3>  
+                          <p>Chips, biscuits, soft drinks</p>  
+                      </div>  
+                  </div>  
+              </div>  
+        
+              <!-- Slide 6 -->  
+              <div class="swiper-slide">  
+                  <div class="slide-container">  
+                      <div class="slide-left">  
+                          <h2>Household Essentials</h2>  
+                          <div class="price">From ₹19*</div>  
+                          <p>Daily use products at best price.</p>  
+                          <small>*Prices may vary.</small>  
+                      </div>  
+                      <div class="slide-right">  
+                          <div class="sale-badge">BRIXO MART SALE</div>  
+                          <h3>Essentials</h3>  
+                          <p>Cleaning, personal care & more</p>  
+                      </div>  
+                  </div>  
+              </div>  
+          </div>  
+            
+          <!-- Pagination -->  
+          <div class="swiper-pagination"></div>  
+      </div>  
+
+      <!-- Category Navigation -->
+      <div class="category-container">
+          <div class="category-bar">
+            <!-- First category with green grid icon -->
+            <div class="category active">
+              <div class="category-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7" rx="1" ry="1"/>
+                  <rect x="14" y="3" width="7" height="7" rx="1" ry="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1" ry="1"/>
+                  <rect x="14" y="14" width="7" height="7" rx="1" ry="1"/>
+                </svg>
+              </div>
+              <span>Category</span>  <!-- Changed from "All" to "Category" -->
+            </div>
+
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png" alt="Fashion">
+              </div>
+              <span>Fashion</span>
+            </div>
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/929/929564.png" alt="Mobiles">
+              </div>
+              <span>Mobiles</span>
+            </div>
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="Electronics">
+              </div>
+              <span>Electronics</span>
+            </div>
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/1041/1041913.png" alt="Appliances">
+              </div>
+              <span>Appliances</span>
+            </div>
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="Grocery">
+              </div>
+              <span>Grocery</span>
+            </div>
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Toys">
+              </div>
+              <span>Toys</span>
+            </div>
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/2936/2936886.png" alt="Beauty">
+              </div>
+              <span>Beauty</span>
+            </div>
+            <div class="category">
+              <div class="category-icon">
+                <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Home">
+              </div>
+              <span>Home</span>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="overlay" id="overlay"></div>
+    
+    <!-- Side Menu -->
+    <div class="menu" id="menu">
+      <div class="menu-header">brixo mart</div>
+      <div class="menu-item" onclick="showCategories()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Home</span>
+      </div>
+      <div class="menu-item" onclick="showWishlist()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M12 4.248c-3.148-5.402-12-3.056-12 2.944 0 4.418 6.582 9.76 12 14.808 5.418-5.048 12-10.39 12-14.808 0-6-8.852-8.346-12-2.944z"/>
+        </svg>
+        <span>Wishlist</span>
+      </div>
+      <div class="menu-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        <span>Orders</span>
+      </div>
+      <div class="menu-item" onclick="showCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Cart</span>
+      </div>
+      <div class="menu-item" onclick="showCategoriesGrid()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Categories</span>
+      </div>
+    </div>
+
+    <!-- Location Popup -->
+    <div class="popup-overlay" id="locationPopup">
+        <div class="popup-box">
+            <div class="popup-header">Select your Location</div>
+            <div class="popup-search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6B7280" viewBox="0 0 30 30">
+                    <path d="M13 3C7.489 3 3 7.489 3 13s4.489 10 10 10a9.95 9.95 0 0 0 6.322-2.264l5.971 5.971a1 1 0 1 0 1.414-1.414l-5.97-5.97A9.95 9.95 0 0 0 23 13c0-5.511-4.489-10-10-10m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8-8-3.57-8-8 3.57-8 8-8"/>
+                </svg>
+                <input type="text" id="popupSearchInput" placeholder="Search by area, street, pin code">
+            </div>
+            <div class="suggestions" id="suggestions"></div>
+            <div class="use-location" id="useCurrentLocation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24">
+                    <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm0-6a1 1 0 011 1v1.07A8.001 8.001 0 0120.93 11H22a1 1 0 110 2h-1.07A8.001 8.001 0 0113 20.93V22a1 1 0 11-2 0v-1.07A8.001 8.001 0 013.07 13H2a1 1 0 110-2h1.07A8.001 8.001 0 0111 3.07V2a1 1 0 011-1z"/>
+                </svg>
+                Use current location
+            </div>
+            <button class="confirm-btn" id="confirmAddressBtn">Confirm Location</button>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+      <div class="search-header">
+        <button class="back-btn" id="closeSearch"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="search-bar">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+            <path d="M13 3C7.489 3 3 7.489 3 13s4.489 10 10 10a9.95 9.95 0 0 0 6.322-2.264l5.971 5.971a1 1 0 1 0 1.414-1.414l-5.97-5.97A9.95 9.95 0 0 0 23 13c0-5.511-4.489-10-10-10m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8-8-3.57-8-8 3.57-8 8-8"/>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Search for products...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+      <!-- Categories Page -->
+      <div id="categories-page" class="container">
+        <div class="category-section">
+          <h2 class="section-title">Fruits & Vegetables</h2>
+          <div class="category-grid">
+            <div class="category-card" onclick="showProducts('Apples')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Apple" class="category-image" alt="Apple">
+              </div>
+              <p class="category-name">Apples</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Bananas')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Banana" class="category-image" alt="Banana">
+              </div>
+              <p class="category-name">Bananas</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Oranges')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Orange" class="category-image" alt="Orange">
+              </div>
+              <p class="category-name">Oranges</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Grapes')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Grapes" class="category-image" alt="Grapes">
+              </div>
+              <p class="category-name">Grapes</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Tomatoes')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Tomato" class="category-image" alt="Tomato">
+              </div>
+              <p class="category-name">Tomatoes</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Potatoes')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Potato" class="category-image" alt="Potato">
+              </div>
+              <p class="category-name">Potatoes</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Onions')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Onion" class="category-image" alt="Onion">
+              </div>
+              <p class="category-name">Onions</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Garlic')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Garlic" class="category-image" alt="Garlic">
+              </div>
+              <p class="category-name">Garlic</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Organic')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Organic" class="category-image" alt="Organic">
+              </div>
+              <p class="category-name">Organic</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-section">
+          <h2 class="section-title">Dairy & Eggs</h2>
+          <div class="category-grid">
+            <div class="category-card" onclick="showProducts('Milk')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Milk" class="category-image" alt="Milk">
+              </div>
+              <p class="category-name">Milk</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Cheese')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Cheese" class="category-image" alt="Cheese">
+              </div>
+              <p class="category-name">Cheese</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Butter')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Butter" class="category-image" alt="Butter">
+              </div>
+              <p class="category-name">Butter</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Yogurt')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Yogurt" class="category-image" alt="Yogurt">
+              </div>
+              <p class="category-name">Yogurt</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Paneer')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Paneer" class="category-image" alt="Paneer">
+              </div>
+              <p class="category-name">Paneer</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Eggs')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Eggs" class="category-image" alt="Eggs">
+              </div>
+              <p class="category-name">Eggs</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Curd')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Curd" class="category-image" alt="Curd">
+              </div>
+              <p class="category-name">Curd</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Ghee')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Ghee" class="category-image" alt="Ghee">
+              </div>
+              <p class="category-name">Ghee</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Cream')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Cream" class="category-image" alt="Cream">
+              </div>
+              <p class="category-name">Cream</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-section">
+          <h2 class="section-title">Kitchen Staples</h2>
+          <div class="category-grid">
+            <div class="category-card" onclick="showProducts('Rice')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Rice" class="category-image" alt="Rice">
+              </div>
+              <p class="category-name">Rice</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Wheat')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Wheat" class="category-image" alt="Wheat">
+              </div>
+              <p class="category-name">Wheat</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Dal')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Dal" class="category-image" alt="Dal">
+              </div>
+              <p class="category-name">Dal</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Sugar')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Sugar" class="category-image" alt="Sugar">
+              </div>
+              <p class="category-name">Sugar</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Salt')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Salt" class="category-image" alt="Salt">
+              </div>
+              <p class="category-name">Salt</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Oil')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Oil" class="category-image" alt="Oil">
+              </div>
+              <p class="category-name">Oil</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Ghee')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Ghee" class="category-image" alt="Ghee">
+              </div>
+              <p class="category-name">Ghee</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Flour')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Flour" class="category-image" alt="Flour">
+              </div>
+              <p class="category-name">Flour</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Poha')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Poha" class="category-image" alt="Poha">
+              </div>
+              <p class="category-name">Poha</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-section">
+          <h2 class="section-title">Snacks & Beverages</h2>
+          <div class="category-grid">
+            <div class="category-card" onclick="showProducts('Biscuits')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Biscuits" class="category-image" alt="Biscuits">
+              </div>
+              <p class="category-name">Biscuits</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Noodles')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Noodles" class="category-image" alt="Noodles">
+              </div>
+              <p class="category-name">Noodles</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Chips')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Chips" class="category-image" alt="Chips">
+              </div>
+              <p class="category-name">Chips</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Chocolates')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Chocolates" class="category-image" alt="Chocolates">
+              </div>
+              <p class="category-name">Chocolates</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Soft Drinks')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Soft+Drinks" class="category-image" alt="Soft Drinks">
+              </div>
+              <p class="category-name">Soft Drinks</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Tea')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Tea" class="category-image" alt="Tea">
+              </div>
+              <p class="category-name">Tea</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Juices')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Juices" class="category-image" alt="Juices">
+              </div>
+              <p class="category-name">Juices</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Energy Drinks')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Energy+Drinks" class="category-image" alt="Energy Drinks">
+              </div>
+              <p class="category-name">Energy Drinks</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Namkeen')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Namkeen" class="category-image" alt="Namkeen">
+              </div>
+              <p class="category-name">Namkeen</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="category-section">
+          <h2 class="section-title">Personal Care</h2>
+          <div class="category-grid">
+            <div class="category-card" onclick="showProducts('Shampoo')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Shampoo" class="category-image" alt="Shampoo">
+              </div>
+              <p class="category-name">Shampoo</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Soap')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Soap" class="category-image" alt="Soap">
+              </div>
+              <p class="category-name">Soap</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Toothpaste')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Toothpaste" class="category-image" alt="Toothpaste">
+              </div>
+              <p class="category-name">Toothpaste</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Toothbrush')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Toothbrush" class="category-image" alt="Toothbrush">
+              </div>
+              <p class="category-name">Toothbrush</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Face Wash')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Face+Wash" class="category-image" alt="Face Wash">
+              </div>
+              <p class="category-name">Face Wash</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Deodorant')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Deodorant" class="category-image" alt="Deodorant">
+              </div>
+              <p class="category-name">Deodorant</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Razor')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Razor" class="category-image" alt="Razor">
+              </div>
+              <p class="category-name">Razor</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Shaving Cream')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Shaving+Cream" class="category-image" alt="Shaving Cream">
+              </div>
+              <p class="category-name">Shaving Cream</p>
+            </div>
+            <div class="category-card" onclick="showProducts('Sanitary Pads')">
+              <div class="category-image-container">
+                <img src="https://via.placeholder.com/100x100?text=Sanitary+Pads" class="category-image" alt="Sanitary Pads">
+              </div>
+              <p class="category-name">Sanitary Pads</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories Grid Page (hidden by default) -->
+      <div id="categories-grid-page" class="hidden">
+        <!-- Header -->
+        <div class="categories-header">
+          <div>Categories</div>
+          <i class="fa-solid fa-magnifying-glass search-icon" id="openSearch"></i>
+        </div>
+
+        <!-- Fruits & Vegetables -->
+        <div class="categories-section-title">Fruits & Vegetables</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Fresh Fruits')"><img src="https://via.placeholder.com/100x70"><p>Fresh Fruits</p></div>
+          <div class="categories-card" onclick="showProducts('Fresh Vegetables')"><img src="https://via.placeholder.com/100x70"><p>Fresh Vegetables</p></div>
+          <div class="categories-card" onclick="showProducts('Organic Produce')"><img src="https://via.placeholder.com/100x70"><p>Organic Produce</p></div>
+          <div class="categories-card" onclick="showProducts('Exotic Fruits')"><img src="https://via.placeholder.com/100x70"><p>Exotic Fruits</p></div>
+        </div>
+
+        <!-- Dairy -->
+        <div class="categories-section-title">Dairy, Bakery & Eggs</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Milk')"><img src="https://via.placeholder.com/100x70"><p>Milk</p></div>
+          <div class="categories-card" onclick="showProducts('Cheese')"><img src="https://via.placeholder.com/100x70"><p>Cheese</p></div>
+          <div class="categories-card" onclick="showProducts('Bread')"><img src="https://via.placeholder.com/100x70"><p>Bread</p></div>
+          <div class="categories-card" onclick="showProducts('Eggs')"><img src="https://via.placeholder.com/100x70"><p>Eggs</p></div>
+        </div>
+        
+        <!-- Grocery Staples -->
+        <div class="categories-section-title">Grocery Staples</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Rice')"><img src="https://via.placeholder.com/100x70"><p>Rice</p></div>
+          <div class="categories-card" onclick="showProducts('Atta & Flour')"><img src="https://via.placeholder.com/100x70"><p>Atta & Flour</p></div>
+          <div class="categories-card" onclick="showProducts('Pulses')"><img src="https://via.placeholder.com/100x70"><p>Pulses</p></div>
+          <div class="categories-card" onclick="showProducts('Oil & Ghee')"><img src="https://via.placeholder.com/100x70"><p>Oil & Ghee</p></div>
+          <div class="categories-card" onclick="showProducts('Sugar & Salt')"><img src="https://via.placeholder.com/100x70"><p>Sugar & Salt</p></div>
+          <div class="categories-card" onclick="showProducts('Dry Fruits')"><img src="https://via.placeholder.com/100x70"><p>Dry Fruits</p></div>
+        </div>
+
+        <!-- Household Essentials -->
+        <div class="categories-section-title">Household Essentials</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Cleaning Supplies')"><img src="https://via.placeholder.com/100x70"><p>Cleaning Supplies</p></div>
+          <div class="categories-card" onclick="showProducts('Detergents')"><img src="https://via.placeholder.com/100x70"><p>Detergents</p></div>
+          <div class="categories-card" onclick="showProducts('Kitchen Tools')"><img src="https://via.placeholder.com/100x70"><p>Kitchen Tools</p></div>
+          <div class="categories-card" onclick="showProducts('Paper Products')"><img src="https://via.placeholder.com/100x70"><p>Paper Products</p></div>
+        </div>
+
+        <!-- Snacks & Drinks -->
+        <div class="categories-section-title">Snacks & Drinks</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Cold Drinks')"><img src="https://via.placeholder.com/100x70"><p>Cold Drinks</p></div>
+          <div class="categories-card" onclick="showProducts('Juices')"><img src="https://via.placeholder.com/100x70"><p>Juices</p></div>
+          <div class="categories-card" onclick="showProducts('Ice Creams')"><img src="https://via.placeholder.com/100x70"><p>Ice Creams</p></div>
+          <div class="categories-card" onclick="showProducts('Frozen Snacks')"><img src="https://via.placeholder.com/100x70"><p>Frozen Snacks</p></div>
+          <div class="categories-card" onclick="showProducts('Chips')"><img src="https://via.placeholder.com/100x70"><p>Chips</p></div>
+          <div class="categories-card" onclick="showProducts('Namkeens')"><img src="https://via.placeholder.com/100x70"><p>Namkeens</p></div>
+          <div class="categories-card" onclick="showProducts('Chocolates')"><img src="https://via.placeholder.com/100x70"><p>Chocolates</p></div>
+          <div class="categories-card" onclick="showProducts('Biscuits')"><img src="https://via.placeholder.com/100x70"><p>Biscuits</p></div>
+          <div class="categories-card" onclick="showProducts('Cakes & Muffins')"><img src="https://via.placeholder.com/100x70"><p>Cakes & Muffins</p></div>
+          <div class="categories-card" onclick="showProducts('Energy Drinks')"><img src="https://via.placeholder.com/100x70"><p>Energy Drinks</p></div>
+          <div class="categories-card" onclick="showProducts('Tea')"><img src="https://via.placeholder.com/100x70"><p>Tea</p></div>
+          <div class="categories-card" onclick="showProducts('Coffee')"><img src="https://via.placeholder.com/100x70"><p>Coffee</p></div>
+          <div class="categories-card" onclick="showProducts('Noodles')"><img src="https://via.placeholder.com/100x70"><p>Noodles</p></div>
+        </div>
+
+        <!-- Beauty & Personal Care -->
+        <div class="categories-section-title">Beauty & Personal Care</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Bath & Body')"><img src="https://via.placeholder.com/100x70"><p>Bath & Body</p></div>
+          <div class="categories-card" onclick="showProducts('Hair Care')"><img src="https://via.placeholder.com/100x70"><p>Hair Care</p></div>
+          <div class="categories-card" onclick="showProducts('Skincare')"><img src="https://via.placeholder.com/100x70"><p>Skincare</p></div>
+          <div class="categories-card" onclick="showProducts('Makeup')"><img src="https://via.placeholder.com/100x70"><p>Makeup</p></div>
+          <div class="categories-card" onclick="showProducts('Fragrances')"><img src="https://via.placeholder.com/100x70"><p>Fragrances</p></div>
+          <div class="categories-card" onclick="showProducts('Oral Care')"><img src="https://via.placeholder.com/100x70"><p>Oral Care</p></div>
+          <div class="categories-card" onclick="showProducts('Men's Grooming')"><img src="https://via.placeholder.com/100x70"><p>Men's Grooming</p></div>
+          <div class="categories-card" onclick="showProducts('Baby Care')"><img src="https://via.placeholder.com/100x70"><p>Baby Care</p></div>
+        </div>
+
+        <!-- Electronics -->
+        <div class="categories-section-title">Electronics</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Mobiles')"><img src="https://via.placeholder.com/100x70"><p>Mobiles</p></div>
+          <div class="categories-card" onclick="showProducts('Headphones')"><img src="https://via.placeholder.com/100x70"><p>Headphones</p></div>
+          <div class="categories-card" onclick="showProducts('Speakers')"><img src="https://via.placeholder.com/100x70"><p>Speakers</p></div>
+          <div class="categories-card" onclick="showProducts('Smart Watches')"><img src="https://via.placeholder.com/100x70"><p>Smart Watches</p></div>
+          <div class="categories-card" onclick="showProducts('Laptops')"><img src="https://via.placeholder.com/100x70"><p>Laptops</p></div>
+          <div class="categories-card" onclick="showProducts('Chargers')"><img src="https://via.placeholder.com/100x70"><p>Chargers</p></div>
+          <div class="categories-card" onclick="showProducts('Power Banks')"><img src="https://via.placeholder.com/100x70"><p>Power Banks</p></div>
+          <div class="categories-card" onclick="showProducts('Home Appliances')"><img src="https://via.placeholder.com/100x70"><p>Home Appliances</p></div>
+        </div>
+
+        <!-- Baby & Toys -->
+        <div class="categories-section-title">Baby & Toys</div>
+        <div class="categories-grid">
+          <div class="categories-card" onclick="showProducts('Baby Food')"><img src="https://via.placeholder.com/100x70"><p>Baby Food</p></div>
+          <div class="categories-card" onclick="showProducts('Baby Diapers')"><img src="https://via.placeholder.com/100x70"><p>Baby Diapers</p></div>
+          <div class="categories-card" onclick="showProducts('Baby Skincare')"><img src="https://via.placeholder.com/100x70"><p>Baby Skincare</p></div>
+          <div class="categories-card" onclick="showProducts('Baby Wipes')"><img src="https://via.placeholder.com/100x70"><p>Baby Wipes</p></div>
+          <div class="categories-card" onclick="showProducts('Soft Toys')"><img src="https://via.placeholder.com/100x70"><p>Soft Toys</p></div>
+          <div class="categories-card" onclick="showProducts('Educational Toys')"><img src="https://via.placeholder.com/100x70"><p>Educational Toys</p></div>
+          <div class="categories-card" onclick="showProducts('Games')"><img src="https://via.placeholder.com/100x70"><p>Games</p></div>
+          <div class="categories-card" onclick="showProducts('Ride-ons')"><img src="https://via.placeholder.com/100x70"><p>Ride-ons</p></div>
+        </div>
+      </div>
+
+      <!-- Products Page (hidden by default) -->
+      <div id="products-page" class="container full-screen-products hidden">
+        <button class="back-button" onclick="showCategories()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to Categories</span>
+        </button>
+        
+        <h2 id="product-category-title" class="section-title">Products</h2>
+        
+        <div class="product-grid" id="products-grid">
+          <!-- Products will be dynamically inserted here -->
+        </div>
+      </div>
+
+      <!-- Product Detail Page (hidden by default) -->
+      <div id="product-detail-page" class="hidden">
+        <div class="product-detail-container">
+          <button class="back-button" onclick="showProducts(currentCategory)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Back to Products</span>
+          </button>
+          
+          <div class="product-detail">
+            <div class="product-detail-image-container">
+              <img id="detail-product-image" class="product-detail-image" src="" alt="">
+            </div>
+            <div class="product-detail-info">
+              <h2 id="detail-product-title" class="product-detail-title"></h2>
+              <div id="detail-product-price" class="product-detail-price"></div>
+              <div id="detail-product-discount" class="discount-text"></div>
+              <p id="detail-product-description" class="product-detail-description"></p>
+              
+              <div class="product-detail-actions">
+                <div class="product-detail-qty">
+                  <button onclick="decreaseDetailQty()">-</button>
+                  <span id="detail-qty">1</span>
+                  <button onclick="increaseDetailQty()">+</button>
+                </div>
+                <button class="add-to-cart-btn" onclick="addDetailToCart()">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Related Products Section -->
+          <div class="related-products">
+            <h2>Related Products</h2>
+            <div class="related-products-grid" id="related-products-grid">
+              <!-- Related products will be dynamically inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wishlist Page (hidden by default) -->
+      <div id="wishlist-page" class="hidden">
+        <div class="wishlist-container">
+          <button class="back-button" onclick="showCategories()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Back to Home</span>
+          </button>
+          
+          <div class="wishlist-header">
+            <h2>My Wishlist</h2>
+            <div class="wishlist-count" id="wishlist-count">0</div>
+          </div>
+          
+          <div class="product-grid" id="wishlist-grid">
+            <!-- Wishlist items will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Cart Page (hidden by default) -->
+      <div id="cart-page" class="hidden">
+        <div class="cart-container">
+          <button class="back-button" onclick="showCategories()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Back to Home</span>
+          </button>
+          
+          <div class="cart-header">
+            <h2>My Cart</h2>
+            <div class="cart-count" id="cart-count">0</div>
+          </div>
+          
+          <div class="cart-items" id="cart-items">
+            <!-- Cart items will be dynamically inserted here -->
+          </div>
+          
+          <div class="bill-details" style="display: none;">
+            <!-- Bill details will be dynamically inserted here -->
+          </div>
+          
+          <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Menu Toggle Functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menu');
+    const overlay = document.getElementById('overlay');
+    
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+    
+    overlay.addEventListener('click', () => {
+      menu.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Location Selector Functionality
+    const addressBar = document.getElementById("addressBar");
+    const locationPopup = document.getElementById("locationPopup");
+    const useCurrentLocation = document.getElementById("useCurrentLocation");
+    const currentAddress = document.getElementById("currentAddress");
+    const addressIcon = document.getElementById("addressIcon");
+    const popupSearchInput = document.getElementById("popupSearchInput");
+    const confirmAddressBtn = document.getElementById("confirmAddressBtn");
+    const suggestionsBox = document.getElementById("suggestions");
+    const homeSearchInput = document.querySelector(".home-search input");
+
+    let debounceTimer, cache={}, selectedIndex=-1, currentSuggestions=[];
+
+    // Open popup
+    addressBar.addEventListener("click",()=> locationPopup.style.display="flex");
+    locationPopup.addEventListener("click",e=> { if(e.target===locationPopup) locationPopup.style.display="none"; });
+
+    // Set home icon
+    function setHomeIcon() {
+        addressIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>`;
+    }
+
+    // Autocomplete search in popup
+    popupSearchInput.addEventListener("input",()=>{
+        const query = popupSearchInput.value.trim();
+        clearTimeout(debounceTimer); selectedIndex=-1;
+        if(query.length<2){ suggestionsBox.innerHTML=""; return; }
+        if(cache[query]){ renderSuggestions(cache[query]); return; }
+        debounceTimer=setTimeout(async()=>{
+            try{
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5&countrycodes=in`);
+                const data = await res.json();
+                cache[query]=data;
+                renderSuggestions(data);
+            }catch(err){ console.error(err); }
+        },250);
+    });
+
+    function renderSuggestions(data){
+        currentSuggestions=data;
+        suggestionsBox.innerHTML="";
+        if(data.length===0){ suggestionsBox.innerHTML="No results found"; return; }
+        data.forEach((place,i)=>{
+            const div=document.createElement("div");
+            div.textContent=place.display_name;
+            div.onclick=()=>selectSuggestion(i);
+            suggestionsBox.appendChild(div);
+        });
+    }
+
+    function selectSuggestion(index){
+        const place=currentSuggestions[index];
+        popupSearchInput.value=place.display_name;
+        currentAddress.innerHTML=place.display_name;
+        setHomeIcon();
+        locationPopup.style.display="none";
+    }
+
+    // Keyboard nav
+    popupSearchInput.addEventListener("keydown",e=>{
+        const items = suggestionsBox.querySelectorAll("div");
+        if(items.length===0) return;
+        if(e.key==="ArrowDown"){ selectedIndex=(selectedIndex+1)%items.length; updateActive(items);}
+        else if(e.key==="ArrowUp"){ selectedIndex=(selectedIndex-1+items.length)%items.length; updateActive(items);}
+        else if(e.key==="Enter" && selectedIndex>=0){ selectSuggestion(selectedIndex); }
+    });
+    function updateActive(items){ items.forEach((item,i)=> item.classList.toggle("active", i===selectedIndex)); }
+
+    // Use current location
+    useCurrentLocation.addEventListener("click",()=>{
+        if(!navigator.geolocation){ alert("Geolocation not supported."); return; }
+        currentAddress.innerHTML="Detecting location...";
+        navigator.geolocation.getCurrentPosition(async pos=>{
+            const lat=pos.coords.latitude, lon=pos.coords.longitude;
+            try{
+                const res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                const data=await res.json();
+                currentAddress.innerHTML=data.display_name || "Current location";
+                setHomeIcon();
+                locationPopup.style.display="none";
+            }catch(err){ console.error(err); currentAddress.innerHTML="Unable to detect location"; }
+        }, err=>{
+            switch(err.code){
+                case err.PERMISSION_DENIED: currentAddress.innerHTML="Permission denied."; break;
+                case err.POSITION_UNAVAILABLE: currentAddress.innerHTML="Location unavailable."; break;
+                case err.TIMEOUT: currentAddress.innerHTML="Request timed out."; break;
+                default: currentAddress.innerHTML="Unknown error."; break;
+            }
+        });
+    });
+
+    // Confirm typed address
+    confirmAddressBtn.addEventListener("click",()=>{
+        let val=popupSearchInput.value.trim();
+        if(!val){ alert("Please enter a location."); return; }
+        currentAddress.innerHTML=val;
+        setHomeIcon();
+        locationPopup.style.display="none";
+    });
+
+    // Grocery autocomplete placeholder rotation
+    const grocerySuggestions = ["Milk", "Bread", "Rice", "Eggs", "Butter", "Cheese", "Fruits", "Vegetables","fashion","beauty","shampoo","laptop","biscuite","chocleate"];
+    let groceryIndex = 0;
+
+    setInterval(() => {
+        homeSearchInput.setAttribute("placeholder", "Search for " + grocerySuggestions[groceryIndex]);
+        groceryIndex = (groceryIndex + 1) % grocerySuggestions.length;
+    }, 2000); // 2 seconds delay between suggestions
+    
+    // Initialize Swiper
+    const swiper = new Swiper('.swiper', {  
+        loop: true,  
+        autoplay: {  
+            delay: 2500,  
+            disableOnInteraction: false,  
+        },  
+        pagination: {  
+            el: '.swiper-pagination',  
+            clickable: true,  
+        },  
+    });
+
+    // Add click event to categories
+    document.querySelectorAll('.category').forEach(item => {
+        item.addEventListener('click', function() {
+            // Remove active class from all categories
+            document.querySelectorAll('.category').forEach(cat => {
+                cat.classList.remove('active');
+            });
+            // Add active class to clicked category
+            this.classList.add('active');
+        });
+    });
+
+    // Sample product data for each category with images
+    const productsData = {
+        'Apples': [
+            { 
+                name: 'Shimla Apple', 
+                price: '₹120/kg', 
+                originalPrice: '₹133/kg',
+                discount: '10% OFF', 
+                description: 'Fresh and juicy Shimla apples with crisp texture and sweet-tart flavor. Rich in fiber and antioxidants.',
+                image: 'https://via.placeholder.com/300x300?text=Shimla+Apple'
+            },
+            { 
+                name: 'Washington Apple', 
+                price: '₹180/kg', 
+                originalPrice: '₹200/kg',
+                discount: '10% OFF', 
+                description: 'Premium imported Washington apples with firm texture and sweet flavor. Perfect for snacking.',
+                image: 'https://via.placeholder.com/300x300?text=Washington+Apple'
+            },
+            { 
+                name: 'Kashmiri Apple', 
+                price: '₹150/kg', 
+                originalPrice: '₹165/kg',
+                discount: '9% OFF', 
+                description: 'Sweet and aromatic Kashmiri apples with deep red color and crisp texture.',
+                image: 'https://via.placeholder.com/300x300?text=Kashmiri+Apple'
+            }
+        ],
+        'Bananas': [
+            { 
+                name: 'Robusta Banana', 
+                price: '₹50/dozen', 
+                originalPrice: '₹55/dozen',
+                discount: '9% OFF', 
+                description: 'Fresh Robusta bananas with perfect ripeness. Rich in potassium and natural sugars for energy.',
+                image: 'https://via.placeholder.com/300x300?text=Robusta+Banana'
+            },
+            { 
+                name: 'Yelakki Banana', 
+                price: '₹60/dozen', 
+                originalPrice: '₹65/dozen',
+                discount: '8% OFF', 
+                description: 'Small and sweet Yelakki bananas, perfect for kids and healthy snacks.',
+                image: 'https://via.placeholder.com/300x300?text=Yelakki+Banana'
+            }
+        ],
+        'Rice': [
+            { 
+                name: 'India Gate Basmati Rice', 
+                price: '₹499', 
+                originalPrice: '₹550',
+                discount: '9% OFF', 
+                description: 'Premium quality basmati rice with long grains and aromatic flavor. Perfect for biryanis and pulao.',
+                image: 'https://via.placeholder.com/300x300?text=India+Gate+Rice'
+            },
+            { 
+                name: 'Daawat Basmati Rice', 
+                price: '₹450', 
+                originalPrice: '₹500',
+                discount: '10% OFF', 
+                description: 'Authentic basmati rice with extra long grains and delicate aroma. Ideal for daily cooking.',
+                image: 'https://via.placeholder.com/300x300?text=Daawat+Rice'
+            },
+            { 
+                name: 'Fortune Basmati Rice', 
+                price: '₹420', 
+                originalPrice: '₹480',
+                discount: '12% OFF', 
+                description: 'Pure basmati rice with excellent elongation and non-sticky texture. Good for all rice dishes.',
+                image: 'https://via.placeholder.com/300x300?text=Fortune+Rice'
+            }
+        ],
+        'Oil': [
+            { 
+                name: 'Fortune Sunflower Oil', 
+                price: '₹199', 
+                originalPrice: '₹225',
+                discount: '12% OFF', 
+                description: '100% pure sunflower oil with light taste and high smoke point. Rich in vitamin E.',
+                image: 'https://via.placeholder.com/300x300?text=Fortune+Oil'
+            },
+            { 
+                name: 'Saffola Gold Oil', 
+                price: '₹210', 
+                originalPrice: '₹240',
+                discount: '12% OFF', 
+                description: 'Blended edible oil with the goodness of rice bran oil and sunflower oil. Helps maintain cholesterol.',
+                image: 'https://via.placeholder.com/300x300?text=Saffola+Oil'
+            },
+            { 
+                name: 'Patanjali Mustard Oil', 
+                price: '₹180', 
+                originalPrice: '₹200',
+                discount: '10% OFF', 
+                description: 'Pure mustard oil with strong aroma and taste. Traditionally used in Indian cooking.',
+                image: 'https://via.placeholder.com/300x300?text=Patanjali+Oil'
+            }
+        ],
+        'Wheat': [
+            { 
+                name: 'Aashirvaad Whole Wheat Atta', 
+                price: '₹299', 
+                originalPrice: '₹330',
+                discount: '9% OFF', 
+                description: '100% whole wheat atta with 0% maida. Rich in fiber and nutrients for healthy rotis.',
+                image: 'https://via.placeholder.com/300x300?text=Aashirvaad+Atta'
+            },
+            { 
+                name: 'Pillsbury Chakki Fresh Atta', 
+                price: '₹280', 
+                originalPrice: '₹310',
+                discount: '10% OFF', 
+                description: 'Chakki ground whole wheat flour for soft and fluffy rotis. No preservatives added.',
+                image: 'https://via.placeholder.com/300x300?text=Pillsbury+Atta'
+            },
+            { 
+                name: 'Nature\'s Gift Organic Wheat', 
+                price: '₹350', 
+                originalPrice: '₹380',
+                discount: '8% OFF', 
+                description: 'Certified organic whole wheat flour. Grown without chemical fertilizers or pesticides.',
+                image: 'https://via.placeholder.com/300x300?text=Organic+Wheat'
+            }
+        ],
+        'Salt': [
+            { 
+                name: 'Tata Iodized Salt', 
+                price: '₹25', 
+                originalPrice: '₹28',
+                discount: '11% OFF', 
+                description: 'Pure vacuum evaporated iodized salt. Essential for thyroid function and overall health.',
+                image: 'https://via.placeholder.com/300x300?text=Tata+Salt'
+            },
+            { 
+                name: 'Saffola Salt', 
+                price: '₹30', 
+                originalPrice: '₹35',
+                discount: '14% OFF', 
+                description: 'Low sodium salt with 15% less sodium than regular salt. Helps maintain blood pressure.',
+                image: 'https://via.placeholder.com/300x300?text=Saffola+Salt'
+            }
+        ],
+        'Noodles': [
+            { 
+                name: 'Maggi Masala Noodles', 
+                price: '₹60', 
+                originalPrice: '₹70',
+                discount: '14% OFF', 
+                description: 'Instant noodles with masala tastemaker. Ready in just 2 minutes. Contains no added MSG.',
+                image: 'https://via.placeholder.com/300x300?text=Maggi+Noodles'
+            },
+            { 
+                name: 'Top Ramen Noodles', 
+                price: '₹55', 
+                originalPrice: '₹65',
+                discount: '15% OFF', 
+                description: 'Delicious instant noodles with vegetable tastemaker. Quick and easy to prepare.',
+                image: 'https://via.placeholder.com/300x300?text=Top+Ramen'
+            }
+        ],
+        'Milk': [
+            { 
+                name: 'Amul Taaza Milk', 
+                price: '₹60', 
+                originalPrice: '',
+                discount: '', 
+                description: 'Pasteurized standardized toned milk. Rich in calcium and protein. 4.5% fat content.',
+                image: 'https://via.placeholder.com/300x300?text=Amul+Milk'
+            },
+            { 
+                name: 'Mother Dairy Milk', 
+                price: '₹58', 
+                originalPrice: '',
+                discount: '', 
+                description: 'Pure and fresh toned milk. Homogenized and pasteurized for safety and longer shelf life.',
+                image: 'https://via.placeholder.com/300x300?text=Mother+Dairy'
+            }
+        ],
+        'Tea': [
+            { 
+                name: 'Brooke Bond Red Label Tea', 
+                price: '₹220', 
+                originalPrice: '₹250',
+                discount: '12% OFF', 
+                description: 'Strong and refreshing tea leaves with rich aroma. Perfect for morning tea.',
+                image: 'https://via.placeholder.com/300x300?text=Red+Label+Tea'
+            },
+            { 
+                name: 'Taj Mahal Tea', 
+                price: '₹250', 
+                originalPrice: '₹280',
+                discount: '11% OFF', 
+                description: 'Premium quality tea leaves with exquisite flavor and aroma. The champagne of teas.',
+                image: 'https://via.placeholder.com/300x300?text=Taj+Mahal+Tea'
+            }
+        ],
+        'Sugar': [
+            { 
+                name: 'Dhampur Sugar', 
+                price: '₹45', 
+                originalPrice: '₹50',
+                discount: '10% OFF', 
+                description: 'Pure and natural sugar crystals. Free from any additives or artificial colors.',
+                image: 'https://via.placeholder.com/300x300?text=Dhampur+Sugar'
+            },
+            { 
+                name: 'Madhur Sugar', 
+                price: '₹48', 
+                originalPrice: '₹55',
+                discount: '13% OFF', 
+                description: 'Fine quality sugar with uniform crystal size. Dissolves quickly in beverages.',
+                image: 'https://via.placeholder.com/300x300?text=Madhur+Sugar'
+            }
+        ],
+        'Biscuits': [
+            { 
+                name: 'Parle-G Biscuits', 
+                price: '₹10', 
+                originalPrice: '₹12',
+                discount: '17% OFF', 
+                description: 'Iconic glucose biscuits with great taste. Perfect for tea time or as a quick snack.',
+                image: 'https://via.placeholder.com/300x300?text=Parle-G'
+            },
+            { 
+                name: 'Britannia Good Day', 
+                price: '₹20', 
+                originalPrice: '₹25',
+                discount: '20% OFF', 
+                description: 'Butter cookies with cashew bits. Rich and crunchy taste that melts in your mouth.',
+                image: 'https://via.placeholder.com/300x300?text=Good+Day'
+            }
+        ],
+        // Additional categories for the grid view
+        'Fresh Fruits': [
+            { 
+                name: 'Apple', 
+                price: '₹120/kg', 
+                originalPrice: '₹133/kg',
+                discount: '10% OFF', 
+                description: 'Fresh and juicy apples with crisp texture and sweet-tart flavor.',
+                image: 'https://via.placeholder.com/300x300?text=Apple'
+            },
+            { 
+                name: 'Banana', 
+                price: '₹50/dozen', 
+                originalPrice: '₹55/dozen',
+                discount: '9% OFF', 
+                description: 'Fresh bananas with perfect ripeness. Rich in potassium.',
+                image: 'https://via.placeholder.com/300x300?text=Banana'
+            }
+        ],
+        'Fresh Vegetables': [
+            { 
+                name: 'Tomato', 
+                price: '₹40/kg', 
+                originalPrice: '₹45/kg',
+                discount: '11% OFF', 
+                description: 'Fresh and juicy tomatoes perfect for salads and cooking.',
+                image: 'https://via.placeholder.com/300x300?text=Tomato'
+            },
+            { 
+                name: 'Potato', 
+                price: '₹30/kg', 
+                originalPrice: '₹35/kg',
+                discount: '14% OFF', 
+                description: 'Fresh potatoes ideal for all types of cooking.',
+                image: 'https://via.placeholder.com/300x300?text=Potato'
+            }
+        ],
+        'Organic Produce': [
+            { 
+                name: 'Organic Apple', 
+                price: '₹180/kg', 
+                originalPrice: '₹200/kg',
+                discount: '10% OFF', 
+                description: 'Certified organic apples grown without pesticides.',
+                image: 'https://via.placeholder.com/300x300?text=Organic+Apple'
+            },
+            { 
+                name: 'Organic Tomato', 
+                price: '₹60/kg', 
+                originalPrice: '₹70/kg',
+                discount: '14% OFF', 
+                description: 'Certified organic tomatoes with natural flavor.',
+                image: 'https://via.placeholder.com/300x300?text=Organic+Tomato'
+            }
+        ],
+        'Exotic Fruits': [
+            { 
+                name: 'Kiwi', 
+                price: '₹100/pack', 
+                originalPrice: '₹120/pack',
+                discount: '17% OFF', 
+                description: 'Exotic kiwi fruits packed with vitamin C.',
+                image: 'https://via.placeholder.com/300x300?text=Kiwi'
+            },
+            { 
+                name: 'Dragon Fruit', 
+                price: '₹150/piece', 
+                originalPrice: '₹180/piece',
+                discount: '17% OFF', 
+                description: 'Exotic dragon fruit with unique appearance and taste.',
+                image: 'https://via.placeholder.com/300x300?text=Dragon+Fruit'
+            }
+        ],
+        'Mobiles': [
+            { 
+                name: 'iPhone 13', 
+                price: '₹69,999', 
+                originalPrice: '₹79,900',
+                discount: '12% OFF', 
+                description: 'Latest iPhone with A15 Bionic chip and great camera.',
+                image: 'https://via.placeholder.com/300x300?text=iPhone+13'
+            },
+            { 
+                name: 'Samsung Galaxy S21', 
+                price: '₹59,999', 
+                originalPrice: '₹69,999',
+                discount: '14% OFF', 
+                description: 'Powerful Android phone with amazing display.',
+                image: 'https://via.placeholder.com/300x300?text=Galaxy+S21'
+            }
+        ],
+        'Headphones': [
+            { 
+                name: 'Sony WH-1000XM4', 
+                price: '₹24,990', 
+                originalPrice: '₹29,990',
+                discount: '17% OFF', 
+                description: 'Industry-leading noise cancellation headphones.',
+                image: 'https://via.placeholder.com/300x300?text=Sony+Headphones'
+            },
+            { 
+                name: 'Boat Rockerz 450', 
+                price: '₹1,499', 
+                originalPrice: '₹1,999',
+                discount: '25% OFF', 
+                description: 'Comfortable wireless headphones with good sound.',
+                image: 'https://via.placeholder.com/300x300?text=Boat+Headphones'
+            }
+        ]
+    };
+
+    let currentCategory = '';
+    let currentProduct = null;
+    let wishlistItems = [];
+    let cartItems = [];
+
+    // Show products for a specific category
+    function showProducts(category) {
+        currentCategory = category;
+        document.body.classList.add('products-page-open');
+        document.getElementById('categories-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('products-page').classList.remove('hidden');
+        
+        // Set the category title
+        document.getElementById('product-category-title').textContent = category;
+        
+        // Get the product grid container
+        const productGrid = document.getElementById('products-grid');
+        productGrid.innerHTML = '';
+        
+        // Check if we have products for this category
+        if (productsData[category]) {
+            // Add products to the grid
+            productsData[category].forEach((product, index) => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.onclick = () => showProductDetail(category, index);
+                
+                // Check if product is in wishlist
+                const isInWishlist = wishlistItems.some(item => item.name === product.name);
+                
+                // Check if product is in cart
+                const cartItem = cartItems.find(item => item.name === product.name);
+                const quantity = cartItem ? cartItem.quantity : 0;
+                
+                productCard.innerHTML = `
+                    <button class="wishlist ${isInWishlist ? 'active' : ''}" onclick="toggleWishlist(event, this, '${category}', ${index})" aria-pressed="${isInWishlist}" title="Add to wishlist">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M12.001 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                                     2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                                     C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                                     c0 3.78-3.4 6.86-8.55 11.54L12.001 21.35z"/>
+                        </svg>
+                    </button>
+                    <div class="product-image-container">
+                        <img src="${product.image}" class="product-image" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">${product.price}</div>
+                        <div class="bottom-row">
+                            <span class="discount-text">${product.discount}</span>
+                            ${quantity > 0 ? 
+                              `<div class="qty-control">
+                                <button onclick="decreaseQty(event, this, '${product.name}')">-</button>
+                                <span>${quantity}</span>
+                                <button onclick="increaseQty(event, this, '${product.name}')">+</button>
+                              </div>` : 
+                              `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
+                        </div>
+                    </div>
+                `;
+                
+                productGrid.appendChild(productCard);
+            });
+        } else {
+            // If no products found for this category
+            const emptyState = document.createElement('div');
+            emptyState.className = 'empty-state';
+            emptyState.textContent = 'No products found for this category.';
+            productGrid.appendChild(emptyState);
+        }
+    }
+
+    // Show product detail page
+    function showProductDetail(category, productIndex) {
+        currentProduct = productsData[category][productIndex];
+        document.getElementById('categories-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.add('hidden');
+        document.getElementById('products-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.remove('hidden');
+        document.getElementById('header-section').style.display = 'none';
+        
+        // Set product details
+        document.getElementById('detail-product-image').src = currentProduct.image;
+        document.getElementById('detail-product-image').alt = currentProduct.name;
+        document.getElementById('detail-product-title').textContent = currentProduct.name;
+        document.getElementById('detail-product-price').textContent = currentProduct.price;
+        document.getElementById('detail-product-discount').textContent = currentProduct.discount;
+        document.getElementById('detail-product-description').textContent = currentProduct.description;
+        document.getElementById('detail-qty').textContent = '1';
+        
+        // Show related products (other products from same category)
+        const relatedProductsGrid = document.getElementById('related-products-grid');
+        relatedProductsGrid.innerHTML = '';
+        
+        if (productsData[category]) {
+            productsData[category].forEach((product, index) => {
+                if (product.name !== currentProduct.name) { // Don't show current product in related
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.onclick = () => {
+                        // Update current product details without reloading page
+                        currentProduct = productsData[category][index];
+                        document.getElementById('detail-product-image').src = currentProduct.image;
+                        document.getElementById('detail-product-image').alt = currentProduct.name;
+                        document.getElementById('detail-product-title').textContent = currentProduct.name;
+                        document.getElementById('detail-product-price').textContent = currentProduct.price;
+                        document.getElementById('detail-product-discount').textContent = currentProduct.discount;
+                        document.getElementById('detail-product-description').textContent = currentProduct.description;
+                        document.getElementById('detail-qty').textContent = '1';
+                        
+                        // Scroll to top of product detail
+                        window.scrollTo(0, 0);
+                    };
+                    
+                    // Check if product is in cart
+                    const cartItem = cartItems.find(item => item.name === product.name);
+                    const quantity = cartItem ? cartItem.quantity : 0;
+                    
+                    productCard.innerHTML = `
+                        <button class="wishlist" onclick="toggleWishlist(event, this, '${category}', ${index})" aria-pressed="false" title="Add to wishlist">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <path d="M12.001 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                                         2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                                         C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                                         c0 3.78-3.4 6.86-8.55 11.54L12.001 21.35z"/>
+                            </svg>
+                        </button>
+                        <div class="product-image-container">
+                            <img src="${product.image}" class="product-image" alt="${product.name}">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">${product.name}</div>
+                            <div class="product-price">${product.price}</div>
+                            <div class="bottom-row">
+                                <span class="discount-text">${product.discount}</span>
+                                ${quantity > 0 ? 
+                                  `<div class="qty-control">
+                                    <button onclick="decreaseQty(event, this, '${product.name}')">-</button>
+                                    <span>${quantity}</span>
+                                    <button onclick="increaseQty(event, this, '${product.name}')">+</button>
+                                  </div>` : 
+                                  `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
+                            </div>
+                        </div>
+                    `;
+                    
+                    relatedProductsGrid.appendChild(productCard);
+                }
+            });
+        }
+    }
+
+    // Show categories page
+    function showCategories() {
+        document.body.classList.remove('products-page-open');
+        document.getElementById('products-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('categories-page').classList.remove('hidden');
+        document.getElementById('header-section').style.display = 'block';
+    }
+
+    // Show categories grid page
+    function showCategoriesGrid() {
+        document.body.classList.remove('products-page-open');
+        document.getElementById('products-page').classList.add('hidden');
+        document.getElementById('categories-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.remove('hidden');
+        document.getElementById('header-section').style.display = 'block';
+        
+        // Close menu if open
+        menu.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+
+    // Show wishlist page
+    function showWishlist() {
+        document.body.classList.add('products-page-open');
+        document.getElementById('categories-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.add('hidden');
+        document.getElementById('products-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.remove('hidden');
+        
+        // Close menu if open
+        menu.classList.remove('active');
+        overlay.classList.remove('active');
+        
+        // Update wishlist count
+        document.getElementById('wishlist-count').textContent = wishlistItems.length;
+        
+        // Display wishlist items
+        const wishlistGrid = document.getElementById('wishlist-grid');
+        wishlistGrid.innerHTML = '';
+        
+        if (wishlistItems.length === 0) {
+            const emptyState = document.createElement('div');
+            emptyState.className = 'empty-state';
+            emptyState.textContent = 'Your wishlist is empty.';
+            wishlistGrid.appendChild(emptyState);
+        } else {
+            wishlistItems.forEach((product, index) => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.onclick = () => {
+                    // Find the category of this product
+                    let category = '';
+                    for (const cat in productsData) {
+                        if (productsData[cat].some(p => p.name === product.name)) {
+                            category = cat;
+                            break;
+                        }
+                    }
+                    
+                    // Find the product index in its category
+                    const productIndex = productsData[category].findIndex(p => p.name === product.name);
+                    
+                    // Show product detail
+                    showProductDetail(category, productIndex);
+                };
+                
+                // Check if product is in cart
+                const cartItem = cartItems.find(item => item.name === product.name);
+                const quantity = cartItem ? cartItem.quantity : 0;
+                
+                productCard.innerHTML = `
+                    <button class="wishlist active" onclick="toggleWishlist(event, this, '${product.category}', ${product.index})" aria-pressed="true" title="Remove from wishlist">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M12.001 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                                     2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                                     C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                                     c0 3.78-3.4 6.86-8.55 11.54L12.001 21.35z"/>
+                        </svg>
+                    </button>
+                    <div class="product-image-container">
+                        <img src="${product.image}" class="product-image" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">${product.price}</div>
+                        <div class="bottom-row">
+                            <span class="discount-text">${product.discount}</span>
+                            ${quantity > 0 ? 
+                              `<div class="qty-control">
+                                <button onclick="decreaseQty(event, this, '${product.name}')">-</button>
+                                <span>${quantity}</span>
+                                <button onclick="increaseQty(event, this, '${product.name}')">+</button>
+                              </div>` : 
+                              `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
+                        </div>
+                    </div>
+                `;
+                
+                wishlistGrid.appendChild(productCard);
+            });
+        }
+    }
+
+    // Show cart page
+    function showCart() {
+        document.body.classList.add('products-page-open');
+        document.getElementById('categories-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.add('hidden');
+        document.getElementById('products-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.remove('hidden');
+        
+        // Close menu if open
+        menu.classList.remove('active');
+        overlay.classList.remove('active');
+        
+        // Update cart count
+        updateCartCount();
+        
+        // Display cart items
+        const cartContainer = document.getElementById('cart-items');
+        cartContainer.innerHTML = '';
+        
+        if (cartItems.length === 0) {
+            cartContainer.innerHTML = `
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="#ccc">
+                        <path d="M19 5h-14l1.5-2h11zm1.794 2.808l-1.961-3.203c-.381-.619-1.053-1.058-1.833-1.058h-11c-.78 0-1.452.439-1.833 1.058l-1.961 3.203c-.356.582-.206 1.392.15 2.192.356.8 1.025 1.458 1.734 1.458h14c.709 0 1.378-.658 1.734-1.458.356-.8.506-1.61.15-2.192zm-12.794 11.192c0 1.105-.672 2-1.5 2s-1.5-.895-1.5-2 .672-2 1.5-2 1.5.895 1.5 2zm9 0c0 1.105-.672 2-1.5 2s-1.5-.895-1.5-2 .672-2 1.5-2 1.5.895 1.5 2z"/>
+                    </svg>
+                    <p>Your cart is empty</p>
+                    <button onclick="showCategories()" class="continue-shopping-btn">Continue Shopping</button>
+                </div>
+            `;
+            document.querySelector('.bill-details').style.display = 'none';
+            document.querySelector('.checkout-btn').style.display = 'none';
+        } else {
+            document.querySelector('.bill-details').style.display = 'block';
+            document.querySelector('.checkout-btn').style.display = 'block';
+            
+            cartItems.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.dataset.index = index;
+                
+                // Calculate price for this item
+                const price = parseInt(item.price.replace(/[^0-9]/g, ''));
+                const totalPrice = price * item.quantity;
+                const originalPrice = item.originalPrice ? parseInt(item.originalPrice.replace(/[^0-9]/g, '')) * item.quantity : 0;
+                
+                cartItem.innerHTML = `
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="cart-item-details">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-size">${item.size || '1 unit'}</div>
+                        <div class="cart-item-price">
+                            ₹${totalPrice}
+                            ${item.originalPrice ? `<span class="cart-item-original-price">₹${originalPrice}</span>` : ''}
+                        </div>
+                        <div class="cart-item-actions">
+                            <button class="remove-item" onclick="removeFromCart(event, ${index})">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#f44336">
+                                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                                </svg>
+                                Remove
+                            </button>
+                            <div class="qty-control">
+                                <button onclick="decreaseCartQty(event, this)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="increaseCartQty(event, this)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                cartContainer.appendChild(cartItem);
+            });
+            
+            updateCartTotal();
+        }
+    }
+
+    // Add to Cart Function
+    function addToCart(event, button, productName = null) {
+        event.stopPropagation();
+        
+        // Get product details
+        let product;
+        if (productName) {
+            // Find product by name
+            for (const category in productsData) {
+                const found = productsData[category].find(p => p.name === productName);
+                if (found) {
+                    product = found;
+                    break;
+                }
+            }
+        } else if (currentProduct) {
+            product = currentProduct;
+        } else {
+            return;
+        }
+
+        if (!product) return;
+
+        // Check if already in cart
+        const existingItem = cartItems.find(item => item.name === product.name);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cartItems.push({
+                ...product,
+                quantity: 1,
+                size: product.size || '1 unit'
+            });
+        }
+        
+        // Update button UI
+        if (button) {
+            button.outerHTML = `
+                <div class="qty-control">
+                    <button onclick="decreaseQty(event, this, '${product.name}')">-</button>
+                    <span>${existingItem ? existingItem.quantity + 1 : 1}</span>
+                    <button onclick="increaseQty(event, this, '${product.name}')">+</button>
+                </div>
+            `;
+        }
+        
+        updateCartCount();
+        showToast(`${product.name} added to cart`);
+    }
+
+    // Quantity Controls
+    function increaseQty(event, btn, productName) {
+        event.stopPropagation();
+        const item = cartItems.find(item => item.name === productName);
+        if (item) {
+            item.quantity += 1;
+            btn.parentElement.querySelector("span").textContent = item.quantity;
+            updateCartTotal();
+        }
+    }
+
+    function decreaseQty(event, btn, productName) {
+        event.stopPropagation();
+        const itemIndex = cartItems.findIndex(item => item.name === productName);
+        
+        if (itemIndex >= 0) {
+            if (cartItems[itemIndex].quantity <= 1) {
+                // Remove from cart
+                cartItems.splice(itemIndex, 1);
+                
+                // Reset all product buttons
+                document.querySelectorAll('.product-card').forEach(card => {
+                    if (card.querySelector('.product-title')?.textContent === productName) {
+                        const qtyControl = card.querySelector('.qty-control');
+                        if (qtyControl) {
+                            qtyControl.outerHTML = '<div class="add-btn" onclick="addToCart(event, this, \'' + productName + '\')">ADD</div>';
+                        }
+                    }
+                });
+            } else {
+                cartItems[itemIndex].quantity -= 1;
+                btn.parentElement.querySelector("span").textContent = cartItems[itemIndex].quantity;
+            }
+            updateCartTotal();
+        }
+        
+        if (document.getElementById('cart-page').classList.contains('hidden')) {
+            updateCartCount();
+        } else {
+            showCart();
+        }
+    }
+
+    // Cart Page Functions
+    function removeFromCart(event, index) {
+        event.stopPropagation();
+        const removedItem = cartItems[index];
+        cartItems.splice(index, 1);
+        
+        // Update product cards
+        document.querySelectorAll('.product-card').forEach(card => {
+            if (card.querySelector('.product-title')?.textContent === removedItem.name) {
+                const qtyControl = card.querySelector('.qty-control');
+                if (qtyControl) {
+                    qtyControl.outerHTML = '<div class="add-btn" onclick="addToCart(event, this, \'' + removedItem.name + '\')">ADD</div>';
+                }
+            }
+        });
+        
+        showCart();
+    }
+
+    function increaseCartQty(event, btn) {
+        event.stopPropagation();
+        const index = parseInt(btn.closest('.cart-item').dataset.index);
+        if (!isNaN(index)) {
+            cartItems[index].quantity += 1;
+            btn.parentElement.querySelector("span").textContent = cartItems[index].quantity;
+            updateCartTotal();
+        }
+    }
+
+    function decreaseCartQty(event, btn) {
+        event.stopPropagation();
+        const index = parseInt(btn.closest('.cart-item').dataset.index);
+        if (!isNaN(index)) {
+            if (cartItems[index].quantity <= 1) {
+                removeFromCart(event, index);
+            } else {
+                cartItems[index].quantity -= 1;
+                btn.parentElement.querySelector("span").textContent = cartItems[index].quantity;
+                updateCartTotal();
+            }
+        }
+    }
+
+    // Helper Functions
+    function updateCartCount() {
+        const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cart-count').textContent = totalItems;
+        document.getElementById('cart-badge').textContent = totalItems;
+    }
+
+    function updateCartTotal() {
+        let itemsTotal = 0;
+        let totalSaved = 0;
+        
+        // Calculate total price and savings
+        cartItems.forEach(item => {
+            const price = parseInt(item.price.replace(/[^0-9]/g, ''));
+            itemsTotal += price * item.quantity;
+            
+            if (item.originalPrice) {
+                const originalPrice = parseInt(item.originalPrice.replace(/[^0-9]/g, ''));
+                totalSaved += (originalPrice - price) * item.quantity;
+            }
+        });
+        
+        // Define all fees
+        const platformFee = 5;  // प्लेटफॉर्म फी ₹5
+        const deliveryFee = 30; // डिलीवरी फी ₹30
+        const handlingFee = 10; // हैंडलिंग फी ₹10
+        const additionalFees = platformFee + deliveryFee + handlingFee;
+        const grandTotal = itemsTotal + additionalFees;
+        
+        // Update bill details section
+        const billDetails = document.querySelector('.bill-details');
+        billDetails.innerHTML = `
+            <div class="bill-row">
+                <span class="bill-label">Items (${cartItems.reduce((total, item) => total + item.quantity, 0)})</span>
+                <span class="bill-value">₹${itemsTotal}</span>
+            </div>
+            <div class="bill-row">
+                <span class="bill-label">Discount</span>
+                <span class="bill-value saved">-₹${totalSaved}</span>
+            </div>
+            <div class="bill-row">
+                <span class="bill-label">Platform fee</span>
+                <span class="bill-value">₹${platformFee}</span>
+            </div>
+            <div class="bill-row">
+                <span class="bill-label">Delivery fee</span>
+                <span class="bill-value">₹${deliveryFee}</span>
+            </div>
+            <div class="bill-row">
+                <span class="bill-label">Handling fee</span>
+                <span class="bill-value">₹${handlingFee}</span>
+            </div>
+            <div class="bill-row grand-total">
+                <span class="bill-label">Total Amount</span>
+                <span class="bill-value">₹${grandTotal}</span>
+            </div>
+        `;
+    }
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }, 10);
+    }
+
+    // Product detail quantity controls
+    function increaseDetailQty() {
+        let qty = document.getElementById('detail-qty');
+        qty.textContent = parseInt(qty.textContent) + 1;
+    }
+
+    function decreaseDetailQty() {
+        let qty = document.getElementById('detail-qty');
+        let newQty = parseInt(qty.textContent) - 1;
+        if (newQty < 1) newQty = 1;
+        qty.textContent = newQty;
+    }
+
+    function addDetailToCart() {
+        const quantity = parseInt(document.getElementById('detail-qty').textContent);
+        
+        for (let i = 0; i < quantity; i++) {
+            addToCart(null, null, currentProduct.name);
+        }
+        
+        // Show confirmation
+        showToast(`${quantity} ${currentProduct.name} added to cart!`);
+    }
+
+    function toggleWishlist(event, el, category, index) {
+        event.stopPropagation();
+        el.classList.toggle('active');
+        const isActive = el.classList.contains('active');
+        el.setAttribute('aria-pressed', isActive);
+        
+        const product = productsData[category][index];
+        const productData = {
+            ...product,
+            category,
+            index
+        };
+        
+        if (isActive) {
+            // Add to wishlist
+            if (!wishlistItems.some(item => item.name === product.name)) {
+                wishlistItems.push(productData);
+                
+                // Show popup
+                showToast("Added to wishlist");
+            }
+        } else {
+            // Remove from wishlist
+            wishlistItems = wishlistItems.filter(item => item.name !== product.name);
+            
+            // If we're on the wishlist page, refresh it
+            if (!document.getElementById('wishlist-page').classList.contains('hidden')) {
+                showWishlist();
+            }
+        }
+    }
+
+    // Search functionality
+    const openSearch = document.getElementById("openSearch");
+    const closeSearch = document.getElementById("closeSearch");
+    const searchOverlay = document.getElementById("searchOverlay");
+    const searchInput = document.getElementById("searchInput");
+
+    openSearch.addEventListener("click", () => {
+      searchOverlay.classList.add("active");
+      setTimeout(()=>searchInput.focus(),0);
+    });
+
+    closeSearch.addEventListener("click", () => {
+      searchOverlay.classList.remove("active");
+    });
+
+    // पेज लोड होते ही current location detect करने के लिए
+    document.addEventListener('DOMContentLoaded', function() {
+        if(navigator.geolocation) {
+            currentAddress.innerHTML = "Detecting location...";
+            navigator.geolocation.getCurrentPosition(async pos => {
+                const lat = pos.coords.latitude, lon = pos.coords.longitude;
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                    const data = await res.json();
+                    currentAddress.innerHTML = data.display_name || "Current location";
+                    setHomeIcon();
+                } catch(err) {
+                    console.error(err);
+                    currentAddress.innerHTML = "Select your delivery location...";
+                }
+            }, err => {
+                console.error(err);
+                currentAddress.innerHTML = "Select your delivery location...";
+            });
+        }
+    });
+    // पेज लोड होते ही location popup खोलने के लिए
+    document.addEventListener('DOMContentLoaded', function() {
+        locationPopup.style.display = "flex";
+    });
+  </script>
+</body>
+</html>
