@@ -1,1150 +1,1237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quantra Ai Pro</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f7f7f8;
-      color: #000;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantara X Chat Bot</title>
 
-    .intro-text {
-      text-align: center;
-      padding: 30px 10px 10px;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      margin-top: auto;
-    }
+<!-- Google Font: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    .intro-text.hide {
-      opacity: 0;
-      transform: translateY(-20px);
-      pointer-events: none;
-      height: 0;
-      overflow: hidden;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background-color: #f7f7f8;
+    color: #000;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .intro-text h1 {
-      font-size: 1.8rem;
-      margin-bottom: 5px;
-      font-weight: 600;
-    }
+  /* ===== HEADER ===== */
+  .chat-header {
+    background-color: #ffffff;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e5e6;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-    .intro-text p {
-      font-size: 1rem;
-      color: #6e6e80;
-    }
+  .header-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #000;
+  }
 
-    #chat-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-    }
+  .intro-text {
+    text-align: center;
+    padding: 30px 10px 10px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
 
-    .message {
-      margin-bottom: 10px;
-      display: flex;
-    }
+  .intro-text.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+  }
 
-    .message.user {
-      justify-content: flex-end;
-    }
+  .intro-text h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
 
-    .message.bot {
-      justify-content: flex-start;
-    }
+  .intro-text p {
+    font-size: 1rem;
+    color: #6e6e80;
+  }
 
-    .bubble {
-      padding: 12px 16px;
-      border-radius: 18px;
-      max-width: 70%;
-      word-wrap: break-word;
-      line-height: 1.4;
-      font-size: 16px;
-    }
+  /* ===== CHAT CONTAINER ===== */
+  #chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .user .bubble {
-      background-color: #007bff;
-      color: white;
-      border-bottom-right-radius: 4px;
-    }
+  .message {
+    margin-bottom: 10px;
+    display: flex;
+  }
 
-    .bot .bubble {
-      background-color: #f2f2f2;
-      color: #000;
-      border-bottom-left-radius: 4px;
-    }
+  .message.user {
+    justify-content: flex-end;
+  }
 
-    #chat-form {
-      display: flex;
-      padding: 12px;
-      background-color: #ffffff;
-      border-top: 1px solid #e5e5e6;
-      position: relative;
-    }
+  .message.bot {
+    justify-content: flex-start;
+  }
 
-    #user-input {
-      flex: 1;
-      padding: 12px 16px;
-      border-radius: 16px;
-      border: 1px solid #e5e5e6;
-      outline: none;
-      font-size: 1rem;
-      background-color: #f7f7f8;
-      color: #000;
-      transition: border 0.3s ease;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
+  .bubble {
+    padding: 12px 16px;
+    border-radius: 18px;
+    max-width: 70%;
+    word-wrap: break-word;
+    line-height: 1.4;
+    font-size: 16px;
+  }
 
-    #user-input:focus {
-      border: 1px solid #007bff;
-    }
+  .user .bubble {
+    background-color: #007bff;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
 
-    #send-btn {
-      margin-left: 10px;
-      padding: 0;
-      border: none;
-      border-radius: 50%;
-      background-color: #007bff;
-      color: white;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
+  .bot .bubble {
+    background-color: #f2f2f2;
+    color: #000;
+    border-bottom-left-radius: 4px;
+  }
 
-    #send-btn svg {
-      width: 20px;
-      height: 20px;
-    }
+  /* ===== INPUT AREA ===== */
+  #chat-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+    background-color: #ffffff;
+    border-top: 1px solid #e5e5e6;
+  }
 
-    .dot {
-      height: 8px;
-      width: 8px;
-      margin: 0 2px;
-      background-color: #999;
-      border-radius: 50%;
-      display: inline-block;
-      animation: blink 1.4s infinite both;
-    }
+  #search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: #f2f2f2;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    transition: background 0.2s ease;
+    margin-bottom: 8px;
+  }
+  
+  #search-btn:hover { 
+    background: #e6e6e6; 
+  }
+  
+  #search-btn.active { 
+    background-color: #cce5ff; 
+  }
 
-    .dot:nth-child(2) {
-      animation-delay: 0.2s;
-    }
+  #search-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: #000;
+    margin-right: 8px;
+  }
 
-    .dot:nth-child(3) {
-      animation-delay: 0.4s;
-    }
+  .input-wrapper {
+    display: flex;
+    width: 100%;
+  }
 
-    @keyframes blink {
-      0%, 80%, 100% { opacity: 0.3; }
-      40% { opacity: 1; }
-    }
+  #user-input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 16px;
+    border: 1px solid #e5e5e6;
+    outline: none;
+    font-size: 1rem;
+    background-color: #f7f7f8;
+    color: #000;
+    transition: border 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  
+  #user-input:focus { 
+    border: 1px solid #007bff; 
+  }
 
-    .suggestion-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 10px;
-      margin-bottom: auto;
-    }
+  #send-btn {
+    margin-left: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  #send-btn svg { 
+    width: 20px; 
+    height: 20px; 
+  }
 
-    .suggestion-box {
-      width: calc(50% - 20px);
-      margin: 8px;
-      padding: 12px;
-      background-color: #f7f7f8;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
+  /* ===== SUGGESTIONS ===== */
+  .suggestion-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    margin-bottom: auto;
+  }
 
-    .suggestion-box:hover {
-      background-color: #e5e5e6;
-    }
+  .suggestion-box {
+    width: calc(50% - 20px);
+    margin: 8px;
+    padding: 12px;
+    background-color: #f7f7f8;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
 
-    .footer {
-      text-align: center;
-      padding: 16px;
-      font-size: 12px;
-      color: #6e6e80;
-      border-top: 1px solid #e5e5e6;
-      background-color: #ffffff;
-    }
+  .suggestion-box:hover {
+    background-color: #e5e5e6;
+  }
 
-    .footer a {
-      color: #007bff;
-      text-decoration: none;
-    }
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 12px;
+    color: #6e6e80;
+    border-top: 1px solid #e5e5e6;
+    background-color: #ffffff;
+  }
 
-    .footer a:hover {
-      text-decoration: underline;
-    }
+  /* ===== TYPING INDICATOR ===== */
+  .dot {
+    height: 8px;
+    width: 8px;
+    margin: 0 2px;
+    background-color: #999;
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink 1.4s infinite both;
+  }
+  
+  .dot:nth-child(2) { 
+    animation-delay: 0.2s; 
+  }
+  
+  .dot:nth-child(3) { 
+    animation-delay: 0.4s; 
+  }
 
-    .attachments {
-      position: absolute;
-      bottom: 70px;
-      right: 20px;
-      display: flex;
-      gap: 10px;
+  @keyframes blink {
+    0%, 80%, 100% { 
+      opacity: 0.3; 
     }
+    40% { 
+      opacity: 1; 
+    }
+  }
 
-    .attachment-btn {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+  /* ===== SPECIAL FORMATTING ===== */
+  .math-result {
+    background-color: #e6f7ff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-family: monospace;
+  }
 
-    .math-result {
-      background-color: #e6f7ff;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 5px;
-      font-family: monospace;
-    }
-
-    .code-block {
-      background-color: #f0f0f0;
-      padding: 10px;
-      border-radius: 8px;
-      font-family: monospace;
-      overflow-x: auto;
-      white-space: pre-wrap;
-    }
-    
-    .steps {
-      margin-top: 10px;
-      padding-left: 20px;
-    }
-    
-    .steps li {
-      margin-bottom: 5px;
-    }
-    
-    .matrix {
-      display: inline-block;
-      border: 1px solid #ccc;
-      margin: 5px;
-      padding: 5px;
-    }
-    
-    .matrix-row {
-      display: flex;
-    }
-    
-    .matrix-cell {
-      padding: 3px 8px;
-      text-align: center;
-    }
-    
-    .info-box {
-      background-color: #f8f9fa;
-      border-left: 4px solid #007bff;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 0 4px 4px 0;
-    }
-    
-    .fun-fact {
-      background-color: #fff3cd;
-      padding: 10px;
-      border-radius: 8px;
-      margin: 10px 0;
-      font-style: italic;
-    }
-  </style>
+  .code-block {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  
+  .steps {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .steps li {
+    margin-bottom: 5px;
+  }
+  
+  .matrix {
+    display: inline-block;
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+  }
+  
+  .matrix-row {
+    display: flex;
+  }
+  
+  .matrix-cell {
+    padding: 3px 8px;
+    text-align: center;
+  }
+  
+  .info-box {
+    background-color: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  
+  .fun-fact {
+    background-color: #fff3cd;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-style: italic;
+  }
+</style>
 </head>
 <body>
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- ... (keep existing head content) ... -->
-  <style>
-    /* ... (keep existing styles) ... */
-    
-    .chat-header {
-      background-color: #ffffff;
-      padding: 12px 16px;
-      border-bottom: 1px solid #e5e5e6;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-    }
 
-    .header-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #00000;
-    }
-    
-    #chat-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      margin-top: 60px; /* Add space for the header */
-    }
-    
-    /* ... (keep rest of the existing styles) ... */
-  </style>
-</head>
-<body>
-  <div class="chat-header">
-    <div class="header-title">Quantra X</div>
+<!-- Header -->
+<div class="chat-header">
+  <div class="header-title">Quantra X</div>
+</div>
+
+<!-- Intro Text -->
+<div class="intro-text" id="intro">
+  <h1>Quantra AI Pro</h1>
+  <p>Your advanced AI assistant for math and general knowledge</p>
+
+  <div class="suggestion-container">
+    <div class="suggestion-box">Calculate 45 * 89 + 120 / 4</div>
+    <div class="suggestion-box">Solve quadratic equation x² - 5x + 6 = 0</div>
+    <div class="suggestion-box">Tell me about quantum computing</div>
+    <div class="suggestion-box">Who invented the telephone?</div>
   </div>
+</div>
 
-  <!-- ... (rest of your existing body content) ... -->
-</body>
-</html>
+<!-- Chat Container -->
+<div id="chat-container"></div>
 
-  <div class="intro-text" id="intro">
-    <h1>Quantra AI Pro</h1>
-    <p>Your advanced AI assistant for math and general knowledge</p>
+<!-- Input Form -->
+<form id="chat-form">
+  <button type="button" id="search-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+               10-4.48 10-10S17.52 2 12 2zm0 0c-2.21 0-4 4.48-4 10s1.79 10 4 10
+               4-4.48 4-10-1.79-10-4-10zM2 12h20" />
+    </svg>
+    Search
+  </button>
 
-    <div class="suggestion-container">
-      <div class="suggestion-box">Calculate 45 * 89 + 120 / 4</div>
-      <div class="suggestion-box">Solve quadratic equation x² - 5x + 6 = 0</div>
-      <div class="suggestion-box">Tell me about quantum computing</div>
-      <div class="suggestion-box">Who invented the telephone?</div>
-    </div>
-  </div>
-  
-
-  <div id="chat-container"></div>
-  
-
-  <form id="chat-form">
-    <input type="text" id="user-input" placeholder="Message Quantra AI Pro..." autocomplete="off" />
-    <button type="submit" id="send-btn">
+  <div class="input-wrapper">
+    <input type="text" id="user-input" placeholder="Message Quantra AI Pro..." autocomplete="off">
+    <button type="button" id="send-btn">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
       </svg>
     </button>
-  </form>
-
-  <div class="footer">
-    Quantra AI Pro - Advanced Mathematical & General AI Assistant
   </div>
+</form>
 
-  <script>
-    const form = document.getElementById("chat-form");
-    const input = document.getElementById("user-input");
-    const chat = document.getElementById("chat-container");
-    const intro = document.getElementById("intro");
-    const suggestionBoxes = document.querySelectorAll('.suggestion-box');
+<!-- Footer -->
+<div class="footer">
+  Quantra AI Pro - Advanced Mathematical & General AI Assistant
+</div>
 
-    // Knowledge database
-    const knowledgeBase = {
-      "who invented the telephone": {
-        answer: "The telephone was invented by Alexander Graham Bell in 1876.",
-        details: "Alexander Graham Bell, a Scottish-born scientist and inventor, was awarded the first US patent for the telephone on March 7, 1876. His work was based on earlier research by Antonio Meucci and others. The first successful telephone call was made by Bell to his assistant Thomas Watson saying, 'Mr. Watson, come here, I want to see you.'",
-        funFact: "Bell originally wanted the standard greeting to be 'Ahoy' instead of 'Hello'!"
-      },
-      "who is albert einstein": {
-        answer: "Albert Einstein was a German-born theoretical physicist who developed the theory of relativity.",
-        details: "Albert Einstein (1879-1955) is best known for his mass-energy equivalence formula E = mc² and for his work on the photoelectric effect which won him the Nobel Prize in Physics in 1921. His theories revolutionized our understanding of space, time, and gravity.",
-        funFact: "Einstein was offered the presidency of Israel in 1952 but declined, saying he lacked the necessary experience."
-      },
-      "what is quantum computing": {
-        answer: "Quantum computing uses quantum-mechanical phenomena to perform calculations.",
-        details: "Unlike classical computers that use bits (0s and 1s), quantum computers use quantum bits or qubits which can exist in superposition states. This allows them to solve certain complex problems much faster than classical computers. Potential applications include cryptography, drug discovery, and optimization problems.",
-        funFact: "A quantum computer with just 300 qubits could theoretically perform more calculations simultaneously than there are atoms in the visible universe!"
-      },
-      "how does photosynthesis work": {
-        answer: "Photosynthesis is the process plants use to convert light energy into chemical energy.",
-        details: "In photosynthesis, plants use sunlight, water (H₂O), and carbon dioxide (CO₂) to create oxygen (O₂) and energy in the form of glucose (C₆H₁₂O₆). The chemical equation is: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. This process occurs in chloroplasts containing chlorophyll.",
-        funFact: "Photosynthesis is responsible for producing nearly all of the oxygen in Earth's atmosphere."
-      },
-      "what is the capital of france": {
-        answer: "The capital of France is Paris.",
-        details: "Paris is located in northern France on the river Seine. With over 2 million inhabitants, it's France's largest city and a global center for art, fashion, gastronomy and culture. Famous landmarks include the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral.",
-        funFact: "Paris was originally a Roman city called 'Lutetia' before being renamed in the 4th century."
-      },
-      "tell me about the solar system": {
-        answer: "Our solar system consists of the Sun and objects gravitationally bound to it.",
-        details: "The solar system formed 4.6 billion years ago from a giant molecular cloud. It contains 8 planets (Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune), dwarf planets like Pluto, numerous moons, asteroids, comets, and other small bodies. The Sun contains 99.86% of the system's mass.",
-        funFact: "If the Sun were the size of a front door, Earth would be the size of a nickel, and Jupiter about the size of a basketball."
-      },
-      "who wrote harry potter": {
-        answer: "The Harry Potter series was written by British author J.K. Rowling.",
-        details: "Joanne Rowling (pen name J.K. Rowling) wrote the seven Harry Potter books between 1997 and 2007. The series follows the life of young wizard Harry Potter and has sold over 500 million copies worldwide, becoming the best-selling book series in history.",
-        funFact: "Rowling was rejected by 12 publishers before Bloomsbury accepted Harry Potter and the Philosopher's Stone."
-      },
-      "what is artificial intelligence": {
-        answer: "Artificial Intelligence (AI) is the simulation of human intelligence in machines.",
-        details: "AI systems are designed to perform tasks that typically require human intelligence, such as visual perception, speech recognition, decision-making, and language translation. Major approaches include machine learning (especially deep learning), rule-based systems, and evolutionary computation.",
-        funFact: "The term 'Artificial Intelligence' was first coined in 1956 at the Dartmouth Conference, considered the birth of AI as a field."
-      }
-    };
+<script>
+// DOM Elements
+const input = document.getElementById("user-input");
+const chat = document.getElementById("chat-container");
+const searchBtn = document.getElementById("search-btn");
+const sendBtn = document.getElementById("send-btn");
+const form = document.getElementById("chat-form");
+const intro = document.getElementById("intro");
+const suggestionBoxes = document.querySelectorAll('.suggestion-box');
 
-    // User profile
-    const userProfile = {
-      name: null,
-      interests: [],
-      mathLevel: "intermediate",
-      lastInteraction: null
-    };
+// State variables
+let searchActive = false;
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const userText = input.value.trim();
-      if (!userText) return;
+// Knowledge database
+const knowledgeBase = {
+  "who invented the telephone": {
+    answer: "The telephone was invented by Alexander Graham Bell in 1876.",
+    details: "Alexander Graham Bell, a Scottish-born scientist and inventor, was awarded the first US patent for the telephone on March 7, 1876. His work was based on earlier research by Antonio Meucci and others. The first successful telephone call was made by Bell to his assistant Thomas Watson saying, 'Mr. Watson, come here, I want to see you.'",
+    funFact: "Bell originally wanted the standard greeting to be 'Ahoy' instead of 'Hello'!"
+  },
+  "who is albert einstein": {
+    answer: "Albert Einstein was a German-born theoretical physicist who developed the theory of relativity.",
+    details: "Albert Einstein (1879-1955) is best known for his mass-energy equivalence formula E = mc² and for his work on the photoelectric effect which won him the Nobel Prize in Physics in 1921. His theories revolutionized our understanding of space, time, and gravity.",
+    funFact: "Einstein was offered the presidency of Israel in 1952 but declined, saying he lacked the necessary experience."
+  },
+  "what is quantum computing": {
+    answer: "Quantum computing uses quantum-mechanical phenomena to perform calculations.",
+    details: "Unlike classical computers that use bits (0s and 1s), quantum computers use quantum bits or qubits which can exist in superposition states. This allows them to solve certain complex problems much faster than classical computers. Potential applications include cryptography, drug discovery, and optimization problems.",
+    funFact: "A quantum computer with just 300 qubits could theoretically perform more calculations simultaneously than there are atoms in the visible universe!"
+  },
+  "how does photosynthesis work": {
+    answer: "Photosynthesis is the process plants use to convert light energy into chemical energy.",
+    details: "In photosynthesis, plants use sunlight, water (H₂O), and carbon dioxide (CO₂) to create oxygen (O₂) and energy in the form of glucose (C₆H₁₂O₆). The chemical equation is: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂. This process occurs in chloroplasts containing chlorophyll.",
+    funFact: "Photosynthesis is responsible for producing nearly all of the oxygen in Earth's atmosphere."
+  },
+  "what is the capital of france": {
+    answer: "The capital of France is Paris.",
+    details: "Paris is located in northern France on the river Seine. With over 2 million inhabitants, it's France's largest city and a global center for art, fashion, gastronomy and culture. Famous landmarks include the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral.",
+    funFact: "Paris was originally a Roman city called 'Lutetia' before being renamed in the 4th century."
+  },
+  "tell me about the solar system": {
+    answer: "Our solar system consists of the Sun and objects gravitationally bound to it.",
+    details: "The solar system formed 4.6 billion years ago from a giant molecular cloud. It contains 8 planets (Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune), dwarf planets like Pluto, numerous moons, asteroids, comets, and other small bodies. The Sun contains 99.86% of the system's mass.",
+    funFact: "If the Sun were the size of a front door, Earth would be the size of a nickel, and Jupiter about the size of a basketball."
+  },
+  "who wrote harry potter": {
+    answer: "The Harry Potter series was written by British author J.K. Rowling.",
+    details: "Joanne Rowling (pen name J.K. Rowling) wrote the seven Harry Potter books between 1997 and 2007. The series follows the life of young wizard Harry Potter and has sold over 500 million copies worldwide, becoming the best-selling book series in history.",
+    funFact: "Rowling was rejected by 12 publishers before Bloomsbury accepted Harry Potter and the Philosopher's Stone."
+  },
+  "what is artificial intelligence": {
+    answer: "Artificial Intelligence (AI) is the simulation of human intelligence in machines.",
+    details: "AI systems are designed to perform tasks that typically require human intelligence, such as visual perception, speech recognition, decision-making, and language translation. Major approaches include machine learning (especially deep learning), rule-based systems, and evolutionary computation.",
+    funFact: "The term 'Artificial Intelligence' was first coined in 1956 at the Dartmouth Conference, considered the birth of AI as a field."
+  }
+};
 
-      if (intro) intro.classList.add("hide");
+// User profile
+const userProfile = {
+  name: null,
+  interests: [],
+  mathLevel: "intermediate",
+  lastInteraction: null
+};
 
-      addMessage("user", userText);
-      input.value = "";
+// Toggle search mode
+searchBtn.addEventListener("click", () => {
+  searchActive = !searchActive;
+  searchBtn.classList.toggle("active", searchActive);
+});
 
-      const typing = document.createElement("div");
-      typing.classList.add("message", "bot");
-      typing.innerHTML = `<div class="bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
-      chat.appendChild(typing);
-      chat.scrollTop = chat.scrollHeight;
+// Handle form submission
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  handleSend();
+});
 
-      setTimeout(() => {
-        chat.removeChild(typing);
-        const response = generateAdvancedResponse(userText);
-        addMessage("bot", response);
-      }, 1000);
-    });
+// Handle send button click
+sendBtn.addEventListener("click", handleSend);
 
-    // Add click event for suggestion boxes
-    suggestionBoxes.forEach(box => {
-      box.addEventListener('click', () => {
-        const suggestionText = box.textContent;
-        if (intro) intro.classList.add("hide");
+// Handle Enter key in input
+input.addEventListener("keydown", e => { 
+  if(e.key === "Enter") handleSend(); 
+});
 
-        addMessage("user", suggestionText);
+// Add click event for suggestion boxes
+suggestionBoxes.forEach(box => {
+  box.addEventListener('click', () => {
+    const suggestionText = box.textContent;
+    if (intro) intro.classList.add("hide");
 
-        const typing = document.createElement("div");
-        typing.classList.add("message", "bot");
-        typing.innerHTML = `<div class="bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
-        chat.appendChild(typing);
-        chat.scrollTop = chat.scrollHeight;
+    addMessage(suggestionText, "user");
 
-        setTimeout(() => {
-          chat.removeChild(typing);
-          const response = generateAdvancedResponse(suggestionText);
-          addMessage("bot", response);
-        }, 1000);
+    const typing = document.createElement("div");
+    typing.classList.add("message", "bot");
+    typing.innerHTML = `<div class="bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+    chat.appendChild(typing);
+    chat.scrollTop = chat.scrollHeight;
+
+    setTimeout(() => {
+      chat.removeChild(typing);
+      const response = generateAdvancedResponse(suggestionText);
+      addMessage(response, "bot");
+    }, 1000);
+  });
+});
+
+// Add chat message
+function addMessage(text, sender="user") {
+  const msg = document.createElement("div");
+  msg.className = "message " + sender;
+  
+  if (typeof text === 'string') {
+    msg.innerHTML = `<div class="bubble">${text}</div>`;
+  } else {
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+    bubble.appendChild(text);
+    msg.appendChild(bubble);
+  }
+  
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// Handle sending messages
+async function handleSend() {
+  const query = input.value.trim();
+  if(!query) return;
+
+  if (intro) intro.classList.add("hide");
+
+  addMessage(query, "user");
+  input.value = "";
+
+  // If search is not active, use the advanced response system
+  if(!searchActive) {
+    const typing = document.createElement("div");
+    typing.className = "message bot";
+    typing.innerHTML = `<div class="bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+    chat.appendChild(typing);
+    chat.scrollTop = chat.scrollHeight;
+
+    setTimeout(() => {
+      chat.removeChild(typing);
+      const response = generateAdvancedResponse(query);
+      addMessage(response, "bot");
+    }, 1000);
+  } else {
+    // If search is active, use the search functionality
+    const typing = document.createElement("div");
+    typing.className = "message bot";
+    typing.innerHTML = `<div class="bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+    chat.appendChild(typing);
+    chat.scrollTop = chat.scrollHeight;
+
+    const response = await fetchWikiDuckDuckGo(query);
+
+    chat.removeChild(typing);
+    addMessage(response, "bot");
+  }
+}
+
+// Fetch Wikipedia + DuckDuckGo
+async function fetchWikiDuckDuckGo(query) {
+  let result = "";
+
+  // Wikipedia
+  try {
+    const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
+    const res = await fetch(wikiUrl);
+    const data = await res.json();
+    if(data.extract) result += `<b>📖 Wikipedia:</b> ${data.extract}<br>
+                                <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(query)}" target="_blank">Read more</a><br><br>`;
+  } catch(e) { result += "❌ Wikipedia error<br>"; }
+
+  // DuckDuckGo
+  try {
+    const ddgUrl = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&pretty=1`;
+    const res = await fetch(ddgUrl);
+    const data = await res.json();
+    if(data.RelatedTopics && data.RelatedTopics.length > 0) {
+      result += `<b>🌐 Related Links:</b><br>`;
+      data.RelatedTopics.slice(0,3).forEach(item=>{
+        if(item.FirstURL && item.Text) result += `🔗 <a href="${item.FirstURL}" target="_blank">${item.Text}</a><br>`;
       });
-    });
-
-    function addMessage(sender, text) {
-      const msg = document.createElement("div");
-      msg.classList.add("message", sender);
-      const bubble = document.createElement("div");
-      bubble.classList.add("bubble");
-      
-      if (typeof text === 'string') {
-        bubble.innerHTML = text;
-      } else {
-        bubble.appendChild(text);
-      }
-      
-      msg.appendChild(bubble);
-      chat.appendChild(msg);
-      chat.scrollTop = chat.scrollHeight;
     }
+  } catch(e) { result += "❌ DuckDuckGo error<br>"; }
 
-    function generateAdvancedResponse(msg) {
-      const originalMsg = msg;
-      msg = msg.toLowerCase().trim();
+  return result || "No results found.";
+}
 
-      // Update user profile with last interaction
-      userProfile.lastInteraction = new Date();
+// Generate advanced responses
+function generateAdvancedResponse(msg) {
+  const originalMsg = msg;
+  msg = msg.toLowerCase().trim();
 
-      // Helper function to create detailed responses
-      function createMathResponse(title, result, steps, explanation = "") {
-        const div = document.createElement('div');
-        let html = `<strong>${title}</strong>`;
-        
-        if (explanation) {
-          html += `<p>${explanation}</p>`;
-        }
-        
-        html += `<div class="math-result">${result}</div>`;
-        
-        if (steps && steps.length > 0) {
-          html += `<p>Step-by-step solution:</p><ol class="steps">`;
-          steps.forEach(step => {
-            html += `<li>${step}</li>`;
-          });
-          html += `</ol>`;
-        }
-        
-        div.innerHTML = html;
-        return div;
-      }
+  // Update user profile with last interaction
+  userProfile.lastInteraction = new Date();
 
-      // Helper function to create knowledge responses
-      function createKnowledgeResponse(answer, details, funFact = null) {
-        const div = document.createElement('div');
-        let html = `<strong>${answer}</strong>`;
-        html += `<div class="info-box">${details}</div>`;
-        
-        if (funFact) {
-          html += `<div class="fun-fact">✨ Fun fact: ${funFact}</div>`;
-        }
-        
-        div.innerHTML = html;
-        return div;
-      }
-
-      // Check for name in message
-      if (msg.match(/my name is|i am|i'm|call me/i)) {
-        const nameMatch = originalMsg.match(/(?:my name is|i am|i'm|call me)\s+([^\.,;\?\!]+)/i);
-        if (nameMatch) {
-          const name = nameMatch[1].trim();
-          userProfile.name = name;
-          return `Nice to meet you, ${name}! I'm Quantra AI Pro. How can I assist you today?`;
-        }
-      }
-
-      // Check if user asked for name
-      if (msg.match(/your name|who are you/i)) {
-        if (userProfile.name) {
-          return `I'm Quantra AI Pro, your advanced AI assistant. It's nice to talk with you again, ${userProfile.name}!`;
-        }
-        return "I'm Quantra AI Pro — an advanced mathematical and general knowledge AI assistant. I can help with complex calculations, explain math concepts, and answer general knowledge questions. What would you like to know?";
-      }
-
-      // Check for general knowledge questions
-      for (const [question, data] of Object.entries(knowledgeBase)) {
-        if (msg.includes(question)) {
-          return createKnowledgeResponse(data.answer, data.details, data.funFact);
-        }
-      }
-
-      // Mathematical calculations
-      if (msg.match(/(calculate|compute|solve|what is|what's|convert|^\d)/i)) {
-        try {
-          // Basic arithmetic
-          if (msg.match(/[\d\s+\-*\/^%().]+=[\d\s+\-*\/^%().]+/)) {
-            return "Please provide one equation at a time for accurate calculation.";
-          }
-          
-          if (msg.match(/[\d\s+\-*\/^%().]+/)) {
-            // Extract the math expression
-            let mathExpr = originalMsg.replace(/[^\d\s+\-*\/^%().=x²√π!]|pi/gi, '').trim();
-            mathExpr = mathExpr.replace(/pi/gi, 'Math.PI');
-            
-            // Handle percentage calculations
-            if (mathExpr.includes('%')) {
-              const parts = mathExpr.split(/([+\-*\/])/);
-              let result = parseFloat(parts[0]);
-              const steps = [];
-              
-              for (let i = 1; i < parts.length; i += 2) {
-                const operator = parts[i];
-                let operand = parts[i+1];
-                
-                if (operand.includes('%')) {
-                  const percent = parseFloat(operand);
-                  const originalResult = result;
-                  operand = result * (percent / 100);
-                  steps.push(`${operator} ${percent}% of ${originalResult} = ${operator} ${operand}`);
-                } else {
-                  operand = parseFloat(operand);
-                }
-                
-                switch(operator) {
-                  case '+': 
-                    result += operand; 
-                    steps.push(`Add ${operand}: ${result - operand} + ${operand} = ${result}`);
-                    break;
-                  case '-': 
-                    result -= operand; 
-                    steps.push(`Subtract ${operand}: ${result + operand} - ${operand} = ${result}`);
-                    break;
-                  case '*': 
-                    result *= operand; 
-                    steps.push(`Multiply by ${operand}: ${result / operand} × ${operand} = ${result}`);
-                    break;
-                  case '/': 
-                    result /= operand; 
-                    steps.push(`Divide by ${operand}: ${result * operand} ÷ ${operand} = ${result}`);
-                    break;
-                }
-              }
-              
-              return createMathResponse(
-                "Percentage Calculation Result",
-                `${mathExpr} = ${result.toFixed(6)}`,
-                steps
-              );
-            }
-            
-            // Handle exponents
-            mathExpr = mathExpr.replace(/\^/g, '**');
-            mathExpr = mathExpr.replace(/x²/g, 'x**2');
-            
-            // Handle square roots
-            if (mathExpr.includes('√')) {
-              mathExpr = mathExpr.replace(/√(\d+)/g, 'Math.sqrt($1)');
-            }
-            
-            // Handle complex expressions with safe eval
-            const result = evaluateMathExpression(mathExpr);
-            const steps = [];
-            
-            // Generate steps for simple arithmetic
-            if (mathExpr.match(/^[\d+\-*\/. ]+$/)) {
-              try {
-                // Step 1: Multiplication and division
-                let step1 = mathExpr.replace(/(\d+)\s*([*\/])\s*(\d+)/g, (match, a, op, b) => {
-                  const numA = parseFloat(a);
-                  const numB = parseFloat(b);
-                  return op === '*' ? (numA * numB) : (numA / numB);
-                });
-                
-                if (step1 !== mathExpr) {
-                  steps.push(`First perform multiplication/division: ${mathExpr} → ${step1}`);
-                  mathExpr = step1;
-                }
-                
-                // Step 2: Addition and subtraction
-                let step2 = mathExpr.replace(/(\d+)\s*([+-])\s*(\d+)/g, (match, a, op, b) => {
-                  const numA = parseFloat(a);
-                  const numB = parseFloat(b);
-                  return op === '+' ? (numA + numB) : (numA - numB);
-                });
-                
-                if (step2 !== mathExpr) {
-                  steps.push(`Then perform addition/subtraction: ${mathExpr} → ${step2}`);
-                }
-              } catch (e) {
-                // If step generation fails, just show the result
-              }
-            }
-            
-            return createMathResponse(
-              "Calculation Result",
-              `${originalMsg.match(/[\d\s+\-*\/^%().x²√π]+/i)[0]} = ${result}`,
-              steps.length > 0 ? steps : null
-            );
-          }
-          
-          // Temperature conversion
-          if (msg.match(/convert\s+(\d+)\s*(°?[cf])\s*to\s*°?([cf])/i)) {
-            const matches = originalMsg.match(/convert\s+(\d+)\s*(°?[cf])\s*to\s*°?([cf])/i);
-            const temp = parseFloat(matches[1]);
-            const fromUnit = matches[2].toLowerCase().replace('°', '');
-            const toUnit = matches[3].toLowerCase().replace('°', '');
-            
-            let convertedTemp, formula;
-            if (fromUnit === 'c' && toUnit === 'f') {
-              convertedTemp = (temp * 9/5) + 32;
-              formula = `(${temp} × 9/5) + 32 = ${convertedTemp.toFixed(2)}`;
-            } else if (fromUnit === 'f' && toUnit === 'c') {
-              convertedTemp = (temp - 32) * 5/9;
-              formula = `(${temp} - 32) × 5/9 = ${convertedTemp.toFixed(2)}`;
-            } else {
-              return "I can only convert between Celsius and Fahrenheit.";
-            }
-            
-            return createMathResponse(
-              "Temperature Conversion Result",
-              `${temp}°${fromUnit.toUpperCase()} = ${convertedTemp.toFixed(2)}°${toUnit.toUpperCase()}`,
-              [`Using formula: ${formula}`]
-            );
-          }
-          
-          // Quadratic equations
-          if (msg.match(/(solve|find|roots? of|zeroes? of)\s*([+-]?\d*)x²\s*([+-]\d*)x\s*([+-]\d*)\s*=\s*0/i)) {
-            const matches = originalMsg.match(/([+-]?\d*)x²\s*([+-]\d*)x\s*([+-]\d*)/i);
-            let a = matches[1] === '' ? 1 : matches[1] === '-' ? -1 : parseFloat(matches[1]);
-            let b = parseFloat(matches[2]);
-            let c = parseFloat(matches[3]);
-            
-            const discriminant = b*b - 4*a*c;
-            const steps = [
-              `Identify coefficients: a = ${a}, b = ${b}, c = ${c}`,
-              `Calculate discriminant: D = b² - 4ac = ${b}² - 4×${a}×${c} = ${discriminant}`
-            ];
-            
-            let solution;
-            if (discriminant > 0) {
-              const root1 = (-b + Math.sqrt(discriminant)) / (2*a);
-              const root2 = (-b - Math.sqrt(discriminant)) / (2*a);
-              solution = `Roots are real and distinct: x = ${root1.toFixed(4)}, x = ${root2.toFixed(4)}`;
-              steps.push(`Using quadratic formula: x = [-b ± √D]/2a`);
-              steps.push(`First root: x = [${-b} + √${discriminant}]/(2×${a}) = ${root1.toFixed(4)}`);
-              steps.push(`Second root: x = [${-b} - √${discriminant}]/(2×${a}) = ${root2.toFixed(4)}`);
-            } else if (discriminant === 0) {
-              const root = -b / (2*a);
-              solution = `Root is real and repeated: x = ${root.toFixed(4)}`;
-              steps.push(`Using quadratic formula: x = -b/2a = ${-b}/(2×${a}) = ${root.toFixed(4)}`);
-            } else {
-              const realPart = (-b / (2*a)).toFixed(2);
-              const imagPart = (Math.sqrt(-discriminant) / (2*a)).toFixed(2);
-              solution = `Roots are complex: x = ${realPart} + ${imagPart}i, x = ${realPart} - ${imagPart}i`;
-              steps.push(`Using quadratic formula for complex roots: x = [-b ± i√|D|]/2a`);
-            }
-            
-            return createMathResponse(
-              `Quadratic Equation Solution`,
-              `For equation ${a}x² ${b >= 0 ? '+' : ''}${b}x ${c >= 0 ? '+' : ''}${c} = 0: ${solution}`,
-              steps
-            );
-          }
-          
-          // Linear equations
-          if (msg.match(/(solve|find)\s*([+-]?\d*)x\s*([+-]\d*)\s*=\s*([+-]?\d*)/i)) {
-            const matches = originalMsg.match(/([+-]?\d*)x\s*([+-]\d*)\s*=\s*([+-]?\d*)/i);
-            let a = matches[1] === '' ? 1 : matches[1] === '-' ? -1 : parseFloat(matches[1]);
-            let b = parseFloat(matches[2]);
-            let c = parseFloat(matches[3]);
-            
-            const solution = (c - b) / a;
-            const steps = [
-              `Original equation: ${a}x ${b >= 0 ? '+' : ''}${b} = ${c}`,
-              `Subtract ${b} from both sides: ${a}x = ${c} - ${b} = ${c - b}`,
-              `Divide both sides by ${a}: x = ${c - b} / ${a} = ${solution}`
-            ];
-            
-            return createMathResponse(
-              "Linear Equation Solution",
-              `Solution: x = ${solution}`,
-              steps
-            );
-          }
-          
-          // Area/volume calculations
-          if (msg.match(/area of (circle|square|rectangle|triangle)/i)) {
-            const shape = msg.match(/area of (circle|square|rectangle|triangle)/i)[1];
-            const numbers = originalMsg.match(/\d+(\.\d+)?/g) || [];
-            
-            let area, steps = [];
-            switch(shape.toLowerCase()) {
-              case 'circle':
-                if (numbers.length < 1) return "Please provide the radius for the circle.";
-                const radius = parseFloat(numbers[0]);
-                area = Math.PI * radius * radius;
-                steps = [
-                  `Formula: Area = π × r²`,
-                  `Calculation: π × ${radius}² = ${Math.PI.toFixed(4)} × ${radius * radius} ≈ ${area.toFixed(4)}`
-                ];
-                return createMathResponse(
-                  "Circle Area Calculation",
-                  `Area of circle with radius ${radius} = ${area.toFixed(4)}`,
-                  steps
-                );
-              case 'square':
-                if (numbers.length < 1) return "Please provide the side length for the square.";
-                const side = parseFloat(numbers[0]);
-                area = side * side;
-                steps = [
-                  `Formula: Area = side × side`,
-                  `Calculation: ${side} × ${side} = ${area}`
-                ];
-                return createMathResponse(
-                  "Square Area Calculation",
-                  `Area of square with side ${side} = ${area}`,
-                  steps
-                );
-              case 'rectangle':
-                if (numbers.length < 2) return "Please provide both length and width for the rectangle.";
-                const length = parseFloat(numbers[0]);
-                const width = parseFloat(numbers[1]);
-                area = length * width;
-                steps = [
-                  `Formula: Area = length × width`,
-                  `Calculation: ${length} × ${width} = ${area}`
-                ];
-                return createMathResponse(
-                  "Rectangle Area Calculation",
-                  `Area of rectangle with length ${length} and width ${width} = ${area}`,
-                  steps
-                );
-              case 'triangle':
-                if (numbers.length < 2) return "Please provide both base and height for the triangle.";
-                const base = parseFloat(numbers[0]);
-                const height = parseFloat(numbers[1]);
-                area = 0.5 * base * height;
-                steps = [
-                  `Formula: Area = ½ × base × height`,
-                  `Calculation: 0.5 × ${base} × ${height} = ${area}`
-                ];
-                return createMathResponse(
-                  "Triangle Area Calculation",
-                  `Area of triangle with base ${base} and height ${height} = ${area}`,
-                  steps
-                );
-            }
-          }
-          
-          if (msg.match(/volume of (cube|sphere|cylinder|cone)/i)) {
-            const shape = msg.match(/volume of (cube|sphere|cylinder|cone)/i)[1];
-            const numbers = originalMsg.match(/\d+(\.\d+)?/g) || [];
-            
-            let volume, steps = [];
-            switch(shape.toLowerCase()) {
-              case 'cube':
-                if (numbers.length < 1) return "Please provide the side length for the cube.";
-                const sideCube = parseFloat(numbers[0]);
-                volume = Math.pow(sideCube, 3);
-                steps = [
-                  `Formula: Volume = side³`,
-                  `Calculation: ${sideCube}³ = ${volume}`
-                ];
-                return createMathResponse(
-                  "Cube Volume Calculation",
-                  `Volume of cube with side ${sideCube} = ${volume}`,
-                  steps
-                );
-              case 'sphere':
-                if (numbers.length < 1) return "Please provide the radius for the sphere.";
-                const radiusSphere = parseFloat(numbers[0]);
-                volume = (4/3) * Math.PI * Math.pow(radiusSphere, 3);
-                steps = [
-                  `Formula: Volume = (4/3)πr³`,
-                  `Calculation: (4/3) × π × ${radiusSphere}³ ≈ ${volume.toFixed(4)}`
-                ];
-                return createMathResponse(
-                  "Sphere Volume Calculation",
-                  `Volume of sphere with radius ${radiusSphere} ≈ ${volume.toFixed(4)}`,
-                  steps
-                );
-              case 'cylinder':
-                if (numbers.length < 2) return "Please provide both radius and height for the cylinder.";
-                const radiusCyl = parseFloat(numbers[0]);
-                const heightCyl = parseFloat(numbers[1]);
-                volume = Math.PI * Math.pow(radiusCyl, 2) * heightCyl;
-                steps = [
-                  `Formula: Volume = πr²h`,
-                  `Calculation: π × ${radiusCyl}² × ${heightCyl} ≈ ${volume.toFixed(4)}`
-                ];
-                return createMathResponse(
-                  "Cylinder Volume Calculation",
-                  `Volume of cylinder with radius ${radiusCyl} and height ${heightCyl} ≈ ${volume.toFixed(4)}`,
-                  steps
-                );
-              case 'cone':
-                if (numbers.length < 2) return "Please provide both radius and height for the cone.";
-                const radiusCone = parseFloat(numbers[0]);
-                const heightCone = parseFloat(numbers[1]);
-                volume = (1/3) * Math.PI * Math.pow(radiusCone, 2) * heightCone;
-                steps = [
-                  `Formula: Volume = (1/3)πr²h`,
-                  `Calculation: (1/3) × π × ${radiusCone}² × ${heightCone} ≈ ${volume.toFixed(4)}`
-                ];
-                return createMathResponse(
-                  "Cone Volume Calculation",
-                  `Volume of cone with radius ${radiusCone} and height ${heightCone} ≈ ${volume.toFixed(4)}`,
-                  steps
-                );
-            }
-          }
-          
-          // Matrix operations
-          if (msg.match(/matrix|determinant|inverse|multipl(y|ication)/i)) {
-            // This is a simplified version - a full implementation would need proper matrix parsing
-            if (msg.match(/multipl(y|ication)/i)) {
-              return "For matrix multiplication, please specify the matrices in format like: Multiply [[1,2],[3,4]] and [[5,6],[7,8]]";
-            }
-            return "I can help with matrix operations. Please specify the operation and matrices in clear format.";
-          }
-          
-          // Calculus operations
-          if (msg.match(/derivative of|integral of|differentiate|integrate/i)) {
-            const funcMatch = originalMsg.match(/(derivative of|integral of|differentiate|integrate)\s*(.+)/i);
-            if (funcMatch) {
-              const operation = funcMatch[1].toLowerCase();
-              const func = funcMatch[2].trim();
-              
-              if (operation.includes('deriv') || operation.includes('differentiate')) {
-                // Very basic derivative examples
-                if (func.match(/x\^?\d*/)) {
-                  const powerMatch = func.match(/x\^?(\d*)/);
-                  const power = powerMatch[1] ? parseInt(powerMatch[1]) : 1;
-                  
-                  if (power === 0) {
-                    return createMathResponse(
-                      "Derivative Calculation",
-                      `The derivative of ${func} is 0`,
-                      ["Derivative of any constant is 0"]
-                    );
-                  } else {
-                    const newPower = power - 1;
-                    const derivative = `${power}${newPower > 0 ? 'x' + (newPower > 1 ? `^${newPower}` : '') : ''}`;
-                    return createMathResponse(
-                      "Derivative Calculation",
-                      `d/dx(${func}) = ${derivative}`,
-                      [
-                        `Using power rule: d/dx(xⁿ) = nxⁿ⁻¹`,
-                        `Calculation: d/dx(x${power > 1 ? `^${power}` : ''}) = ${power}x${newPower > 1 ? `^${newPower}` : newPower === 1 ? '' : ''}`
-                      ]
-                    );
-                  }
-                }
-              } else if (operation.includes('integral')) {
-                // Very basic integral examples
-                if (func.match(/x\^?\d*/)) {
-                  const powerMatch = func.match(/x\^?(\d*)/);
-                  const power = powerMatch[1] ? parseInt(powerMatch[1]) : 1;
-                  
-                  const newPower = power + 1;
-                  const integral = `${newPower !== 0 ? `(1/${newPower})` : ''}x${newPower > 1 ? `^${newPower}` : ''} + C`;
-                  return createMathResponse(
-                    "Integral Calculation",
-                    `∫${func} dx = ${integral}`,
-                    [
-                      `Using power rule: ∫xⁿ dx = (1/(n+1))xⁿ⁺¹ + C (for n ≠ -1)`,
-                      `Calculation: ∫x${power > 1 ? `^${power}` : ''} dx = ${integral}`
-                    ]
-                  );
-                }
-              }
-            }
-            return "I can help with basic derivatives and integrals. Please specify the function clearly.";
-          }
-          
-        } catch (e) {
-          console.error(e);
-          return "I couldn't process that mathematical expression. Please make sure it's properly formatted.";
-        }
-      }
-      
-      // Math concepts explanations
-      if (msg.includes('calculus') || msg.includes('derivative') || msg.includes('integral')) {
-        const div = document.createElement('div');
-        div.innerHTML = `
-          <strong>Calculus Concepts:</strong>
-          <p>Calculus is the mathematical study of continuous change, with two main branches:</p>
-          <ol>
-            <li><strong>Differential Calculus:</strong> Concerned with derivatives (rates of change and slopes of curves)</li>
-            <li><strong>Integral Calculus:</strong> Concerned with integrals (accumulation of quantities and areas under curves)</li>
-          </ol>
-          <p>Key concepts include limits, derivatives, integrals, and the Fundamental Theorem of Calculus which connects differentiation and integration.</p>
-          <div class="code-block">Example derivative: d/dx(x²) = 2x\nExample integral: ∫x dx = x²/2 + C</div>
-          <p>Would you like me to calculate a specific derivative or integral for you?</p>
-        `;
-        return div;
-      }
-      
-      if (msg.includes('algebra')) {
-        const div = document.createElement('div');
-        div.innerHTML = `
-          <strong>Algebra Concepts:</strong>
-          <p>Algebra is the study of mathematical symbols and the rules for manipulating them. Key areas include:</p>
-          <ul>
-            <li>Solving equations and inequalities</li>
-            <li>Working with polynomials</li>
-            <li>Understanding functions and their properties</li>
-            <li>Matrix operations in linear algebra</li>
-          </ul>
-          <div class="code-block">Example: Solve 2x + 5 = 15\nSolution: 2x = 10 → x = 5</div>
-          <p>Would you like me to solve a specific algebra problem for you?</p>
-        `;
-        return div;
-      }
-      
-      if (msg.includes('trigonometry')) {
-        const div = document.createElement('div');
-        div.innerHTML = `
-          <strong>Trigonometry Concepts:</strong>
-          <p>Trigonometry studies relationships between side lengths and angles of triangles. Key concepts:</p>
-          <ul>
-            <li>Trigonometric functions (sin, cos, tan, etc.)</li>
-            <li>Unit circle and radian measure</li>
-            <li>Trigonometric identities</li>
-            <li>Applications to periodic phenomena</li>
-          </ul>
-          <div class="code-block">Example: sin(30°) = 0.5\nPythagorean identity: sin²θ + cos²θ = 1</div>
-          <p>Would you like me to calculate a specific trigonometric value or identity?</p>
-        `;
-        return div;
-      }
-      
-      if (msg.includes('statistics') || msg.includes('probability')) {
-        const div = document.createElement('div');
-        div.innerHTML = `
-          <strong>Statistics & Probability Concepts:</strong>
-          <p>Statistics involves collecting, analyzing, interpreting data, while probability deals with predicting likelihood of events.</p>
-          <p>Key concepts:</p>
-          <ul>
-            <li>Mean, median, mode, standard deviation</li>
-            <li>Probability distributions (normal, binomial, etc.)</li>
-            <li>Hypothesis testing</li>
-            <li>Regression analysis</li>
-          </ul>
-          <div class="code-block">Example: Mean of [2,4,6] is (2+4+6)/3 = 4\nProbability of rolling 6 on die: 1/6</div>
-          <p>Would you like me to calculate a specific statistical measure or probability?</p>
-        `;
-        return div;
-      }
-      
-      // Unit conversions
-      if (msg.match(/convert\s+(\d+)\s*(\w+)\s*to\s*(\w+)/i)) {
-        const matches = originalMsg.match(/convert\s+(\d+)\s*(\w+)\s*to\s*(\w+)/i);
-        const value = parseFloat(matches[1]);
-        const fromUnit = matches[2].toLowerCase();
-        const toUnit = matches[3].toLowerCase();
-        
-        // Length conversions
-        const lengthConversions = {
-          'm': {factor: 1, name: "meters"},
-          'cm': {factor: 0.01, name: "centimeters"},
-          'mm': {factor: 0.001, name: "millimeters"},
-          'km': {factor: 1000, name: "kilometers"},
-          'in': {factor: 0.0254, name: "inches"},
-          'ft': {factor: 0.3048, name: "feet"},
-          'yd': {factor: 0.9144, name: "yards"},
-          'mi': {factor: 1609.34, name: "miles"}
-        };
-        
-        // Weight conversions
-        const weightConversions = {
-          'kg': {factor: 1, name: "kilograms"},
-          'g': {factor: 0.001, name: "grams"},
-          'mg': {factor: 0.000001, name: "milligrams"},
-          'lb': {factor: 0.453592, name: "pounds"},
-          'oz': {factor: 0.0283495, name: "ounces"}
-        };
-        
-        let result, steps = [];
-        if (lengthConversions[fromUnit] && lengthConversions[toUnit]) {
-          const fromFactor = lengthConversions[fromUnit].factor;
-          const toFactor = lengthConversions[toUnit].factor;
-          result = value * fromFactor / toFactor;
-          
-          steps = [
-            `1 ${fromUnit} = ${fromFactor} meters`,
-            `1 ${toUnit} = ${toFactor} meters`,
-            `So ${value} ${fromUnit} = ${value} × (${fromFactor}/${toFactor}) ${toUnit}`,
-            `Calculation: ${value} × ${fromFactor/toFactor} ≈ ${result.toFixed(6)}`
-          ];
-          
-          return createMathResponse(
-            "Length Conversion Result",
-            `${value} ${lengthConversions[fromUnit].name} = ${result.toFixed(6)} ${lengthConversions[toUnit].name}`,
-            steps
-          );
-        } else if (weightConversions[fromUnit] && weightConversions[toUnit]) {
-          const fromFactor = weightConversions[fromUnit].factor;
-          const toFactor = weightConversions[toUnit].factor;
-          result = value * fromFactor / toFactor;
-          
-          steps = [
-            `1 ${fromUnit} = ${fromFactor} kilograms`,
-            `1 ${toUnit} = ${toFactor} kilograms`,
-            `So ${value} ${fromUnit} = ${value} × (${fromFactor}/${toFactor}) ${toUnit}`,
-            `Calculation: ${value} × ${fromFactor/toFactor} ≈ ${result.toFixed(6)}`
-          ];
-          
-          return createMathResponse(
-            "Weight Conversion Result",
-            `${value} ${weightConversions[fromUnit].name} = ${result.toFixed(6)} ${weightConversions[toUnit].name}`,
-            steps
-          );
-        } else {
-          return "I can currently convert length (m, cm, mm, km, in, ft, yd, mi) and weight (kg, g, mg, lb, oz) units.";
-        }
-      }
-      
-      // Greetings and general conversation
-      if (msg.match(/hello|hi|hey|greetings/i)) {
-        if (userProfile.name) {
-          return `Hello ${userProfile.name}! I'm Quantra AI Pro. How can I assist you today?`;
-        }
-        return "Hello! I'm Quantra AI Pro, your advanced math and knowledge assistant. What would you like help with today?";
-      }
-      
-      if (msg.match(/how are you|how's it going/i)) {
-        return "I'm an AI, so I don't have feelings, but I'm functioning perfectly! How can I assist you today?";
-      }
-      
-      if (msg.match(/thank|thanks|appreciate/i)) {
-        return "You're welcome! Is there anything else I can help you with?";
-      }
-      
-      if (msg.match(/what can you do|your abilities/i)) {
-        return "I can perform complex calculations, solve equations, explain math concepts, convert units, answer general knowledge questions, and more! I specialize in:<br>" +
-               "- Mathematics (algebra, calculus, statistics, etc.)<br>" +
-               "- Scientific calculations and conversions<br>" +
-               "- General knowledge questions<br>" +
-               "- And much more! What would you like me to help with?";
-      }
-      
-      if (msg.match(/who made you|who created you/i)) {
-        return "I'm Quantra AI Pro, created by a team of developers to assist with mathematical and general knowledge queries. How can I help you today?";
-      }
-      
-      if (msg.match(/what time is it|current time/i)) {
-        const now = new Date();
-        return `The current time is ${now.toLocaleTimeString()}.`;
-      }
-      
-      if (msg.match(/what day is it|today's date/i)) {
-        const now = new Date();
-        return `Today is ${now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}.`;
-      }
-      
-      // If no specific query detected
-      return "I specialize in mathematical calculations and general knowledge. Try asking me to:<br>" +
-             "- Solve an equation (e.g., 'solve 2x + 5 = 15')<br>" +
-             "- Calculate something (e.g., 'calculate 45 * 89 + 120 / 4')<br>" +
-             "- Explain a concept (e.g., 'explain quantum computing')<br>" +
-             "- Convert units (e.g., 'convert 5 miles to km')<br>" +
-             "- Or ask general knowledge questions (e.g., 'who invented the telephone?')";
+  // Helper function to create detailed responses
+  function createMathResponse(title, result, steps, explanation = "") {
+    const div = document.createElement('div');
+    let html = `<strong>${title}</strong>`;
+    
+    if (explanation) {
+      html += `<p>${explanation}</p>`;
     }
     
-    // Safe math expression evaluation
-    function evaluateMathExpression(expr) {
-      // Remove any potentially dangerous characters
-      expr = expr.replace(/[^0-9+\-*\/%^().\s=πx]/g, '');
+    html += `<div class="math-result">${result}</div>`;
+    
+    if (steps && steps.length > 0) {
+      html += `<p>Step-by-step solution:</p><ol class="steps">`;
+      steps.forEach(step => {
+        html += `<li>${step}</li>`;
+      });
+      html += `</ol>`;
+    }
+    
+    div.innerHTML = html;
+    return div;
+  }
+
+  // Helper function to create knowledge responses
+  function createKnowledgeResponse(answer, details, funFact = null) {
+    const div = document.createElement('div');
+    let html = `<strong>${answer}</strong>`;
+    html += `<div class="info-box">${details}</div>`;
+    
+    if (funFact) {
+      html += `<div class="fun-fact">✨ Fun fact: ${funFact}</div>`;
+    }
+    
+    div.innerHTML = html;
+    return div;
+  }
+
+  // Check for name in message
+  if (msg.match(/my name is|i am|i'm|call me/i)) {
+    const nameMatch = originalMsg.match(/(?:my name is|i am|i'm|call me)\s+([^\.,;\?\!]+)/i);
+    if (nameMatch) {
+      const name = nameMatch[1].trim();
+      userProfile.name = name;
+      return `Nice to meet you, ${name}! I'm Quantra AI Pro. How can I assist you today?`;
+    }
+  }
+
+  // Check if user asked for name
+  if (msg.match(/your name|who are you/i)) {
+    if (userProfile.name) {
+      return `I'm Quantra AI Pro, your advanced AI assistant. It's nice to talk with you again, ${userProfile.name}!`;
+    }
+    return "I'm Quantra AI Pro — an advanced mathematical and general knowledge AI assistant. I can help with complex calculations, explain math concepts, and answer general knowledge questions. What would you like to know?";
+  }
+
+  // Check for general knowledge questions
+  for (const [question, data] of Object.entries(knowledgeBase)) {
+    if (msg.includes(question)) {
+      return createKnowledgeResponse(data.answer, data.details, data.funFact);
+    }
+  }
+
+  // Mathematical calculations
+  if (msg.match(/(calculate|compute|solve|what is|what's|convert|^\d)/i)) {
+    try {
+      // Basic arithmetic
+      if (msg.match(/[\d\s+\-*\/^%().]+=[\d\s+\-*\/^%().]+/)) {
+        return "Please provide one equation at a time for accurate calculation.";
+      }
       
-      // Replace implied multiplication (e.g., 2(3) with 2*(3))
-      expr = expr.replace(/(\d)(\()/g, '$1*$2');
-      expr = expr.replace(/(\))(\d)/g, '$1*$2');
-      expr = expr.replace(/π/g, 'Math.PI');
-      
-      // Handle factorial if needed (example implementation)
-      if (expr.includes('!')) {
-        const parts = expr.split('!');
-        if (parts.length === 2 && parts[1] === '') {
-          const num = parseFloat(parts[0]);
-          if (num >= 0 && num <= 20) { // Limit to prevent huge numbers
-            let fact = 1;
-            for (let i = 2; i <= num; i++) fact *= i;
-            return fact;
+      if (msg.match(/[\d\s+\-*\/^%().]+/)) {
+        // Extract the math expression
+        let mathExpr = originalMsg.replace(/[^\d\s+\-*\/^%().=x²√π!]|pi/gi, '').trim();
+        mathExpr = mathExpr.replace(/pi/gi, 'Math.PI');
+        
+        // Handle percentage calculations
+        if (mathExpr.includes('%')) {
+          const parts = mathExpr.split(/([+\-*\/])/);
+          let result = parseFloat(parts[0]);
+          const steps = [];
+          
+          for (let i = 1; i < parts.length; i += 2) {
+            const operator = parts[i];
+            let operand = parts[i+1];
+            
+            if (operand.includes('%')) {
+              const percent = parseFloat(operand);
+              const originalResult = result;
+              operand = result * (percent / 100);
+              steps.push(`${operator} ${percent}% of ${originalResult} = ${operator} ${operand}`);
+            } else {
+              operand = parseFloat(operand);
+            }
+            
+            switch(operator) {
+              case '+': 
+                result += operand; 
+                steps.push(`Add ${operand}: ${result - operand} + ${operand} = ${result}`);
+                break;
+              case '-': 
+                result -= operand; 
+                steps.push(`Subtract ${operand}: ${result + operand} - ${operand} = ${result}`);
+                break;
+              case '*': 
+                result *= operand; 
+                steps.push(`Multiply by ${operand}: ${result / operand} × ${operand} = ${result}`);
+                break;
+              case '/': 
+                result /= operand; 
+                steps.push(`Divide by ${operand}: ${result * operand} ÷ ${operand} = ${result}`);
+                break;
+            }
           }
+          
+          return createMathResponse(
+            "Percentage Calculation Result",
+            `${mathExpr} = ${result.toFixed(6)}`,
+            steps
+          );
+        }
+        
+        // Handle exponents
+        mathExpr = mathExpr.replace(/\^/g, '**');
+        mathExpr = mathExpr.replace(/x²/g, 'x**2');
+        
+        // Handle square roots
+        if (mathExpr.includes('√')) {
+          mathExpr = mathExpr.replace(/√(\d+)/g, 'Math.sqrt($1)');
+        }
+        
+        // Handle complex expressions with safe eval
+        const result = evaluateMathExpression(mathExpr);
+        const steps = [];
+        
+        // Generate steps for simple arithmetic
+        if (mathExpr.match(/^[\d+\-*\/. ]+$/)) {
+          try {
+            // Step 1: Multiplication and division
+            let step1 = mathExpr.replace(/(\d+)\s*([*\/])\s*(\d+)/g, (match, a, op, b) => {
+              const numA = parseFloat(a);
+              const numB = parseFloat(b);
+              return op === '*' ? (numA * numB) : (numA / numB);
+            });
+            
+            if (step1 !== mathExpr) {
+              steps.push(`First perform multiplication/division: ${mathExpr} → ${step1}`);
+              mathExpr = step1;
+            }
+            
+            // Step 2: Addition and subtraction
+            let step2 = mathExpr.replace(/(\d+)\s*([+-])\s*(\d+)/g, (match, a, op, b) => {
+              const numA = parseFloat(a);
+              const numB = parseFloat(b);
+              return op === '+' ? (numA + numB) : (numA - numB);
+            });
+            
+            if (step2 !== mathExpr) {
+              steps.push(`Then perform addition/subtraction: ${mathExpr} → ${step2}`);
+            }
+          } catch (e) {
+            // If step generation fails, just show the result
+          }
+        }
+        
+        return createMathResponse(
+          "Calculation Result",
+          `${originalMsg.match(/[\d\s+\-*\/^%().x²√π]+/i)[0]} = ${result}`,
+          steps.length > 0 ? steps : null
+        );
+      }
+      
+      // Temperature conversion
+      if (msg.match(/convert\s+(\d+)\s*(°?[cf])\s*to\s*°?([cf])/i)) {
+        const matches = originalMsg.match(/convert\s+(\d+)\s*(°?[cf])\s*to\s*°?([cf])/i);
+        const temp = parseFloat(matches[1]);
+        const fromUnit = matches[2].toLowerCase().replace('°', '');
+        const toUnit = matches[3].toLowerCase().replace('°', '');
+        
+        let convertedTemp, formula;
+        if (fromUnit === 'c' && toUnit === 'f') {
+          convertedTemp = (temp * 9/5) + 32;
+          formula = `(${temp} × 9/5) + 32 = ${convertedTemp.toFixed(2)}`;
+        } else if (fromUnit === 'f' && toUnit === 'c') {
+          convertedTemp = (temp - 32) * 5/9;
+          formula = `(${temp} - 32) × 5/9 = ${convertedTemp.toFixed(2)}`;
+        } else {
+          return "I can only convert between Celsius and Fahrenheit.";
+        }
+        
+        return createMathResponse(
+          "Temperature Conversion Result",
+          `${temp}°${fromUnit.toUpperCase()} = ${convertedTemp.toFixed(2)}°${toUnit.toUpperCase()}`,
+          [`Using formula: ${formula}`]
+        );
+      }
+      
+      // Quadratic equations
+      if (msg.match(/(solve|find|roots? of|zeroes? of)\s*([+-]?\d*)x²\s*([+-]\d*)x\s*([+-]\d*)\s*=\s*0/i)) {
+        const matches = originalMsg.match(/([+-]?\d*)x²\s*([+-]\d*)x\s*([+-]\d*)/i);
+        let a = matches[1] === '' ? 1 : matches[1] === '-' ? -1 : parseFloat(matches[1]);
+        let b = parseFloat(matches[2]);
+        let c = parseFloat(matches[3]);
+        
+        const discriminant = b*b - 4*a*c;
+        const steps = [
+          `Identify coefficients: a = ${a}, b = ${b}, c = ${c}`,
+          `Calculate discriminant: D = b² - 4ac = ${b}² - 4×${a}×${c} = ${discriminant}`
+        ];
+        
+        let solution;
+        if (discriminant > 0) {
+          const root1 = (-b + Math.sqrt(discriminant)) / (2*a);
+          const root2 = (-b - Math.sqrt(discriminant)) / (2*a);
+          solution = `Roots are real and distinct: x = ${root1.toFixed(4)}, x = ${root2.toFixed(4)}`;
+          steps.push(`Using quadratic formula: x = [-b ± √D]/2a`);
+          steps.push(`First root: x = [${-b} + √${discriminant}]/(2×${a}) = ${root1.toFixed(4)}`);
+          steps.push(`Second root: x = [${-b} - √${discriminant}]/(2×${a}) = ${root2.toFixed(4)}`);
+        } else if (discriminant === 0) {
+          const root = -b / (2*a);
+          solution = `Root is real and repeated: x = ${root.toFixed(4)}`;
+          steps.push(`Using quadratic formula: x = -b/2a = ${-b}/(2×${a}) = ${root.toFixed(4)}`);
+        } else {
+          const realPart = (-b / (2*a)).toFixed(2);
+          const imagPart = (Math.sqrt(-discriminant) / (2*a)).toFixed(2);
+          solution = `Roots are complex: x = ${realPart} + ${imagPart}i, x = ${realPart} - ${imagPart}i`;
+          steps.push(`Using quadratic formula for complex roots: x = [-b ± i√|D|]/2a`);
+        }
+        
+        return createMathResponse(
+          `Quadratic Equation Solution`,
+          `For equation ${a}x² ${b >= 0 ? '+' : ''}${b}x ${c >= 0 ? '+' : ''}${c} = 0: ${solution}`,
+          steps
+        );
+      }
+      
+      // Linear equations
+      if (msg.match(/(solve|find)\s*([+-]?\d*)x\s*([+-]\d*)\s*=\s*([+-]?\d*)/i)) {
+        const matches = originalMsg.match(/([+-]?\d*)x\s*([+-]\d*)\s*=\s*([+-]?\d*)/i);
+        let a = matches[1] === '' ? 1 : matches[1] === '-' ? -1 : parseFloat(matches[1]);
+        let b = parseFloat(matches[2]);
+        let c = parseFloat(matches[3]);
+        
+        const solution = (c - b) / a;
+        const steps = [
+          `Original equation: ${a}x ${b >= 0 ? '+' : ''}${b} = ${c}`,
+          `Subtract ${b} from both sides: ${a}x = ${c} - ${b} = ${c - b}`,
+          `Divide both sides by ${a}: x = ${c - b} / ${a} = ${solution}`
+        ];
+        
+        return createMathResponse(
+          "Linear Equation Solution",
+          `Solution: x = ${solution}`,
+          steps
+        );
+      }
+      
+      // Area/volume calculations
+      if (msg.match(/area of (circle|square|rectangle|triangle)/i)) {
+        const shape = msg.match(/area of (circle|square|rectangle|triangle)/i)[1];
+        const numbers = originalMsg.match(/\d+(\.\d+)?/g) || [];
+        
+        let area, steps = [];
+        switch(shape.toLowerCase()) {
+          case 'circle':
+            if (numbers.length < 1) return "Please provide the radius for the circle.";
+            const radius = parseFloat(numbers[0]);
+            area = Math.PI * radius * radius;
+            steps = [
+              `Formula: Area = π × r²`,
+              `Calculation: π × ${radius}² = ${Math.PI.toFixed(4)} × ${radius * radius} ≈ ${area.toFixed(4)}`
+            ];
+            return createMathResponse(
+              "Circle Area Calculation",
+              `Area of circle with radius ${radius} = ${area.toFixed(4)}`,
+              steps
+            );
+          case 'square':
+            if (numbers.length < 1) return "Please provide the side length for the square.";
+            const side = parseFloat(numbers[0]);
+            area = side * side;
+            steps = [
+              `Formula: Area = side × side`,
+              `Calculation: ${side} × ${side} = ${area}`
+            ];
+            return createMathResponse(
+              "Square Area Calculation",
+              `Area of square with side ${side} = ${area}`,
+              steps
+            );
+          case 'rectangle':
+            if (numbers.length < 2) return "Please provide both length and width for the rectangle.";
+            const length = parseFloat(numbers[0]);
+            const width = parseFloat(numbers[1]);
+            area = length * width;
+            steps = [
+              `Formula: Area = length × width`,
+              `Calculation: ${length} × ${width} = ${area}`
+            ];
+            return createMathResponse(
+              "Rectangle Area Calculation",
+              `Area of rectangle with length ${length} and width ${width} = ${area}`,
+              steps
+            );
+          case 'triangle':
+            if (numbers.length < 2) return "Please provide both base and height for the triangle.";
+            const base = parseFloat(numbers[0]);
+            const height = parseFloat(numbers[1]);
+            area = 0.5 * base * height;
+            steps = [
+              `Formula: Area = ½ × base × height`,
+              `Calculation: 0.5 × ${base} × ${height} = ${area}`
+            ];
+            return createMathResponse(
+              "Triangle Area Calculation",
+              `Area of triangle with base ${base} and height ${height} = ${area}`,
+              steps
+            );
         }
       }
       
-      // Evaluate using Function constructor (safer than eval)
-      try {
-        return new Function('return ' + expr)();
-      } catch (e) {
-        throw new Error("Invalid mathematical expression");
+      if (msg.match(/volume of (cube|sphere|cylinder|cone)/i)) {
+        const shape = msg.match(/volume of (cube|sphere|cylinder|cone)/i)[1];
+        const numbers = originalMsg.match(/\d+(\.\d+)?/g) || [];
+        
+        let volume, steps = [];
+        switch(shape.toLowerCase()) {
+          case 'cube':
+            if (numbers.length < 1) return "Please provide the side length for the cube.";
+            const sideCube = parseFloat(numbers[0]);
+            volume = Math.pow(sideCube, 3);
+            steps = [
+              `Formula: Volume = side³`,
+              `Calculation: ${sideCube}³ = ${volume}`
+            ];
+            return createMathResponse(
+              "Cube Volume Calculation",
+              `Volume of cube with side ${sideCube} = ${volume}`,
+              steps
+            );
+          case 'sphere':
+            if (numbers.length < 1) return "Please provide the radius for the sphere.";
+            const radiusSphere = parseFloat(numbers[0]);
+            volume = (4/3) * Math.PI * Math.pow(radiusSphere, 3);
+            steps = [
+              `Formula: Volume = (4/3)πr³`,
+              `Calculation: (4/3) × π × ${radiusSphere}³ ≈ ${volume.toFixed(4)}`
+            ];
+            return createMathResponse(
+              "Sphere Volume Calculation",
+              `Volume of sphere with radius ${radiusSphere} ≈ ${volume.toFixed(4)}`,
+              steps
+            );
+          case 'cylinder':
+            if (numbers.length < 2) return "Please provide both radius and height for the cylinder.";
+            const radiusCyl = parseFloat(numbers[0]);
+            const heightCyl = parseFloat(numbers[1]);
+            volume = Math.PI * Math.pow(radiusCyl, 2) * heightCyl;
+            steps = [
+              `Formula: Volume = πr²h`,
+              `Calculation: π × ${radiusCyl}² × ${heightCyl} ≈ ${volume.toFixed(4)}`
+            ];
+            return createMathResponse(
+              "Cylinder Volume Calculation",
+              `Volume of cylinder with radius ${radiusCyl} and height ${heightCyl} ≈ ${volume.toFixed(4)}`,
+              steps
+            );
+          case 'cone':
+            if (numbers.length < 2) return "Please provide both radius and height for the cone.";
+            const radiusCone = parseFloat(numbers[0]);
+            const heightCone = parseFloat(numbers[1]);
+            volume = (1/3) * Math.PI * Math.pow(radiusCone, 2) * heightCone;
+            steps = [
+              `Formula: Volume = (1/3)πr²h`,
+              `Calculation: (1/3) × π × ${radiusCone}² × ${heightCone} ≈ ${volume.toFixed(4)}`
+            ];
+            return createMathResponse(
+              "Cone Volume Calculation",
+              `Volume of cone with radius ${radiusCone} and height ${heightCone} ≈ ${volume.toFixed(4)}`,
+              steps
+            );
+        }
+      }
+      
+      // Matrix operations
+      if (msg.match(/matrix|determinant|inverse|multipl(y|ication)/i)) {
+        // This is a simplified version - a full implementation would need proper matrix parsing
+        if (msg.match(/multipl(y|ication)/i)) {
+          return "For matrix multiplication, please specify the matrices in format like: Multiply [[1,2],[3,4]] and [[5,6],[7,8]]";
+        }
+        return "I can help with matrix operations. Please specify the operation and matrices in clear format.";
+      }
+      
+      // Calculus operations
+      if (msg.match(/derivative of|integral of|differentiate|integrate/i)) {
+        const funcMatch = originalMsg.match(/(derivative of|integral of|differentiate|integrate)\s*(.+)/i);
+        if (funcMatch) {
+          const operation = funcMatch[1].toLowerCase();
+          const func = funcMatch[2].trim();
+          
+          if (operation.includes('deriv') || operation.includes('differentiate')) {
+            // Very basic derivative examples
+            if (func.match(/x\^?\d*/)) {
+              const powerMatch = func.match(/x\^?(\d*)/);
+              const power = powerMatch[1] ? parseInt(powerMatch[1]) : 1;
+              
+              if (power === 0) {
+                return createMathResponse(
+                  "Derivative Calculation",
+                  `The derivative of ${func} is 0`,
+                  ["Derivative of any constant is 0"]
+                );
+              } else {
+                const newPower = power - 1;
+                const derivative = `${power}${newPower > 0 ? 'x' + (newPower > 1 ? `^${newPower}` : '') : ''}`;
+                return createMathResponse(
+                  "Derivative Calculation",
+                  `d/dx(${func}) = ${derivative}`,
+                  [
+                    `Using power rule: d/dx(xⁿ) = nxⁿ⁻¹`,
+                    `Calculation: d/dx(x${power > 1 ? `^${power}` : ''}) = ${power}x${newPower > 1 ? `^${newPower}` : newPower === 1 ? '' : ''}`
+                  ]
+                );
+              }
+            }
+          } else if (operation.includes('integral')) {
+            // Very basic integral examples
+            if (func.match(/x\^?\d*/)) {
+              const powerMatch = func.match(/x\^?(\d*)/);
+              const power = powerMatch[1] ? parseInt(powerMatch[1]) : 1;
+              
+              const newPower = power + 1;
+              const integral = `${newPower !== 0 ? `(1/${newPower})` : ''}x${newPower > 1 ? `^${newPower}` : ''} + C`;
+              return createMathResponse(
+                "Integral Calculation",
+                `∫${func} dx = ${integral}`,
+                [
+                  `Using power rule: ∫xⁿ dx = (1/(n+1))xⁿ⁺¹ + C (for n ≠ -1)`,
+                  `Calculation: ∫x${power > 1 ? `^${power}` : ''} dx = ${integral}`
+                ]
+              );
+            }
+          }
+        }
+        return "I can help with basic derivatives and integrals. Please specify the function clearly.";
+      }
+      
+    } catch (e) {
+      console.error(e);
+      return "I couldn't process that mathematical expression. Please make sure it's properly formatted.";
+    }
+  }
+  
+  // Math concepts explanations
+  if (msg.includes('calculus') || msg.includes('derivative') || msg.includes('integral')) {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <strong>Calculus Concepts:</strong>
+      <p>Calculus is the mathematical study of continuous change, with two main branches:</p>
+      <ol>
+        <li><strong>Differential Calculus:</strong> Concerned with derivatives (rates of change and slopes of curves)</li>
+        <li><strong>Integral Calculus:</strong> Concerned with integrals (accumulation of quantities and areas under curves)</li>
+      </ol>
+      <p>Key concepts include limits, derivatives, integrals, and the Fundamental Theorem of Calculus which connects differentiation and integration.</p>
+      <div class="code-block">Example derivative: d/dx(x²) = 2x\nExample integral: ∫x dx = x²/2 + C</div>
+      <p>Would you like me to calculate a specific derivative or integral for you?</p>
+    `;
+    return div;
+  }
+  
+  if (msg.includes('algebra')) {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <strong>Algebra Concepts:</strong>
+      <p>Algebra is the study of mathematical symbols and the rules for manipulating them. Key areas include:</p>
+      <ul>
+        <li>Solving equations and inequalities</li>
+        <li>Working with polynomials</li>
+        <li>Understanding functions and their properties</li>
+        <li>Matrix operations in linear algebra</li>
+      </ul>
+      <div class="code-block">Example: Solve 2x + 5 = 15\nSolution: 2x = 10 → x = 5</div>
+      <p>Would you like me to solve a specific algebra problem for you?</p>
+    `;
+    return div;
+  }
+  
+  if (msg.includes('trigonometry')) {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <strong>Trigonometry Concepts:</strong>
+      <p>Trigonometry studies relationships between side lengths and angles of triangles. Key concepts:</p>
+      <ul>
+        <li>Trigonometric functions (sin, cos, tan, etc.)</li>
+        <li>Unit circle and radian measure</li>
+        <li>Trigonometric identities</li>
+        <li>Applications to periodic phenomena</li>
+      </ul>
+      <div class="code-block">Example: sin(30°) = 0.5\nPythagorean identity: sin²θ + cos²θ = 1</div>
+      <p>Would you like me to calculate a specific trigonometric value or identity?</p>
+    `;
+    return div;
+  }
+  
+  if (msg.includes('statistics') || msg.includes('probability')) {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <strong>Statistics & Probability Concepts:</strong>
+      <p>Statistics involves collecting, analyzing, interpreting data, while probability deals with predicting likelihood of events.</p>
+      <p>Key concepts:</p>
+      <ul>
+        <li>Mean, median, mode, standard deviation</li>
+        <li>Probability distributions (normal, binomial, etc.)</li>
+        <li>Hypothesis testing</li>
+        <li>Regression analysis</li>
+      </ul>
+      <div class="code-block">Example: Mean of [2,4,6] is (2+4+6)/3 = 4\nProbability of rolling 6 on die: 1/6</div>
+      <p>Would you like me to calculate a specific statistical measure or probability?</p>
+    `;
+    return div;
+  }
+  
+  // Unit conversions
+  if (msg.match(/convert\s+(\d+)\s*(\w+)\s*to\s*(\w+)/i)) {
+    const matches = originalMsg.match(/convert\s+(\d+)\s*(\w+)\s*to\s*(\w+)/i);
+    const value = parseFloat(matches[1]);
+    const fromUnit = matches[2].toLowerCase();
+    const toUnit = matches[3].toLowerCase();
+    
+    // Length conversions
+    const lengthConversions = {
+      'm': {factor: 1, name: "meters"},
+      'cm': {factor: 0.01, name: "centimeters"},
+      'mm': {factor: 0.001, name: "millimeters"},
+      'km': {factor: 1000, name: "kilometers"},
+      'in': {factor: 0.0254, name: "inches"},
+      'ft': {factor: 0.3048, name: "feet"},
+      'yd': {factor: 0.9144, name: "yards"},
+      'mi': {factor: 1609.34, name: "miles"}
+    };
+    
+    // Weight conversions
+    const weightConversions = {
+      'kg': {factor: 1, name: "kilograms"},
+      'g': {factor: 0.001, name: "grams"},
+      'mg': {factor: 0.000001, name: "milligrams"},
+      'lb': {factor: 0.453592, name: "pounds"},
+      'oz': {factor: 0.0283495, name: "ounces"}
+    };
+    
+    let result, steps = [];
+    if (lengthConversions[fromUnit] && lengthConversions[toUnit]) {
+      const fromFactor = lengthConversions[fromUnit].factor;
+      const toFactor = lengthConversions[toUnit].factor;
+      result = value * fromFactor / toFactor;
+      
+      steps = [
+        `1 ${fromUnit} = ${fromFactor} meters`,
+        `1 ${toUnit} = ${toFactor} meters`,
+        `So ${value} ${fromUnit} = ${value} × (${fromFactor}/${toFactor}) ${toUnit}`,
+        `Calculation: ${value} × ${fromFactor/toFactor} ≈ ${result.toFixed(6)}`
+      ];
+      
+      return createMathResponse(
+        "Length Conversion Result",
+        `${value} ${lengthConversions[fromUnit].name} = ${result.toFixed(6)} ${lengthConversions[toUnit].name}`,
+        steps
+      );
+    } else if (weightConversions[fromUnit] && weightConversions[toUnit]) {
+      const fromFactor = weightConversions[fromUnit].factor;
+      const toFactor = weightConversions[toUnit].factor;
+      result = value * fromFactor / toFactor;
+      
+      steps = [
+        `1 ${fromUnit} = ${fromFactor} kilograms`,
+        `1 ${toUnit} = ${toFactor} kilograms`,
+        `So ${value} ${fromUnit} = ${value} × (${fromFactor}/${toFactor}) ${toUnit}`,
+        `Calculation: ${value} × ${fromFactor/toFactor} ≈ ${result.toFixed(6)}`
+      ];
+      
+      return createMathResponse(
+        "Weight Conversion Result",
+        `${value} ${weightConversions[fromUnit].name} = ${result.toFixed(6)} ${weightConversions[toUnit].name}`,
+        steps
+      );
+    } else {
+      return "I can currently convert length (m, cm, mm, km, in, ft, yd, mi) and weight (kg, g, mg, lb, oz) units.";
+    }
+  }
+  
+  // Greetings and general conversation
+  if (msg.match(/hello|hi|hey|greetings/i)) {
+    if (userProfile.name) {
+      return `Hello ${userProfile.name}! I'm Quantra AI Pro. How can I assist you today?`;
+    }
+    return "Hello! I'm Quantra AI Pro, your advanced math and knowledge assistant. What would you like help with today?";
+  }
+  
+  if (msg.match(/how are you|how's it going/i)) {
+    return "I'm an AI, so I don't have feelings, but I'm functioning perfectly! How can I assist you today?";
+  }
+  
+  if (msg.match(/thank|thanks|appreciate/i)) {
+    return "You're welcome! Is there anything else I can help you with?";
+  }
+  
+  if (msg.match(/what can you do|your abilities/i)) {
+    return "I can perform complex calculations, solve equations, explain math concepts, convert units, answer general knowledge questions, and more! I specialize in:<br>" +
+           "- Mathematics (algebra, calculus, statistics, etc.)<br>" +
+           "- Scientific calculations and conversions<br>" +
+           "- General knowledge questions<br>" +
+           "- And much more! What would you like me to help with?";
+  }
+  
+  if (msg.match(/who made you|who created you/i)) {
+    return "I'm Quantra AI Pro, created by a team of developers to assist with mathematical and general knowledge queries. How can I help you today?";
+  }
+  
+  if (msg.match(/what time is it|current time/i)) {
+    const now = new Date();
+    return `The current time is ${now.toLocaleTimeString()}.`;
+  }
+  
+  if (msg.match(/what day is it|today's date/i)) {
+    const now = new Date();
+    return `Today is ${now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}.`;
+  }
+  
+  // If no specific query detected
+  return "I specialize in mathematical calculations and general knowledge. Try asking me to:<br>" +
+         "- Solve an equation (e.g., 'solve 2x + 5 = 15')<br>" +
+         "- Calculate something (e.g., 'calculate 45 * 89 + 120 / 4')<br>" +
+         "- Explain a concept (e.g., 'explain quantum computing')<br>" +
+         "- Convert units (e.g., 'convert 5 miles to km')<br>" +
+         "- Or ask general knowledge questions (e.g., 'who invented the telephone?')";
+}
+
+// Safe math expression evaluation
+function evaluateMathExpression(expr) {
+  // Remove any potentially dangerous characters
+  expr = expr.replace(/[^0-9+\-*\/%^().\s=πx]/g, '');
+  
+  // Replace implied multiplication (e.g., 2(3) with 2*(3))
+  expr = expr.replace(/(\d)(\()/g, '$1*$2');
+  expr = expr.replace(/(\))(\d)/g, '$1*$2');
+  expr = expr.replace(/π/g, 'Math.PI');
+  
+  // Handle factorial if needed (example implementation)
+  if (expr.includes('!')) {
+    const parts = expr.split('!');
+    if (parts.length === 2 && parts[1] === '') {
+      const num = parseFloat(parts[0]);
+      if (num >= 0 && num <= 20) { // Limit to prevent huge numbers
+        let fact = 1;
+        for (let i = 2; i <= num; i++) fact *= i;
+        return fact;
       }
     }
-  </script>
+  }
+  
+  // Evaluate using Function constructor (safer than eval)
+  try {
+    return new Function('return ' + expr)();
+  } catch (e) {
+    throw new Error("Invalid mathematical expression");
+  }
+}
+</script>
 </body>
 </html>
-
