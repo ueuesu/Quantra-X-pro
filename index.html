@@ -315,6 +315,31 @@
     margin: 10px 0;
     font-style: italic;
   }
+  /* ✅ Tap highlight completely remove */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none; /* iOS pe extra menu disable */
+}
+
+/* ✅ Default background white */
+body {
+  background: #fff;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ✅ Active state me sirf text/icon ka color badlega */
+a, button {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+a:active, button:active {
+  color: #007BFF; /* bas color change hoga, blur nahi aayega */
+}
 </style>
 </head>
 <body>
@@ -1232,6 +1257,7 @@ function evaluateMathExpression(expr) {
     throw new Error("Invalid mathematical expression");
   }
 }
+
 </script>
 </body>
 </html>
