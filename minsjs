@@ -1,38 +1,50 @@
 <!doctype html>
 <html lang="hi">
 <head>
+  <!-- 1. Meta tags for character set and viewport -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  
+  <!-- 2. Page title -->
   <title>brixo mart</title>
+  
+  <!-- 3. External stylesheets -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  
+  <!-- Inline CSS -->
   <style>
+    /* 1. Global Reset and Base Styles */
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{
       height:100%;
       font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
       background:#f9f9f9;
     }
-    
-    /* Main layout */
+
+    /* 2. Main Layout Structure */
     .main-container {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
-    
+
     .content {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-    
-    /* Header styles */
+
+    /* 3. Header Styles */
     .header-section {
       background: white;
     }
-    
+
     .topbar{
       width:100%;
       background:#ffffff;
@@ -108,8 +120,8 @@
       width:22px;
       height:22px;
     }
-    
-    /* Menu Styles */
+
+    /* 4. Side Menu Styles */
     .menu {
       position: fixed;
       top: 0;
@@ -161,8 +173,8 @@
     .overlay.active {
       display: block;
     }
-    
-    /* Address Bar */
+
+    /* 5. Address Bar Styles */
     .address-bar {
         display:flex;
         align-items:center;
@@ -175,7 +187,7 @@
     .address-bar svg { flex-shrink:0; }
     .address-text { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-    /* Home Page Search Bar */
+    /* 6. Search Bar Styles */
     .home-search {
         display:flex;
         align-items:center;
@@ -193,7 +205,7 @@
     .home-search svg { flex-shrink:0; display:block; }
     .home-search input { flex:1; height:100%; border:none; outline:none; padding:0 4px; font-size:14px; color:#6B7280; }
 
-    /* Popup Overlay */
+    /* 7. Popup Overlay Styles */
     .popup-overlay {
         position:fixed; top:0; left:0;
         width:100%; height:100%;
@@ -204,7 +216,7 @@
         z-index:1001;
     }
 
-    /* Popup Box */
+    /* 8. Popup Box Styles */
     .popup-box {
         background:#fff;
         width:100%; max-width:500px;
@@ -233,18 +245,18 @@
     .popup-search svg { flex-shrink:0; display:block; }
     .popup-search input { flex:1; height:100%; border:none; outline:none; padding:0 4px; font-size:14px; color:#6B7280; }
 
-    /* Suggestions list */
+    /* 9. Suggestions List Styles */
     .suggestions { max-height:150px; overflow-y:auto; border:1px solid #ccc; border-radius:5px; margin-bottom:10px; }
     .suggestions div { padding:8px; cursor:pointer; }
     .suggestions div:hover, .suggestions .active { background:#eee; }
 
-    /* Use current location */
+    /* 10. Location Button Styles */
     .use-location { display:flex; align-items:center; gap:10px; color:green; font-weight:bold; cursor:pointer; padding:10px 0; }
 
-    /* Confirm button */
+    /* 11. Confirm Button Styles */
     .confirm-btn { width:100%; padding:12px; background:green; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
-    
-    /* Slider Styles */
+
+    /* 12. Slider/Carousel Styles */
     .swiper {  
         width: 100%;  
         margin-top: 10px;
@@ -340,7 +352,7 @@
         margin-bottom: 10px;  
     }  
 
-    /* Dots styling */  
+    /* 13. Pagination Dots Styles */
     .swiper-pagination {  
         position: relative;  
         margin-top: 15px;  
@@ -350,73 +362,73 @@
         background: #4CAF50 !important;
     }  
 
-    /* Category Navigation Styles */
+    /* 14. Category Navigation Styles */
     .category-container {
-        margin-top: 10px;  /* Reduced from 20px to bring it closer to slider */
+        margin-top: 10px;
         padding: 0 10px;
     }
     .category-section {
-  background: white;
-  border-radius: 12px;
-  margin: 12px 0; /* Reduced from 16px */
-  padding: 12px; /* Reduced from 16px */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
+      background: white;
+      border-radius: 12px;
+      margin: 12px 0;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
 
-.section-title {
-  font-size: 15px; /* Reduced from larger size */
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px; /* Reduced spacing */
-  padding: 0 4px; /* Added small padding */
-}
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+      padding: 0 4px;
+    }
 
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
-  gap: 8px; /* Reduced from 12px */
-}
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 8px;
+    }
 
-.category-card {
-  background: white;
-  border-radius: 6px; /* Reduced from 8px */
-  overflow: hidden;
-  text-align: center;
-  transition: transform 0.2s;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  border: 1px solid #f0f0f0;
-  cursor: pointer;
-}
+    .category-card {
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid #f0f0f0;
+      cursor: pointer;
+    }
 
-.category-name {
-  padding: 8px 4px; /* Reduced from 12px 4px */
-  font-size: 12px; /* Reduced from 13px */
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-    
+    .category-name {
+      padding: 8px 4px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+        
 
     .category-bar {  
         display: flex;  
         overflow-x: auto;  
-        padding: 10px 0;  /* Reduced padding to make it more compact */
+        padding: 10px 0;
         background: #fff;  
-        scrollbar-width: none; /* Firefox */
+        scrollbar-width: none;
         -webkit-tap-highlight-color: transparent;
     }  
 
     .category-bar::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
+        display: none;
     }
 
     .category {  
         flex: 0 0 auto;  
-        width: 70px;  /* Slightly reduced width */
+        width: 70px;
         text-align: center;  
         padding: 5px 0;  
         cursor: pointer;  
@@ -427,8 +439,8 @@
         display: flex;  
         justify-content: center;  
         align-items: center;  
-        height: 40px;  /* Reduced size */
-        width: 40px;   /* Reduced size */
+        height: 40px;
+        width: 40px;
         margin: 0 auto;  
         border-radius: 10px;  
         background: #f5f5f5;
@@ -441,8 +453,8 @@
     }  
 
     .category img {  
-        width: 24px;  /* Reduced icon size */
-        height: 24px; /* Reduced icon size */
+        width: 24px;
+        height: 24px;
         object-fit: contain;  
     }  
 
@@ -454,8 +466,8 @@
 
     .category span {  
         display: block;  
-        margin-top: 6px;  /* Reduced margin */
-        font-size: 12px;  /* Smaller font */
+        margin-top: 6px;
+        font-size: 12px;
         color: #333;  
         font-weight: 500;
     }  
@@ -465,24 +477,15 @@
         font-weight: 600;
     }
 
-    /* Section Heading */
+    /* 15. Section Heading Styles */
     .section-heading {
-        padding: 10px 15px 5px;  /* Reduced padding */
-        font-size: 16px;  /* Smaller heading */
+        padding: 10px 15px 5px;
+        font-size: 16px;
         font-weight: 600;
         color: #333;
     }
-    
-    @media (max-width:420px){
-      .logo{font-size:22px}
-      .hamburger{width:26px;height:26px}
-    }
-    
-    button {
-      -webkit-tap-highlight-color: transparent;
-    }
 
-    /* Product Listing Styles */
+    /* 16. Product Listing Styles */
     .container {
       padding: 16px;
       max-width: 1200px;
@@ -548,7 +551,7 @@
       text-overflow: ellipsis;
     }
 
-    /* Product Listing Page Styles */
+    /* 17. Product Grid Styles */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -703,19 +706,19 @@
       justify-content: center;
     }
 
-    /* Product Detail Page Styles */
+    /* 18. Product Detail Page Styles */
     #product-detail-page {
       background: white;
       min-height: 100vh;
       padding-top: 20px;
     }
-    
+
     .product-detail-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 16px;
     }
-    
+
     .product-detail {
       background: white;
       border-radius: 12px;
@@ -807,7 +810,7 @@
       background: #1b5e20;
     }
 
-    /* Related Products Section */
+    /* 19. Related Products Section Styles */
     .related-products {
       margin-top: 30px;
       padding: 0 16px;
@@ -815,21 +818,21 @@
       margin-left: auto;
       margin-right: auto;
     }
-    
+
     .related-products h2 {
       font-size: 20px;
       margin-bottom: 20px;
       color: #333;
       font-weight: 600;
     }
-    
+
     .related-products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 15px;
     }
 
-    /* Navigation */
+    /* 20. Navigation Styles */
     .back-button {
       display: flex;
       align-items: center;
@@ -847,7 +850,7 @@
       margin-right: 8px;
     }
 
-    /* Empty State */
+    /* 21. Empty State Styles */
     .empty-state {
       text-align: center;
       padding: 40px 20px;
@@ -855,12 +858,12 @@
       grid-column: 1 / -1;
     }
 
-    /* Hidden class for toggling views */
+    /* 22. Visibility Toggle Class */
     .hidden {
       display: none;
     }
 
-    /* Full screen products page */
+    /* 23. Full Screen Products Page Styles */
     .full-screen-products {
       position: fixed;
       top: 60px;
@@ -873,14 +876,14 @@
       padding: 15px;
     }
 
-    /* Hide other elements when products page is open */
+    /* 24. Products Page Open State Styles */
     .products-page-open #header-section > *:not(.topbar),
     .products-page-open .swiper,
     .products-page-open .category-container {
       display: none;
     }
 
-    /* Wishlist Popup Styles */
+    /* 25. Wishlist Popup Styles */
     .wishlist-popup {
       position: fixed;
       bottom: 20px;
@@ -911,7 +914,7 @@
       100% { opacity: 0; bottom: 0; }
     }
 
-    /* Wishlist Page Styles */
+    /* 26. Wishlist Page Styles */
     #wishlist-page {
       background: white;
       min-height: 100vh;
@@ -944,7 +947,7 @@
       font-size: 14px;
     }
 
-    /* Cart Page Styles */
+    /* 27. Cart Page Styles */
     #cart-page {
       background: white;
       min-height: 100vh;
@@ -981,7 +984,7 @@
       margin-bottom: 20px;
     }
 
-    /* Cart Item Styles */
+    /* 28. Cart Item Styles */
     .cart-item {
       display: flex;
       padding: 15px 0;
@@ -1098,7 +1101,7 @@
       font-weight: 500;
     }
 
-    /* Empty Cart Styles */
+    /* 29. Empty Cart Styles */
     .empty-state {
       text-align: center;
       padding: 40px 20px;
@@ -1124,7 +1127,7 @@
       margin-top: 10px;
     }
 
-    /* Bill Details */
+    /* 30. Bill Details Styles */
     .bill-details {
       background: #f9f9f9;
       border-radius: 8px;
@@ -1186,7 +1189,7 @@
       background: #3e8e41;
     }
 
-    /* Toast Message */
+    /* 31. Toast Message Styles */
     .toast-message {
       position: fixed;
       bottom: 20px;
@@ -1205,80 +1208,7 @@
       opacity: 1;
     }
 
-    /* Responsive */
-    @media (min-width: 600px) {
-      .category-grid {
-        gap: 16px;
-      }
-      
-      .product-grid {
-        gap: 20px;
-      }
-      
-      .related-products-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (min-width: 900px) {
-      .section-title {
-        font-size: 20px;
-      }
-      
-      .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      
-      .product-detail {
-        display: flex;
-        gap: 30px;
-      }
-      
-      .product-detail-image-container {
-        width: 50%;
-        max-width: 400px;
-        margin-bottom: 0;
-      }
-      
-      .product-detail-info {
-        width: 50%;
-      }
-      
-      .related-products-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      
-      .cart-item {
-        padding: 20px 0;
-      }
-      
-      .cart-item-image {
-        width: 100px;
-        height: 100px;
-      }
-    }
-
-    @media (min-width: 1200px) {
-      .product-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      
-      .related-products-grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
-    }
-
-    /* For Chrome, Safari, Opera on mobile */
-    * {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Remove focus outline on click */
-    :focus {
-      outline: none;
-    }
-
-    /* Categories Page Styles */
+    /* 32. Categories Page Styles */
     .categories-header {
       display: flex;
       justify-content: space-between;
@@ -1299,7 +1229,7 @@
       cursor: pointer;
     }
 
-    /* Section Title */
+    /* 33. Categories Section Title Styles */
     .categories-section-title {
       font-size: 14px;
       font-weight: 600;
@@ -1323,7 +1253,7 @@
       margin-left: 10px;
     }
 
-    /* Grid */
+    /* 34. Categories Grid Styles */
     .categories-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1358,7 +1288,7 @@
       margin: 0;
     }
 
-    /* Search Overlay */
+    /* 35. Search Overlay Styles */
     .search-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -1388,7 +1318,7 @@
       padding: 6px;
     }
 
-    /* Styled Search Bar */
+    /* 36. Styled Search Bar Styles */
     .search-bar {
       display: flex;
       align-items: center;
@@ -1419,41 +1349,545 @@
     .search-bar input::placeholder {
       color: #6B7280;
     }
+
+    /* 37. Footer Styles */
+    .footer {
+      background: linear-gradient(to bottom, #43a047, #2e7d32);
+      color: #fff;
+      padding: 50px 20px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+    }
+
+    /* 38. Brand Section Styles */
+    .brand h2 {
+      color: #caffca;
+      margin-bottom: 15px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .brand p {
+      color: #f0fff0;
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 650px;
+      margin: auto;
+    }
+
+    /* 39. App Badge Styles */
+    .app-badge {
+      margin-top: 25px;
+    }
+    .app-badge img {
+      width: 160px;
+      transition: transform 0.3s;
+    }
+    .app-badge img:hover {
+      transform: scale(1.05);
+    }
+
+    /* 40. Footer Links Styles */
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 50px;
+      flex-wrap: wrap;
+      padding: 0 10px;
+    }
+
+    /* 41. Contact & Support Styles */
+    .contact, .support {
+      font-size: 14px;
+    }
+    .contact h3, .support h3 {
+      margin-bottom: 12px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .contact {
+      text-align: left;
+    }
+    .support {
+      text-align: right;
+    }
+    .support a {
+      color: #d0ffd6;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .support a:hover {
+      color: #ffffff;
+    }
+
+    /* 42. Copyright Styles */
+    .copy {
+      margin-top: 45px;
+      font-size: 13px;
+      color: #d9f9dc;
+    }
+
+    /* 43. Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.7);
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+    }
+    .modal-content {
+      background:#fff;
+      color:#333;
+      padding:25px;
+      border-radius:12px;
+      max-width:600px;
+      width:90%;
+      text-align:left;
+      position:relative;
+    }
+    .modal-content h2 {
+      margin-bottom:10px;
+      color:#2e7d32;
+    }
+    .modal-content p {
+      line-height:1.6;
+      font-size:14px;
+    }
+    .close {
+      position:absolute;
+      top:10px;
+      right:15px;
+      cursor:pointer;
+      font-size:20px;
+      font-weight:bold;
+      color:#2e7d32;
+    }
+
+    /* 44. Desktop Styles (768px and up) */
+    @media (min-width: 768px) {
+      .topbar {
+        padding: 16px 32px;
+      }
+      
+      .logo {
+        font-size: 28px;
+      }
+      
+      .hamburger {
+        display: flex;
+      }
+      
+      .menu {
+        width: 320px;
+      }
+      
+      .menu-header {
+        padding: 20px 24px;
+        font-size: 22px;
+      }
+      
+      .menu-item {
+        padding: 16px 24px;
+        font-size: 16px;
+      }
+      
+      .home-search {
+        max-width: 600px;
+        margin: 20px auto;
+      }
+      
+      .slide-container {
+        height: 250px;
+      }
+      
+      .slide-left h2 {
+        font-size: 24px;
+      }
+      
+      .slide-left .price {
+        font-size: 22px;
+      }
+      
+      .slide-right h3 {
+        font-size: 40px;
+      }
+      
+      .category-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 16px;
+      }
+      
+      .category-bar {
+        justify-content: center;
+        padding: 15px 0;
+      }
+      
+      .category {
+        width: 90px;
+        margin: 0 10px;
+      }
+      
+      .category-icon {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .category img, .category svg {
+        width: 32px;
+        height: 32px;
+      }
+      
+      .category span {
+        font-size: 14px;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      
+      .product-detail {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+      }
+      
+      .product-detail-image-container {
+        width: 45%;
+        flex-shrink: 0;
+      }
+      
+      .product-detail-info {
+        flex: 1;
+      }
+      
+      .related-products-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .cart-item {
+        padding: 20px 0;
+      }
+      
+      .cart-item-image {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .footer {
+        padding: 60px 40px;
+      }
+      
+      .footer-links {
+        padding: 0 40px;
+      }
+      
+      .categories-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 20px;
+        padding: 0 40px 40px;
+      }
+      
+      .categories-card {
+        padding: 16px 8px;
+      }
+      
+      .categories-card img {
+        height: 90px;
+      }
+      
+      .categories-card p {
+        font-size: 14px;
+      }
+    }
+
+    /* 45. Large Desktop Styles (1200px and up) */
+    @media (min-width: 1200px) {
+      .topbar {
+        padding: 16px 60px;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      
+      .related-products-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      
+      .categories-grid {
+        grid-template-columns: repeat(8, 1fr);
+      }
+      
+      .slide-container {
+        max-width: 1200px;
+        height: 300px;
+      }
+      
+      .slide-left {
+        padding: 30px;
+      }
+      
+      .slide-left h2 {
+        font-size: 28px;
+      }
+      
+      .slide-left .price {
+        font-size: 24px;
+      }
+      
+      .slide-right h3 {
+        font-size: 48px;
+      }
+    }
+
+    /* 46. Extra Large Desktop Styles (1600px and up) */
+    @media (min-width: 1600px) {
+      .container, 
+      .product-detail-container,
+      .wishlist-container,
+      .cart-container {
+        max-width: 1400px;
+      }
+      
+      .product-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    /* 47. Mobile Tap Highlight Removal */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 48. Focus Outline Removal */
+    :focus {
+      outline: none;
+    }
+
+    /* 49. Small Mobile Adjustments */
+    @media (max-width:420px){
+      .logo{font-size:22px}
+      .hamburger{width:26px;height:26px}
+    }
+
+    /* 50. Button Tap Highlight Removal */
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Orders Page Styles */
+    #orders-page {
+      background: white;
+      min-height: 100vh;
+      padding-top: 20px;
+    }
+
+    .orders-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .orders-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .orders-header h2 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .orders-count {
+      background: #4CAF50;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .order-item {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .order-item-detail {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      margin-top: 10px;
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+    }
+
+    .order-status {
+      text-align: right;
+      color: #4CAF50;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",Arial,sans-serif;}
+body{background:#f9f9f9;display:flex;flex-direction:column;min-height:100vh;position:relative;padding-bottom:80px;}
+
+.header{background:#28a745;color:#fff;padding:15px;font-size:18px;font-weight:600;display:flex;align-items:center;gap:10px;} .payment-options{margin:20px;display:flex;flex-direction:column;gap:15px;flex:1;} .option{border:1px solid #ddd;padding:15px;border-radius:12px;cursor:pointer;background:#fff;transition:all 0.3s ease;display:flex;align-items:center;gap:12px;} .option:hover{transform:translateY(-3px);border-color:#28a745;} .option.selected{border:2px solid #28a745;background:#f3fff7;} .logo{width:55px;height:auto;object-fit:contain;} .option-title{font-size:16px;font-weight:600;} .option-desc{font-size:14px;color:#666;} .footer{position:fixed;bottom:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;background:#fff;border-top:1px solid #ddd;padding:15px;z-index:10;} .price{font-size:18px;font-weight:600;color:#28a745;} .btn{background:#28a745;color:#fff;border:none;padding:12px 24px;font-size:16px;font-weight:600;border-radius:8px;cursor:pointer;} .btn:hover{background:#218838;} .btn:disabled{background:#ccc;cursor:not-allowed;}
+
+/* Location logo style - IMPROVED */ .location-logo{width: 26px; height: 26px; margin-right: 5px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;} .location-logo svg{ width:100%; height:100%; display:block; } .location-icon-fg{ fill: #28a745; } .location-icon-hole{ fill: white; }
+
+/* Popup */ .popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:flex-end;justify-content:center;z-index:999;} .popup-box{background:#fff;width:100%;max-width:500px;border-top-left-radius:16px;border-top-right-radius:16px;padding:20px;animation:slideUp 0.3s ease-out;max-height:90vh;overflow-y:auto;} @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}} .popup-header{font-size:18px;font-weight:bold;margin-bottom:15px;color:#333;} .input-field{width:100%;padding:12px;margin-bottom:10px;border:1px solid #ccc;border-radius:8px;font-size:14px;font-family:inherit;} .input-field:focus{outline:none;border-color:#28a745;} .use-location{display:flex;align-items:center;gap:10px;color:#28a745;font-weight:600;cursor:pointer;padding:10px 0;font-size:16px;} #map{width:100%;height:200px;border-radius:10px;margin:10px 0;display:none;} #paymentMap{width:100%;height:200px;border-radius:10px;margin:10px 0;display:none;} .suggestions{border:1px solid #ccc;border-radius:6px;max-height:120px;overflow-y:auto;margin-top:-8px;margin-bottom:8px;display:none;background:white;z-index:1000;position:relative;} .suggestions div{padding:8px;cursor:pointer;font-size:14px;} .suggestions div:hover,.suggestions div.active{background:#f0f8f1;} .confirm-btn{width:100%;padding:12px;background:#28a745;color:white;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;} .confirm-btn:disabled{background:#ccc;cursor:not-allowed;}
+
+/* Toast */ .toast{position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%); background: #fff; color: #333; padding: 12px 18px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; opacity: 0; transition: all 0.4s ease; z-index: 2000;} .toast.show{bottom: 30px; opacity: 1;} .toast svg{ flex-shrink:0; }
+
+/* Success */ .success-page{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;display:none;justify-content:center;align-items:center;flex-direction:column;z-index:9999;} .circle{width:100px;height:100px;border-radius:50%;background:#28a745;display:flex;justify-content:center;align-items:center;} .circle svg{width:60px;height:60px;stroke:white;stroke-width:6;fill:none;stroke-dasharray:100;stroke-dashoffset:100;animation:draw 1s forwards;} @keyframes draw{to{stroke-dashoffset:0;}} .success-text{margin-top:20px;font-size:18px;font-weight:600;color:#28a745;text-align:center;}
+
+/* Loading indicator */ .loading{display: none; text-align: center; padding: 10px; color: #28a745;} .loading::after{content: ""; display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(40, 167, 69, 0.3); border-radius: 50%; border-top-color: #28a745; animation: spin 1s ease-in-out infinite;} @keyframes spin{to {transform: rotate(360deg);}}
+
+/* Location detection message */ .location-message{text-align: center; padding: 10px; color: #28a745; font-weight: 550; display: none; font-size: 16px;}
+
+/* Map error message */ .map-error{color: #e74c3c; text-align: center; padding: 10px; display: none;}
+
+/* Close button for popup */ .close-popup{position: absolute; top: 15px; right: 15px; width: 24px; height: 24px; cursor: pointer; opacity: 0.7;} .close-popup:hover{opacity: 1;} .close-popup:before,.close-popup:after {position: absolute; content: ' '; height: 20px; width: 2px; background-color: #333;} .close-popup:before{transform: rotate(45deg);} .close-popup:after{transform: rotate(-45deg);}
+
+/* Pincode input container */ .pincode-container{position: relative;}
+
+/* Address summary */ .address-summary{background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 15px 20px; display: none;} .address-summary h3{margin-bottom: 10px; font-size: 16px; color: #333;} .address-details{font-size: 14px; line-height: 1.5; color: #555;}
+
+/* Order button */ .order-btn{background: #ff6b00; width: calc(100% - 40px); padding: 15px; font-size: 16px; font-weight: 600; border-radius: 8px; border: none; color: white; cursor: pointer; margin: 15px 20px; display: none;} .order-btn:hover{background: #e65c00;}
+
+/* Edit address button */ .edit-address{background: transparent; border: none; color: #28a745; text-decoration: underline; cursor: pointer; font-size: 14px; margin-top: 10px;}
+
+/* Place Order Button in Footer */ .place-order-btn{background: #ff6b00; color: #fff; border: none; padding: 12px 24px; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer;} .place-order-btn:hover{background: #e65c00;} .place-order-btn:disabled{background: #ccc; cursor: not-allowed;}
+
+:root{
+  --green:#2ecc71;
+  --green-dark:#27ae60;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background:#f4f6f8;
+  padding-bottom:90px; /* space for fixed bar */
+}
+
+/* main pill */
+.cart-bar{
+  position:fixed;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 32px);
+  max-width:960px;
+
+  background:linear-gradient(180deg,var(--green),var(--green-dark));
+  color:#fff;
+  border-radius:20px;
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 8px 22px rgba(0,0,0,0.15);
+  cursor:pointer;
+  transition:transform 0.15s ease, box-shadow 0.15s ease;
+  z-index:999;
+  display: none; /* Initially hidden */
+}
+.cart-bar:hover{
+  transform:translateX(-50%) translateY(-2px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.2);
+}
+
+.left{display:flex;align-items:center;gap:14px}
+
+/* icon square */
+.icon-square{
+  width:54px;height:54px;
+  background:rgba(255,255,255,0.12);
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.icon-square svg{
+  width:30px; height:30px;
+  stroke:#a9f0c4;
+  fill:none;
+  stroke-width:1.3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* text */
+.info{display:flex;flex-direction:column;line-height:1.2}
+.info .items{font-size:16px;font-weight:500;opacity:0.9}
+.info .price{font-size:20px;font-weight:700}
+
+/* right side */
+.view{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600}
+.chev{width:16px;height:16px;transform:translateY(1px)}
+
+@media (max-width:420px){
+  .cart-bar{padding:12px 16px;border-radius:16px;bottom:12px}
+  .icon-square{width:46px;height:46px}
+  .icon-square svg{width:26px;height:26px}
+  .info .items{font-size:14px}
+  .info .price{font-size:17px}
+  .view{font-size:16px}
+}
   </style>
 </head>
 <body>
+  <!-- 4. Main container wrapping all content -->
   <div class="main-container">
-    <!-- Header Section (hidden on product detail page) -->
+    <!-- 5. Header section (hidden on product detail page) -->
     <div id="header-section">
+      <!-- 6. Top navigation bar -->
       <header class="topbar" role="banner" aria-label="Top navigation">
         <div class="left">
+          <!-- 7. Hamburger menu button -->
           <button class="hamburger" id="menuToggle" aria-label="Open menu">
             <span></span>
             <span></span>
             <span></span>
           </button>
-          <div class="logo" aria-hidden="true">brixo mart</div>
+          <!-- 8. Logo -->
+          <div class="logo" aria-hidden="true">brixomart</div>
         </div>
+        
+        <!-- 9. Header actions (wishlist and cart) -->
         <nav class="actions" role="navigation" aria-label="Header actions">
-          <!-- Wishlist Icon -->
+          <!-- 10. Wishlist Icon -->
           <button class="icon-btn" aria-label="Wishlist" onclick="showWishlist()">
             <svg viewBox="0 0 24 24" fill="#ff5a5f" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M12 4.248c-3.148-5.402-12-3.056-12 2.944 0 4.418 6.582 9.76 12 14.808 5.418-5.048 12-10.39 12-14.808 0-6-8.852-8.346-12-2.944z"/>
             </svg>
           </button>
-          <!-- Cart Icon with green color -->
-          <button class="icon-btn" aria-label="Cart" onclick="showCart()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-            <span id="cart-badge" style="position:absolute; top:-5px; right:-5px; background:#4CAF50; color:white; border-radius:50%; width:18px; height:18px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:bold;">0</span>
-          </button>
+          
         </nav>
       </header>
 
-      <!-- Address Bar -->
+      <!-- 13. Address Bar -->
       <div class="address-bar" id="addressBar">
           <span id="addressIcon">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24">
@@ -1466,7 +1900,7 @@
           </svg>
       </div>
 
-      <!-- Home Page Search Bar -->
+      <!-- 14. Home Page Search Bar -->
       <div class="home-search">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6B7280" viewBox="0 0 30 30">
               <path d="M13 3C7.489 3 3 7.489 3 13s4.489 10 10 10a9.95 9.95 0 0 0 6.322-2.264l5.971 5.971a1 1 0 1 0 1.414-1.414l-5.97-5.97A9.95 9.95 0 0 0 23 13c0-5.511-4.489-10-10-10m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8-8-3.57-8-8 3.57-8 8-8"/>
@@ -1474,121 +1908,120 @@
           <input type="text" placeholder="Search for products...">
       </div>
 
-      <!-- Grocery Offers Slider -->
+      <!-- 15. Grocery Offers Slider -->
       <div class="swiper">  
           <div class="swiper-wrapper">  
-                
-              <!-- Slide 1 -->  
-              <div class="swiper-slide">  
-                  <div class="slide-container">  
-                      <div class="slide-left">  
-                          <h2>Fresh Vegetables</h2>  
-                          <div class="price">From ₹29/Kg*</div>  
-                          <p>Farm fresh and healthy.</p>  
-                          <small>*Prices may vary.</small>  
-                      </div>  
-                      <div class="slide-right">  
-                          <div class="sale-badge">BRIXO MART SALE</div>  
-                          <h3>Organic</h3>  
-                          <p>Direct from farms to your table</p>  
-                      </div>  
-                  </div>  
-              </div>  
-        
-              <!-- Slide 2 -->  
-              <div class="swiper-slide">  
-                  <div class="slide-container">  
-                      <div class="slide-left">  
-                          <h2>Daily Dairy</h2>  
-                          <div class="price">From ₹20/Litre*</div>  
-                          <p>Pure and fresh milk products.</p>  
-                          <small>*Prices may vary.</small>  
-                      </div>  
-                      <div class="slide-right">  
-                          <div class="sale-badge">BRIXO MART SALE</div>  
-                          <h3>100% Fresh</h3>  
-                          <p>Milk, butter, paneer & more</p>  
-                      </div>  
-                  </div>  
-              </div>  
-        
-              <!-- Slide 3 -->  
-              <div class="swiper-slide">  
-                  <div class="slide-container">  
-                      <div class="slide-left">  
-                          <h2>Bakery Delights</h2>  
-                          <div class="price">From ₹15*</div>  
-                          <p>Freshly baked everyday.</p>  
-                          <small>*Prices may vary.</small>  
-                      </div>  
-                      <div class="slide-right">  
-                          <div class="sale-badge">BRIXO MART SALE</div>  
-                          <h3>Hot & Soft</h3>  
-                          <p>Bread, cakes, pastries</p>  
-                      </div>  
-                  </div>  
-              </div>  
-        
-              <!-- Slide 4 -->  
-              <div class="swiper-slide">  
-                  <div class="slide-container">  
-                      <div class="slide-left">  
-                          <h2>Groceries</h2>  
-                          <div class="price">From ₹49*</div>  
-                          <p>Everything your kitchen needs.</p>  
-                          <small>*Prices may vary.</small>  
-                      </div>  
-                      <div class="slide-right">  
-                          <div class="sale-badge">BRIXO MART SALE</div>  
-                          <h3>All in One</h3>  
-                          <p>Rice, dal, oil & more</p>  
-                      </div>  
-                  </div>  
-              </div>  
-        
-              <!-- Slide 5 -->  
-              <div class="swiper-slide">  
-                  <div class="slide-container">  
-                      <div class="slide-left">  
-                          <h2>Snacks & Beverages</h2>  
-                          <div class="price">From ₹10*</div>  
-                          <p>Perfect for every occasion.</p>  
-                          <small>*Prices may vary.</small>  
-                      </div>  
-                      <div class="slide-right">  
-                          <div class="sale-badge">BRIXO MART SALE</div>  
-                          <h3>Taste</h3>  
-                          <p>Chips, biscuits, soft drinks</p>  
-                      </div>  
-                  </div>  
-              </div>  
-        
-              <!-- Slide 6 -->  
-              <div class="swiper-slide">  
-                  <div class="slide-container">  
-                      <div class="slide-left">  
-                          <h2>Household Essentials</h2>  
-                          <div class="price">From ₹19*</div>  
-                          <p>Daily use products at best price.</p>  
-                          <small>*Prices may vary.</small>  
-                      </div>  
-                      <div class="slide-right">  
-                          <div class="sale-badge">BRIXO MART SALE</div>  
-                          <h3>Essentials</h3>  
-                          <p>Cleaning, personal care & more</p>  
-                      </div>  
-                  </div>  
-              </div>  
+            <!-- 16. Slide 1 -->  
+            <div class="swiper-slide">  
+                <div class="slide-container">  
+                    <div class="slide-left">  
+                        <h2>Fresh Vegetables</h2>  
+                        <div class="price">From ₹29/Kg*</div>  
+                        <p>Fresh farm fresh and healthy.</p>  
+                        <small>*Prices may vary.</small>  
+                    </div>  
+                    <div class="slide-right">  
+                        <div class="sale-badge">BRIXO MART SALE</div>  
+                        <h3>Organic</h3>  
+                        <p>Direct from farms to your table</p>  
+                    </div>  
+                </div>  
+            </div>  
+      
+            <!-- 17. Slide 2 -->  
+            <div class="swiper-slide">  
+                <div class="slide-container">  
+                    <div class="slide-left">  
+                        <h2>Daily Dairy</h2>  
+                        <div class="price">From ₹20/Litre*</div>  
+                        <p>Pure and fresh milk products.</p>  
+                        <small>*Prices may vary.</small>  
+                    </div>  
+                    <div class="slide-right">  
+                        <div class="sale-badge">BRIXO MART SALE</div>  
+                        <h3>100% Fresh</h3>  
+                        <p>Milk, butter, paneer & more</p>  
+                    </div>  
+                </div>  
+            </div>  
+      
+            <!-- 18. Slide 3 -->  
+            <div class="swiper-slide">  
+                <div class="slide-container">  
+                    <div class="slide-left">  
+                        <h2>Bakery Delights</h2>  
+                        <div class="price">From ₹15*</div>  
+                        <p>Freshly baked everyday.</p>  
+                        <small>*Prices may vary.</small>  
+                    </div>  
+                    <div class="slide-right">  
+                        <div class="sale-badge">BRIXO MART SALE</div>  
+                        <h3>Hot & Soft</h3>  
+                        <p>Bread, cakes, pastries</p>  
+                    </div>  
+                </div>  
+            </div>  
+      
+            <!-- 19. Slide 4 -->  
+            <div class="swiper-slide">  
+                <div class="slide-container">  
+                    <div class="slide-left">  
+                        <h2>Groceries</h2>  
+                        <div class="price">From ₹49*</div>  
+                        <p>Everything your kitchen needs.</p>  
+                        <small>*Prices may vary.</small>  
+                    </div>  
+                    <div class="slide-right">  
+                        <div class="sale-badge">BRIXO MART SALE</div>  
+                        <h3>All in One</h3>  
+                        <p>Rice, dal, oil & more</p>  
+                    </div>  
+                </div>  
+            </div>  
+      
+            <!-- 20. Slide 5 -->  
+            <div class="swiper-slide">  
+                <div class="slide-container">  
+                    <div class="slide-left">  
+                        <h2>Snacks & Beverages</h2>  
+                        <div class="price">From ₹10*</div>  
+                        <p>Perfect for every occasion.</p>  
+                        <small>*Prices may vary.</small>  
+                    </div>  
+                    <div class="slide-right">  
+                        <div class="sale-badge">BRIXO MART SALE</div>  
+                        <h3>Taste</h3>  
+                        <p>Chips, biscuits, soft drinks</p>  
+                    </div>  
+                </div>  
+            </div>  
+      
+            <!-- 21. Slide 6 -->  
+            <div class="swiper-slide">  
+                <div class="slide-container">  
+                    <div class="slide-left">  
+                        <h2>Household Essentials</h2>  
+                        <div class="price">From ₹19*</div>  
+                        <p>Daily use products at best price.</p>  
+                        <small>*Prices may vary.</small>  
+                    </div>  
+                    <div class="slide-right">  
+                        <div class="sale-badge">BRIXO MART SALE</div>  
+                        <h3>Essentials</h3>  
+                        <p>Cleaning, personal care & more</p>  
+                    </div>  
+                </div>  
+            </div>  
           </div>  
             
-          <!-- Pagination -->  
+          <!-- 22. Pagination for slider -->  
           <div class="swiper-pagination"></div>  
       </div>  
 
-      <!-- Category Navigation -->
+      <!-- 23. Category Navigation -->
       <div class="category-container">
           <div class="category-bar">
-            <!-- First category with green grid icon -->
+            <!-- 24. First category with green grid icon -->
             <div class="category active">
               <div class="category-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2">
@@ -1601,6 +2034,7 @@
               <span>Category</span>  <!-- Changed from "All" to "Category" -->
             </div>
 
+            <!-- 25. Additional category items -->
             <div class="category">
               <div class="category-icon">
                 <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png" alt="Fashion">
@@ -1653,10 +2087,10 @@
       </div>
     </div>
 
-    <!-- Menu Overlay -->
+    <!-- 26. Menu Overlay -->
     <div class="overlay" id="overlay"></div>
     
-    <!-- Side Menu -->
+    <!-- 27. Side Menu -->
     <div class="menu" id="menu">
       <div class="menu-header">brixo mart</div>
       <div class="menu-item" onclick="showCategories()">
@@ -1672,7 +2106,7 @@
         </svg>
         <span>Wishlist</span>
       </div>
-      <div class="menu-item">
+      <div class="menu-item" onclick="showOrders()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
           <polyline points="14 2 14 8 20 8"></polyline>
@@ -1701,10 +2135,25 @@
       </div>
     </div>
 
-    <!-- Location Popup -->
+    <!-- 28. Location Popup -->
     <div class="popup-overlay" id="locationPopup">
         <div class="popup-box">
+            <div class="close-popup" id="closePopup"></div>
             <div class="popup-header">Select your Location</div>
+            <div class="location-message" id="locationMessage">
+              <span class="location-logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                  <path class="location-icon-fg" d="M12 3.2a8.8 8.8 0 1 0 0 17.6 8.8 8.8 0 0 0 0-17.6z"/>
+                  <rect class="location-icon-fg" x="11.2" y="0.6" width="1.6" height="3.2" rx="0.8"/>
+                  <rect class="location-icon-fg" x="11.2" y="20.2" width="1.6" height="3.2" rx="0.8"/>
+                  <rect class="location-icon-fg" x="0.6" y="11.2" width="3.2" height="1.6" rx="0.8"/>
+                  <rect class="location-icon-fg" x="20.2" y="11.2" width="3.2" height="1.6" rx="0.8"/>
+                  <circle class="location-icon-hole" cx="12" cy="12" r="4.2"/>
+                </svg>
+              </span>
+              Detecting your location...
+            </div>
+            <div class="map-error" id="mapError">Unable to load map. Please check your address manually.</div>
             <div class="popup-search">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6B7280" viewBox="0 0 30 30">
                     <path d="M13 3C7.489 3 3 7.489 3 13s4.489 10 10 10a9.95 9.95 0 0 0 6.322-2.264l5.971 5.971a1 1 0 1 0 1.414-1.414l-5.97-5.97A9.95 9.95 0 0 0 23 13c0-5.511-4.489-10-10-10m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8-8-3.57-8-8 3.57-8 8-8"/>
@@ -1718,11 +2167,13 @@
                 </svg>
                 Use current location
             </div>
+            <div id="map"></div>
+            <div class="loading" id="locationLoading"></div>
             <button class="confirm-btn" id="confirmAddressBtn">Confirm Location</button>
         </div>
     </div>
 
-    <!-- Search Overlay -->
+    <!-- 29. Search Overlay -->
     <div class="search-overlay" id="searchOverlay">
       <div class="search-header">
         <button class="back-btn" id="closeSearch"><i class="fa-solid fa-arrow-left"></i></button>
@@ -1735,10 +2186,11 @@
       </div>
     </div>
 
-    <!-- Main Content Area -->
+    <!-- 30. Main Content Area -->
     <div class="content">
-      <!-- Categories Page -->
+      <!-- 31. Categories Page -->
       <div id="categories-page" class="container">
+        <!-- 32. Fruits & Vegetables Section -->
         <div class="category-section">
           <h2 class="section-title">Fruits & Vegetables</h2>
           <div class="category-grid">
@@ -1799,6 +2251,7 @@
           </div>
         </div>
 
+        <!-- 33. Dairy & Eggs Section -->
         <div class="category-section">
           <h2 class="section-title">Dairy & Eggs</h2>
           <div class="category-grid">
@@ -1859,6 +2312,7 @@
           </div>
         </div>
 
+        <!-- 34. Kitchen Staples Section -->
         <div class="category-section">
           <h2 class="section-title">Kitchen Staples</h2>
           <div class="category-grid">
@@ -1919,6 +2373,7 @@
           </div>
         </div>
 
+        <!-- 35. Snacks & Beverages Section -->
         <div class="category-section">
           <h2 class="section-title">Snacks & Beverages</h2>
           <div class="category-grid">
@@ -1979,6 +2434,7 @@
           </div>
         </div>
 
+        <!-- 36. Personal Care Section -->
         <div class="category-section">
           <h2 class="section-title">Personal Care</h2>
           <div class="category-grid">
@@ -2040,15 +2496,15 @@
         </div>
       </div>
 
-      <!-- Categories Grid Page (hidden by default) -->
+      <!-- 37. Categories Grid Page (hidden by default) -->
       <div id="categories-grid-page" class="hidden">
-        <!-- Header -->
+        <!-- 38. Categories Header -->
         <div class="categories-header">
           <div>Categories</div>
           <i class="fa-solid fa-magnifying-glass search-icon" id="openSearch"></i>
         </div>
 
-        <!-- Fruits & Vegetables -->
+        <!-- 39. Fruits & Vegetables Section -->
         <div class="categories-section-title">Fruits & Vegetables</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Fresh Fruits')"><img src="https://via.placeholder.com/100x70"><p>Fresh Fruits</p></div>
@@ -2057,7 +2513,7 @@
           <div class="categories-card" onclick="showProducts('Exotic Fruits')"><img src="https://via.placeholder.com/100x70"><p>Exotic Fruits</p></div>
         </div>
 
-        <!-- Dairy -->
+        <!-- 40. Dairy Section -->
         <div class="categories-section-title">Dairy, Bakery & Eggs</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Milk')"><img src="https://via.placeholder.com/100x70"><p>Milk</p></div>
@@ -2066,18 +2522,19 @@
           <div class="categories-card" onclick="showProducts('Eggs')"><img src="https://via.placeholder.com/100x70"><p>Eggs</p></div>
         </div>
         
-        <!-- Grocery Staples -->
+        <!-- 41. Grocery Staples Section -->
         <div class="categories-section-title">Grocery Staples</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Rice')"><img src="https://via.placeholder.com/100x70"><p>Rice</p></div>
           <div class="categories-card" onclick="showProducts('Atta & Flour')"><img src="https://via.placeholder.com/100x70"><p>Atta & Flour</p></div>
+          <div class="categories-card" onclick="showProducts('Pulses')"><img src="https://via.placeholder.com/100x70"><p>Pulses</p></div>
           <div class="categories-card" onclick="showProducts('Pulses')"><img src="https://via.placeholder.com/100x70"><p>Pulses</p></div>
           <div class="categories-card" onclick="showProducts('Oil & Ghee')"><img src="https://via.placeholder.com/100x70"><p>Oil & Ghee</p></div>
           <div class="categories-card" onclick="showProducts('Sugar & Salt')"><img src="https://via.placeholder.com/100x70"><p>Sugar & Salt</p></div>
           <div class="categories-card" onclick="showProducts('Dry Fruits')"><img src="https://via.placeholder.com/100x70"><p>Dry Fruits</p></div>
         </div>
 
-        <!-- Household Essentials -->
+        <!-- 42. Household Essentials Section -->
         <div class="categories-section-title">Household Essentials</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Cleaning Supplies')"><img src="https://via.placeholder.com/100x70"><p>Cleaning Supplies</p></div>
@@ -2086,7 +2543,7 @@
           <div class="categories-card" onclick="showProducts('Paper Products')"><img src="https://via.placeholder.com/100x70"><p>Paper Products</p></div>
         </div>
 
-        <!-- Snacks & Drinks -->
+        <!-- 43. Snacks & Drinks Section -->
         <div class="categories-section-title">Snacks & Drinks</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Cold Drinks')"><img src="https://via.placeholder.com/100x70"><p>Cold Drinks</p></div>
@@ -2104,7 +2561,7 @@
           <div class="categories-card" onclick="showProducts('Noodles')"><img src="https://via.placeholder.com/100x70"><p>Noodles</p></div>
         </div>
 
-        <!-- Beauty & Personal Care -->
+        <!-- 44. Beauty & Personal Care Section -->
         <div class="categories-section-title">Beauty & Personal Care</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Bath & Body')"><img src="https://via.placeholder.com/100x70"><p>Bath & Body</p></div>
@@ -2117,7 +2574,7 @@
           <div class="categories-card" onclick="showProducts('Baby Care')"><img src="https://via.placeholder.com/100x70"><p>Baby Care</p></div>
         </div>
 
-        <!-- Electronics -->
+        <!-- 45. Electronics Section -->
         <div class="categories-section-title">Electronics</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Mobiles')"><img src="https://via.placeholder.com/100x70"><p>Mobiles</p></div>
@@ -2130,7 +2587,7 @@
           <div class="categories-card" onclick="showProducts('Home Appliances')"><img src="https://via.placeholder.com/100x70"><p>Home Appliances</p></div>
         </div>
 
-        <!-- Baby & Toys -->
+        <!-- 46. Baby & Toys Section -->
         <div class="categories-section-title">Baby & Toys</div>
         <div class="categories-grid">
           <div class="categories-card" onclick="showProducts('Baby Food')"><img src="https://via.placeholder.com/100x70"><p>Baby Food</p></div>
@@ -2139,12 +2596,12 @@
           <div class="categories-card" onclick="showProducts('Baby Wipes')"><img src="https://via.placeholder.com/100x70"><p>Baby Wipes</p></div>
           <div class="categories-card" onclick="showProducts('Soft Toys')"><img src="https://via.placeholder.com/100x70"><p>Soft Toys</p></div>
           <div class="categories-card" onclick="showProducts('Educational Toys')"><img src="https://via.placeholder.com/100x70"><p>Educational Toys</p></div>
-          <div class="categories-card" onclick="showProducts('Games')"><img src="https://via.placeholder.com/100x70"><p>Games</p></div>
+          <div class="categories-card" onclick="showProducts('Games')"><img src="https://via.placeholder.com/100x70?text=Games"><p>Games</p></div>
           <div class="categories-card" onclick="showProducts('Ride-ons')"><img src="https://via.placeholder.com/100x70"><p>Ride-ons</p></div>
         </div>
       </div>
 
-      <!-- Products Page (hidden by default) -->
+      <!-- 47. Products Page (hidden by default) -->
       <div id="products-page" class="container full-screen-products hidden">
         <button class="back-button" onclick="showCategories()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2160,7 +2617,7 @@
         </div>
       </div>
 
-      <!-- Product Detail Page (hidden by default) -->
+      <!-- 48. Product Detail Page (hidden by default) -->
       <div id="product-detail-page" class="hidden">
         <div class="product-detail-container">
           <button class="back-button" onclick="showProducts(currentCategory)">
@@ -2186,12 +2643,15 @@
                   <span id="detail-qty">1</span>
                   <button onclick="increaseDetailQty()">+</button>
                 </div>
-                <button class="add-to-cart-btn" onclick="addDetailToCart()">Add to Cart</button>
+                <button class="add-to-cart-btn" onclick="addDetailToCart()">
+  Add to Cart
+</button>
+
               </div>
             </div>
           </div>
           
-          <!-- Related Products Section -->
+          <!-- 49. Related Products Section -->
           <div class="related-products">
             <h2>Related Products</h2>
             <div class="related-products-grid" id="related-products-grid">
@@ -2201,7 +2661,7 @@
         </div>
       </div>
 
-      <!-- Wishlist Page (hidden by default) -->
+      <!-- 50. Wishlist Page (hidden by default) -->
       <div id="wishlist-page" class="hidden">
         <div class="wishlist-container">
           <button class="back-button" onclick="showCategories()">
@@ -2218,11 +2678,18 @@
           
           <div class="product-grid" id="wishlist-grid">
             <!-- Wishlist items will be dynamically inserted here -->
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="#ccc">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <p>Your wishlist is empty</p>
+              <button onclick="showCategories()" class="continue-shopping-btn">Continue Shopping</button>
+            </div>
           </div>
         </div>
       </div>
       
-      <!-- Cart Page (hidden by default) -->
+      <!-- 51. Cart Page (hidden by default) -->
       <div id="cart-page" class="hidden">
         <div class="cart-container">
           <button class="back-button" onclick="showCategories()">
@@ -2239,36 +2706,235 @@
           
           <div class="cart-items" id="cart-items">
             <!-- Cart items will be dynamically inserted here -->
+            <div class="empty-state">
+              <p>Your cart is empty</p>
+              <button onclick="showCategories()" class="continue-shopping-btn">Continue Shopping</button>
+            </div>
           </div>
           
           <div class="bill-details" style="display: none;">
             <!-- Bill details will be dynamically inserted here -->
           </div>
+          <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+      </div>
+
+      <!-- Payment Page (hidden by default) -->
+      <div id="payment-page" class="hidden">
+        <button class="back-button" onclick="showCart()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Payment & Order Summary</span>
+        </button>
+
+        <div class="payment-options">
+          <div class="option">
+            <img src="https://cdn-icons-png.flaticon.com/512/2331/2331941.png" class="logo">
+            <div><div class="option-title">Cash on Delivery</div><div class="option-desc">Pay with cash</div></div>
+          </div>
+          <div class="option">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" class="logo">
+            <div><div class="option-title">UPI</div><div class="option-desc">Pay instantly using UPI apps</div></div>
+          </div>
+          <div class="option">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Mastercard-logo.png" class="logo" style="width:50px;">
+            <div><div class="option-title">Credit / Debit Card</div><div class="option-desc">Pay with card</div></div>
+          </div>
+        </div>
+
+        <!-- Address Summary (initially hidden) -->
+        <div class="address-summary" id="paymentAddressSummary">
+          <h3>Delivery Address</h3>
+          <div class="address-details" id="paymentAddressDetails"></div>
+          <button class="edit-address" id="paymentEditAddress">Edit Address</button>
+        </div>
+
+        <div class="footer">
+          <div class="price">₹</div>
+          <button class="place-order-btn" id="paymentPlaceOrderBtn" disabled>Place Order</button>
+        </div>
+
+        <!-- Address Popup -->
+        <div class="popup-overlay" id="paymentLocationPopup">
+          <div class="popup-box">
+            <div class="close-popup" id="paymentClosePopup"></div>
+            <div class="popup-header">Enter Delivery Address</div>
+            <div class="location-message" id="paymentLocationMessage">
+              <span class="location-logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                  <path class="location-icon-fg" d="M12 3.2a8.8 8.8 0 1 0 0 17.6 8.8 8.8 0 0 0 0-17.6z"/>
+                  <rect class="location-icon-fg" x="11.2" y="0.6" width="1.6" height="3.2" rx="0.8"/>
+                  <rect class="location-icon-fg" x="11.2" y="20.2" width="1.6" height="3.2" rx="0.8"/>
+                  <rect class="location-icon-fg" x="0.6" y="11.2" width="3.2" height="1.6" rx="0.8"/>
+                  <rect class="location-icon-fg" x="20.2" y="11.2" width="3.2" height="1.6" rx="0.8"/>
+                  <circle class="location-icon-hole" cx="12" cy="12" r="4.2"/>
+                </svg>
+              </span>
+              Detecting your location...
+            </div>
+            <div class="map-error" id="paymentMapError">Unable to load map. Please check your address manually.</div>
+            <input type="text" id="paymentName" class="input-field" placeholder="Full Name">
+            <input type="text" id="paymentMobile" class="input-field" placeholder="Mobile Number">
+            <input type="text" id="paymentHouse" class="input-field" placeholder="House / Flat No">
+            <input type="text" id="paymentStreet" class="input-field" placeholder="Street / Locality">
+            <div class="pincode-container">
+              <input type="text" id="paymentPincode" class="input-field" placeholder="Pincode" maxlength="6">
+              <div class="suggestions" id="paymentSuggestions"></div>
+            </div>
+            <div class="use-location" id="paymentUseLocation">
+              <span class="location-logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+                  <path class="location-icon-fg" d="M12 3.2a8.8 8.8 0 1 0 0 17.6 8.8 8.8 0 0 0 0-17.6z"/>
+                  <rect class="location-icon-fg" x="11.2" y="0.6" width="1.6" height="3.2" rx="0.8"/>
+                  <rect class="location-icon-fg" x="11.2" y="20.2" width="1.6" height="3.2" rx="0.8"/>
+                  <rect class="location-icon-fg" x="0.6" y="11.2" width="3.2" height="1.6" rx="0.8"/>
+                  <rect class="location-icon-fg" x="20.2" y="11.2" width="3.2" height="1.6" rx="0.8"/>
+                  <circle class="location-icon-hole" cx="12" cy="12" r="4.2"/>
+                </svg>
+              </span>
+              Use my current location
+            </div>
+            <div id="paymentMap"></div>
+            <div class="loading" id="paymentLocationLoading"></div>
+            <button class="confirm-btn" id="paymentConfirmAddress" disabled>Confirm Address</button>
+          </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast" id="paymentToast">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#28a745" viewBox="0 0 24 24">
+            <path d="M20.285 6.709l-11.285 11.291-5.285-5.291 1.414-1.414 3.871 3.877 9.871-9.877z"/>
+          </svg>
+          <span id="paymentToastMessage">Address Saved</span>
+        </div>
+
+        <!-- Success -->
+        <div class="success-page" id="paymentSuccessPage">
+          <div class="circle"><svg viewBox="0 0 52 52"><path d="M14 27l7 7 17-17"></path></svg></div>
+          <div class="success-text" id="paymentSuccessText"></div>
+          <audio id="paymentSuccessSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+        </div>
+
+      </div>
+
+      <!-- Orders Page (hidden by default) -->
+      <div id="orders-page" class="hidden">
+        <div class="orders-container">
+          <button class="back-button" onclick="showCategories()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Back to Home</span>
+          </button>
           
-          <button class="checkout-btn">Proceed to Checkout</button>
+          <div class="orders-header">
+            <h2>My Orders</h2>
+            <div class="orders-count" id="orders-count">0</div>
+          </div>
+          
+          <div class="orders-list" id="orders-list">
+            <!-- Orders will be dynamically inserted here -->
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="#666">
+                <path d="M8 1h8v2H8zM6 5h12v2H6zM4 9h16v2H4zM2 13h20v2H2zM0 17h24v2H0z"/>
+              </svg>
+              <p>You have no orders yet</p>
+              <button onclick="showCategories()" class="continue-shopping-btn">Continue Shopping</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <!-- ================== 52. BRIXO MART FOOTER and about us ================== -->
+<footer id="app-footer" style="background: #2e7d32; background: linear-gradient(to bottom, #43a047, #2e7d32); color: #fff; padding: 50px 20px; border-top-left-radius: 30px; border-top-right-radius: 30px; font-family: 'Arial', sans-serif;">
+
+  <!-- 53. Brand Section -->
+  <div style="text-align: center;">
+    <h2 style="color: #caffca; margin-bottom: 15px; font-size: 28px; font-weight: bold;">Brixo Mart</h2>
+    <p style="color: #f0fff0; font-size: 15px; line-height: 1.8; max-width: 650px; margin: auto;">
+      Your trusted grocery grocery partner delivering fresh fruits, vegetables, and daily essentials with quality and convenience right to your doorstep.
+    </p>
   </div>
 
+  <!-- 54. App Badge Section -->
+  <div style="text-align: center; margin-top: 25px;">
+    <a href="#">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" style="width: 160px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    </a>
+  </div>
+
+  <!-- 55. Contact and Support Section -->
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 50px; flex-wrap: wrap;">
+
+    <!-- 56. Contact Us LEFT -->
+    <div style="text-align: left;">
+      <h3 style="margin-bottom: 12px; font-size: 18px; font-weight: 600;">Contact Us</h3>
+      <p style="margin: 6px 0; font-size: 14px;">📍 Main Bazaar, Delhi, India</p>
+      <p style="margin: 6px 0; font-size: 14px;">✉️ support@brixomart.com</p>
+      <p style="margin: 6px 0; font-size: 14px;">📞 +91 8407031843</p>
+    </div>
+
+    <!-- 57. Support RIGHT -->
+    <div style="text-align: right;">
+      <h3 style="margin-bottom: 12px; font-size: 18px; font-weight: 600;">Support</h3>
+      <p style="margin: 6px 0; font-size: 14px;">
+        <a href="#" onclick="openModal('privacy')" style="color: #d0ffd6; text-decoration: none;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#d0ffd6'">Privacy Policy</a>
+      </p>
+      <p style="margin: 6px 0; font-size: 14px;">
+        <a href="#" onclick="openModal('terms')" style="color: #d0ffd6; text-decoration: none;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#d0ffd6'">Terms & Conditions</a>
+      </p>
+      <p style="margin: 6px 0; font-size: 14px;">
+        <a href="#" onclick="openModal('refund')" style="color: #d0ffd6; text-decoration: none;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#d0ffd6'">Refund Policy</a>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- 58. Copyright Section -->
+  <div style="margin-top: 45px; font-size: 13px; color: #d9f9dc; text-align: center;">
+    © 2025 Brixo Mart | All Rights Reserved
+  </div>
+</footer>
+<!-- ================== 59. END FOOTER ================== -->
+
+<!-- ================== 60. MODALS ================== -->
+<div id="policyModal" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:999;">
+  <div style="background:#fff; color:#333; padding:25px; border-radius:12px; max-width:600px; width:90%; text-align:left; position:relative;">
+    <span onclick="closeModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px; font-weight:bold; color:#2e7d32;">✖</span>
+    <h2 id="modalTitle" style="margin-bottom:10px; color:#2e7d32;"></h2>
+    <p id="modalContent" style="line-height:1.6; font-size:14px;"></p>
+  </div>
+</div>
+
+  </div>
+  <!-- 62. External JavaScript libraries -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+  <!-- Inline JavaScript -->
   <script>
-    // Menu Toggle Functionality
+    // 1. Menu Toggle Functionality
     const menuToggle = document.getElementById('menuToggle');
     const menu = document.getElementById('menu');
     const overlay = document.getElementById('overlay');
-    
-    menuToggle.addEventListener('click', () => {
-      menu.classList.toggle('active');
-      overlay.classList.toggle('active');
-    });
-    
-    overlay.addEventListener('click', () => {
-      menu.classList.remove('active');
-      overlay.classList.remove('active');
-    });
 
-    // Location Selector Functionality
+    if (menuToggle && menu && overlay) {
+        // 1.1 Add click event to toggle menu
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        // 1.2 Add click event to close menu when overlay is clicked
+        overlay.addEventListener('click', () => {
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    }
+
+    // 2. Location Selector Functionality
     const addressBar = document.getElementById("addressBar");
     const locationPopup = document.getElementById("locationPopup");
     const useCurrentLocation = document.getElementById("useCurrentLocation");
@@ -2278,479 +2944,658 @@
     const confirmAddressBtn = document.getElementById("confirmAddressBtn");
     const suggestionsBox = document.getElementById("suggestions");
     const homeSearchInput = document.querySelector(".home-search input");
+    const locationLoading = document.getElementById("locationLoading");
+    const locationMessage = document.getElementById("locationMessage");
+    const mapError = document.getElementById("mapError");
+    const closePopup = document.getElementById("closePopup");
 
-    let debounceTimer, cache={}, selectedIndex=-1, currentSuggestions=[];
+    // 2.1 Initialize variables for location functionality
+    let debounceTimer, cache = {}, selectedIndex = -1, currentSuggestions = [];
+    let map, marker, coords = null;
 
-    // Open popup
-    addressBar.addEventListener("click",()=> locationPopup.style.display="flex");
-    locationPopup.addEventListener("click",e=> { if(e.target===locationPopup) locationPopup.style.display="none"; });
-
-    // Set home icon
-    function setHomeIcon() {
-        addressIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>`;
+    // 2.2 Open location popup when address bar is clicked
+    if (addressBar && locationPopup) {
+        addressBar.addEventListener("click", () => locationPopup.style.display = "flex");
+        
+        // 2.3 Close popup when clicking outside the content
+        locationPopup.addEventListener("click", e => {
+            if (e.target === locationPopup) locationPopup.style.display = "none";
+        });
     }
 
-    // Autocomplete search in popup
-    popupSearchInput.addEventListener("input",()=>{
-        const query = popupSearchInput.value.trim();
-        clearTimeout(debounceTimer); selectedIndex=-1;
-        if(query.length<2){ suggestionsBox.innerHTML=""; return; }
-        if(cache[query]){ renderSuggestions(cache[query]); return; }
-        debounceTimer=setTimeout(async()=>{
-            try{
-                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5&countrycodes=in`);
-                const data = await res.json();
-                cache[query]=data;
-                renderSuggestions(data);
-            }catch(err){ console.error(err); }
-        },250);
+    // Close popup handler
+    closePopup.addEventListener("click", () => {
+      locationPopup.style.display = "none";
     });
 
-    function renderSuggestions(data){
-        currentSuggestions=data;
-        suggestionsBox.innerHTML="";
-        if(data.length===0){ suggestionsBox.innerHTML="No results found"; return; }
-        data.forEach((place,i)=>{
-            const div=document.createElement("div");
-            div.textContent=place.display_name;
-            div.onclick=()=>selectSuggestion(i);
+    // 2.4 Function to set home icon in address bar
+    function setHomeIcon() {
+        if (addressIcon) {
+            addressIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>`;
+        }
+    }
+
+    // 2.5 Autocomplete search in location popup
+    if (popupSearchInput && suggestionsBox) {
+        popupSearchInput.addEventListener("input", () => {
+            const query = popupSearchInput.value.trim();
+            clearTimeout(debounceTimer);
+            selectedIndex = -1;
+            
+            // 2.5.1 Clear suggestions if query is too short
+            if (query.length < 2) {
+                suggestionsBox.innerHTML = "";
+                return;
+            }
+            
+            // 2.5.2 Use cached results if available
+            if (cache[query]) {
+                renderSuggestions(cache[query]);
+                return;
+            }
+            
+            // 2.5.3 Fetch location suggestions with debouncing
+            debounceTimer = setTimeout(async () => {
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&addressdetails=1&limit=5&countrycodes=in`);
+                    const data = await res.json();
+                    cache[query] = data;
+                    renderSuggestions(data);
+                } catch (err) {
+                    console.error(err);
+                }
+            }, 250);
+        });
+    }
+
+    // 2.6 Function to render location suggestions
+    function renderSuggestions(data) {
+        if (!suggestionsBox) return;
+        
+        currentSuggestions = data;
+        suggestionsBox.innerHTML = "";
+        
+        // 2.6.1 Show message if no results found
+        if (data.length === 0) {
+            suggestionsBox.innerHTML = "No results found";
+            return;
+        }
+        
+        // 2.6.2 Create suggestion items
+        data.forEach((item, i) => {
+            const div = document.createElement("div");
+            div.textContent = item.display_name;
+            div.onclick = () => selectSuggestion(i);
             suggestionsBox.appendChild(div);
         });
     }
 
-    function selectSuggestion(index){
-        const place=currentSuggestions[index];
-        popupSearchInput.value=place.display_name;
-        currentAddress.innerHTML=place.display_name;
+    // 2.7 Function to handle suggestion selection
+    function selectSuggestion(index) {
+        const place = currentSuggestions[index];
+        if (popupSearchInput) popupSearchInput.value = place.display_name;
+        if (currentAddress) currentAddress.innerHTML = place.display_name;
         setHomeIcon();
-        locationPopup.style.display="none";
+        if (locationPopup) locationPopup.style.display = "none";
     }
 
-    // Keyboard nav
-    popupSearchInput.addEventListener("keydown",e=>{
-        const items = suggestionsBox.querySelectorAll("div");
-        if(items.length===0) return;
-        if(e.key==="ArrowDown"){ selectedIndex=(selectedIndex+1)%items.length; updateActive(items);}
-        else if(e.key==="ArrowUp"){ selectedIndex=(selectedIndex-1+items.length)%items.length; updateActive(items);}
-        else if(e.key==="Enter" && selectedIndex>=0){ selectSuggestion(selectedIndex); }
-    });
-    function updateActive(items){ items.forEach((item,i)=> item.classList.toggle("active", i===selectedIndex)); }
-
-    // Use current location
-    useCurrentLocation.addEventListener("click",()=>{
-        if(!navigator.geolocation){ alert("Geolocation not supported."); return; }
-        currentAddress.innerHTML="Detecting location...";
-        navigator.geolocation.getCurrentPosition(async pos=>{
-            const lat=pos.coords.latitude, lon=pos.coords.longitude;
-            try{
-                const res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-                const data=await res.json();
-                currentAddress.innerHTML=data.display_name || "Current location";
-                setHomeIcon();
-                locationPopup.style.display="none";
-            }catch(err){ console.error(err); currentAddress.innerHTML="Unable to detect location"; }
-        }, err=>{
-            switch(err.code){
-                case err.PERMISSION_DENIED: currentAddress.innerHTML="Permission denied."; break;
-                case err.POSITION_UNAVAILABLE: currentAddress.innerHTML="Location unavailable."; break;
-                case err.TIMEOUT: currentAddress.innerHTML="Request timed out."; break;
-                default: currentAddress.innerHTML="Unknown error."; break;
+    // 2.8 Keyboard navigation for suggestions
+    if (popupSearchInput) {
+        popupSearchInput.addEventListener("keydown", e => {
+            const items = suggestionsBox ? suggestionsBox.querySelectorAll("div") : [];
+            if (items.length === 0) return;
+            
+            // 2.8.1 Navigate down with arrow down
+            if (e.key === "ArrowDown") {
+                selectedIndex = (selectedIndex + 1) % items.length;
+                updateActive(items);
+            } 
+            // 2.8.2 Navigate up with arrow up
+            else if (e.key === "ArrowUp") {
+                selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+                updateActive(items);
+            } 
+            // 2.8.3 Select with enter key
+            else if (e.key === "Enter" && selectedIndex >= 0) {
+                selectSuggestion(selectedIndex);
             }
         });
-    });
+    }
 
-    // Confirm typed address
-    confirmAddressBtn.addEventListener("click",()=>{
-        let val=popupSearchInput.value.trim();
-        if(!val){ alert("Please enter a location."); return; }
-        currentAddress.innerHTML=val;
-        setHomeIcon();
-        locationPopup.style.display="none";
-    });
+    // 2.9 Function to update active suggestion item
+    function updateActive(items) {
+        items.forEach((item, i) => item.classList.toggle("active", i === selectedIndex));
+    }
 
-    // Grocery autocomplete placeholder rotation
-    const grocerySuggestions = ["Milk", "Bread", "Rice", "Eggs", "Butter", "Cheese", "Fruits", "Vegetables","fashion","beauty","shampoo","laptop","biscuite","chocleate"];
+    // 2.10 Use current location functionality
+    if (useCurrentLocation && currentAddress) {
+        useCurrentLocation.addEventListener("click", () => {
+            if (!navigator.geolocation) {
+                alert("Geolocation not supported.");
+                return;
+            }
+            
+            currentAddress.innerHTML = "Detecting location...";
+            locationLoading.style.display = "block";
+            useCurrentLocation.style.display = "none";
+            locationMessage.style.display = "block";
+            mapError.style.display = "none";
+            
+            navigator.geolocation.getCurrentPosition(async pos => {
+                coords = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+                try {
+                    await showMap(coords);
+                    await fetchAddress(coords);
+                    locationLoading.style.display = "none";
+                    useCurrentLocation.style.display = "flex";
+                    locationMessage.style.display = "none";
+                } catch (error) {
+                    console.error("Map error:", error);
+                    locationLoading.style.display = "none";
+                    useCurrentLocation.style.display = "flex";
+                    locationMessage.style.display = "none";
+                    mapError.style.display = "block";
+                }
+            }, err => {
+                // 2.10.4 Handle geolocation errors
+                switch (err.code) {
+                    case err.PERMISSION_DENIED:
+                        currentAddress.innerHTML = "Permission denied.";
+                        break;
+                   case err.POSITION_UNAVAILABLE:
+                        currentAddress.innerHTML = "Location unavailable.";
+                        break;
+                    case err.TIMEOUT:
+                        currentAddress.innerHTML = "Request timed out.";
+                        break;
+                    default:
+                        currentAddress.innerHTML = "Unknown error.";
+                        break;
+                }
+                locationLoading.style.display = "none";
+                useCurrentLocation.style.display = "flex";
+            });
+        });
+    }
+
+    // Show map function
+    function showMap({lat, lng}) {
+      return new Promise((resolve, reject) => {
+        try {
+          // Initialize map if not already done
+          if (!map) {
+            map = L.map("map").setView([lat, lng], 15);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Create a custom icon for the marker
+            const customIcon = L.icon({
+              iconUrl: 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+              shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+              shadowSize: [41, 41]
+            });
+
+            marker = L.marker([lat, lng], {icon: customIcon, draggable: true}).addTo(map);
+            
+            // Update address when marker is dragged
+            marker.on("dragend", function() {
+              const position = marker.getLatLng();
+              coords = {lat: position.lat, lng: position.lng};
+              fetchAddress(coords);
+            });
+          } else {
+            map.setView([lat, lng], 15);
+            marker.setLatLng([lat, lng]);
+          }
+          
+          // Make sure the map container is visible
+          document.getElementById("map").style.display = "block";
+          
+          // Small delay to ensure map renders properly
+          setTimeout(() => {
+            map.invalidateSize();
+            resolve();
+          }, 100);
+        } catch (error) {
+          console.error("Error initializing map:", error);
+          mapError.style.display = "block";
+          reject(error);
+        }
+      });
+    }
+
+    // Fetch address from coordinates
+    async function fetchAddress({lat, lng}) {
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`);
+        
+        if (!res.ok) {
+          console.error('Geocoding API error:', res.status);
+          return;
+        }
+        
+        const data = await res.json();
+        
+        if (data && data.address) {
+          popupSearchInput.value = data.display_name || "";
+          currentAddress.innerHTML = data.display_name || "Current location";
+          setHomeIcon();
+        }
+      } catch(err) { 
+        console.error('Error with geocoding API:', err);
+      }
+    }
+
+    // 2.11 Confirm typed address
+    if (confirmAddressBtn && popupSearchInput && currentAddress) {
+        confirmAddressBtn.addEventListener("click", () => {
+            let val = popupSearchInput.value.trim();
+            if (!val) {
+                alert("Please enter a location.");
+                return;
+            }
+            currentAddress.innerHTML = val;
+            setHomeIcon();
+            if (locationPopup) locationPopup.style.display = "none";
+        });
+    }
+
+    // 3. Grocery search placeholder rotation
+    const grocerySuggestions = ["Milk", "Bread", "Rice", "Eggs", "Butter", "Cheese", "Fruits", "Vegetables", "fashion", "beauty", "shampoo", "laptop", "biscuite", "chocleate"];
     let groceryIndex = 0;
 
-    setInterval(() => {
-        homeSearchInput.setAttribute("placeholder", "Search for " + grocerySuggestions[groceryIndex]);
-        groceryIndex = (groceryIndex + 1) % grocerySuggestions.length;
-    }, 2000); // 2 seconds delay between suggestions
-    
-    // Initialize Swiper
-    const swiper = new Swiper('.swiper', {  
-        loop: true,  
-        autoplay: {  
-            delay: 2500,  
-            disableOnInteraction: false,  
-        },  
-        pagination: {  
-            el: '.swiper-pagination',  
-            clickable: true,  
-        },  
-    });
+    // 3.1 Rotate placeholder text every 2 seconds
+    if (homeSearchInput) {
+        setInterval(() => {
+            homeSearchInput.setAttribute("placeholder", "Search for " + grocerySuggestions[groceryIndex]);
+            groceryIndex = (groceryIndex + 1) % grocerySuggestions.length;
+        }, 2000);
+    }
 
-    // Add click event to categories
+    // 4. Initialize Swiper for image carousel
+    let swiper = null;
+    if (document.querySelector('.swiper')) {
+        swiper = new Swiper('.swiper', {
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    }
+
+    // 5. Addclick event to categories
     document.querySelectorAll('.category').forEach(item => {
-        item.addEventListener('click', function() {
-            // Remove active class from all categories
+        item.addEventListener('click', function () {
+            // 5.1 Remove active class from all categories
             document.querySelectorAll('.category').forEach(cat => {
                 cat.classList.remove('active');
             });
-            // Add active class to clicked category
+            // 5.2 Add active class to clicked category
             this.classList.add('active');
         });
     });
 
-    // Sample product data for each category with images
+    // 6. Sample product data for each category with images
     const productsData = {
         'Apples': [
-            { 
-                name: 'Shimla Apple', 
-                price: '₹120/kg', 
+            {
+                name: 'Shimla Apple',
+                price: '₹120/kg',
                 originalPrice: '₹133/kg',
-                discount: '10% OFF', 
+                discount: '10% OFF',
                 description: 'Fresh and juicy Shimla apples with crisp texture and sweet-tart flavor. Rich in fiber and antioxidants.',
                 image: 'https://via.placeholder.com/300x300?text=Shimla+Apple'
             },
-            { 
-                name: 'Washington Apple', 
-                price: '₹180/kg', 
+            {
+                name: 'Washington Apple',
+                price: '₹180/kg',
                 originalPrice: '₹200/kg',
-                discount: '10% OFF', 
+                discount: '10% OFF',
                 description: 'Premium imported Washington apples with firm texture and sweet flavor. Perfect for snacking.',
                 image: 'https://via.placeholder.com/300x300?text=Washington+Apple'
             },
-            { 
-                name: 'Kashmiri Apple', 
-                price: '₹150/kg', 
+            {
+                name: 'Kashmiri Apple',
+                price: '₹150/kg',
                 originalPrice: '₹165/kg',
-                discount: '9% OFF', 
-                description: 'Sweet and aromatic Kashmiri apples with deep red color and crisp texture.',
+                discount: '9% OFF',
+                description: 'Sweet and aromatic Kashmiri apples with deep red color and crisp crisp.',
                 image: 'https://via.placeholder.com/300x300?text=Kashmiri+Apple'
             }
         ],
         'Bananas': [
-            { 
-                name: 'Robusta Banana', 
-                price: '₹50/dozen', 
+            {
+                name: 'Robusta Banana',
+                price: '₹50/dozen',
                 originalPrice: '₹55/dozen',
-                discount: '9% OFF', 
+                discount: '9% OFF',
                 description: 'Fresh Robusta bananas with perfect ripeness. Rich in potassium and natural sugars for energy.',
                 image: 'https://via.placeholder.com/300x300?text=Robusta+Banana'
             },
-            { 
-                name: 'Yelakki Banana', 
-                price: '₹60/dozen', 
+            {
+                name: 'Yelakki Banana',
+                price: '₹60/dozen',
                 originalPrice: '₹65/dozen',
-                discount: '8% OFF', 
+                discount: '8% OFF',
                 description: 'Small and sweet Yelakki bananas, perfect for kids and healthy snacks.',
                 image: 'https://via.placeholder.com/300x300?text=Yelakki+Banana'
             }
         ],
         'Rice': [
-            { 
-                name: 'India Gate Basmati Rice', 
-                price: '₹499', 
+            {
+                name: 'India Gate Basmati Rice',
+                price: '₹499',
                 originalPrice: '₹550',
-                discount: '9% OFF', 
+                discount: '9% OFF',
                 description: 'Premium quality basmati rice with long grains and aromatic flavor. Perfect for biryanis and pulao.',
                 image: 'https://via.placeholder.com/300x300?text=India+Gate+Rice'
             },
-            { 
-                name: 'Daawat Basmati Rice', 
-                price: '₹450', 
+            {
+                name: 'Daawat Basmati Rice',
+                price: '₹450',
                 originalPrice: '₹500',
-                discount: '10% OFF', 
-                description: 'Authentic basmati rice with extra long grains and delicate aroma. Ideal for daily cooking.',
+                discount: '10% OFF',
+                description: 'Authentic basmati rice with extra long grains and aromatic. Ideal for daily cooking.',
                 image: 'https://via.placeholder.com/300x300?text=Daawat+Rice'
             },
-            { 
-                name: 'Fortune Basmati Rice', 
-                price: '₹420', 
+            {
+                name: 'Fortune Basmati Rice',
+                price: '₹420',
                 originalPrice: '₹480',
-                discount: '12% OFF', 
+                discount: '12% OFF',
                 description: 'Pure basmati rice with excellent elongation and non-sticky texture. Good for all rice dishes.',
                 image: 'https://via.placeholder.com/300x300?text=Fortune+Rice'
             }
         ],
         'Oil': [
-            { 
-                name: 'Fortune Sunflower Oil', 
-                price: '₹199', 
+            {
+                name: 'Fortune Sunflower Oil',
+                price: '₹199',
                 originalPrice: '₹225',
-                discount: '12% OFF', 
+                discount: '12% OFF',
                 description: '100% pure sunflower oil with light taste and high smoke point. Rich in vitamin E.',
                 image: 'https://via.placeholder.com/300x300?text=Fortune+Oil'
             },
-            { 
-                name: 'Saffola Gold Oil', 
-                price: '₹210', 
+            {
+                name: 'Saffola Gold Oil',
+                price: '₹210',
                 originalPrice: '₹240',
-                discount: '12% OFF', 
-                description: 'Blended edible oil with the goodness of rice bran oil and sunflower oil. Helps maintain cholesterol.',
+                discount: '12% OFF',
+                description: 'Blended edible oil with extra of rice bran oil and sunflower oil. Helps maintain cholesterol.',
                 image: 'https://via.placeholder.com/300x300?text=Saffola+Oil'
             },
-            { 
-                name: 'Patanjali Mustard Oil', 
-                price: '₹180', 
+            {
+                name: 'Patanjali Mustard Oil',
+                price: '₹180',
                 originalPrice: '₹200',
-                discount: '10% OFF', 
+                discount: '10% OFF',
                 description: 'Pure mustard oil with strong aroma and taste. Traditionally used in Indian cooking.',
                 image: 'https://via.placeholder.com/300x300?text=Patanjali+Oil'
             }
         ],
         'Wheat': [
-            { 
-                name: 'Aashirvaad Whole Wheat Atta', 
-                price: '₹299', 
+            {
+                name: 'Aashirvaad Whole Wheat Atta',
+                price: '₹299',
                 originalPrice: '₹330',
-                discount: '9% OFF', 
+                discount: '9% OFF',
                 description: '100% whole wheat atta with 0% maida. Rich in fiber and nutrients for healthy rotis.',
                 image: 'https://via.placeholder.com/300x300?text=Aashirvaad+Atta'
             },
-            { 
-                name: 'Pillsbury Chakki Fresh Atta', 
-                price: '₹280', 
+            {
+                name: 'Pillsbury Chakki Fresh Atta',
+                price: '₹280',
                 originalPrice: '₹310',
-                discount: '10% OFF', 
+                discount: '10% OFF',
                 description: 'Chakki ground whole wheat flour for soft and fluffy rotis. No preservatives added.',
                 image: 'https://via.placeholder.com/300x300?text=Pillsbury+Atta'
             },
-            { 
-                name: 'Nature\'s Gift Organic Wheat', 
-                price: '₹350', 
+            {
+                name: 'Nature\'s Gift Organic Wheat',
+                price: '₹350',
                 originalPrice: '₹380',
-                discount: '8% OFF', 
+                discount: '8% OFF',
                 description: 'Certified organic whole wheat flour. Grown without chemical fertilizers or pesticides.',
                 image: 'https://via.placeholder.com/300x300?text=Organic+Wheat'
             }
         ],
         'Salt': [
-            { 
-                name: 'Tata Iodized Salt', 
-                price: '₹25', 
+            {
+                name: 'Tata Iodized Salt',
+                price: '₹25',
                 originalPrice: '₹28',
-                discount: '11% OFF', 
-                description: 'Pure vacuum evaporated iodized salt. Essential for thyroid function and overall health.',
+                discount: '11% OFF',
+                description: 'Pure and vacuum evaporated iodized salt. Essential for thyroid function and overall health.',
                 image: 'https://via.placeholder.com/300x300?text=Tata+Salt'
             },
-            { 
-                name: 'Saffola Salt', 
-                price: '₹30', 
+            {
+                name: 'Saffola Salt',
+                price: '₹30',
                 originalPrice: '₹35',
-                discount: '14% OFF', 
+                discount: '14% OFF',
                 description: 'Low sodium salt with 15% less sodium than regular salt. Helps maintain blood pressure.',
                 image: 'https://via.placeholder.com/300x300?text=Saffola+Salt'
             }
         ],
         'Noodles': [
-            { 
-                name: 'Maggi Masala Noodles', 
-                price: '₹60', 
+            {
+                name: 'Maggi Masala Noodles',
+                price: '₹60',
                 originalPrice: '₹70',
-                discount: '14% OFF', 
+                discount: '14% OFF',
                 description: 'Instant noodles with masala tastemaker. Ready in just 2 minutes. Contains no added MSG.',
                 image: 'https://via.placeholder.com/300x300?text=Maggi+Noodles'
             },
-            { 
-                name: 'Top Ramen Noodles', 
-                price: '₹55', 
+            {
+                name: 'Top Ramen Noodles',
+                price: '₹55',
                 originalPrice: '₹65',
-                discount: '15% OFF', 
+                discount: '15% OFF',
                 description: 'Delicious instant noodles with vegetable tastemaker. Quick and easy to prepare.',
                 image: 'https://via.placeholder.com/300x300?text=Top+Ramen'
             }
         ],
         'Milk': [
-            { 
-                name: 'Amul Taaza Milk', 
-                price: '₹60', 
+            {
+                name: 'Amul Taaza Milk',
+                price: '₹60',
                 originalPrice: '',
-                discount: '', 
+                discount: '',
                 description: 'Pasteurized standardized toned milk. Rich in calcium and protein. 4.5% fat content.',
                 image: 'https://via.placeholder.com/300x300?text=Amul+Milk'
             },
-            { 
-                name: 'Mother Dairy Milk', 
-                price: '₹58', 
+            {
+                name: 'Mother Dairy Milk',
+                price: '₹58',
                 originalPrice: '',
-                discount: '', 
+                discount: '',
                 description: 'Pure and fresh toned milk. Homogenized and pasteurized for safety and longer shelf life.',
                 image: 'https://via.placeholder.com/300x300?text=Mother+Dairy'
             }
         ],
         'Tea': [
-            { 
-                name: 'Brooke Bond Red Label Tea', 
-                price: '₹220', 
+            {
+                name: 'Brooke Bond Red Label Tea',
+                price: '₹220',
                 originalPrice: '₹250',
-                discount: '12% OFF', 
+                discount: '12% OFF',
                 description: 'Strong and refreshing tea leaves with rich aroma. Perfect for morning tea.',
                 image: 'https://via.placeholder.com/300x300?text=Red+Label+Tea'
             },
-            { 
-                name: 'Taj Mahal Tea', 
-                price: '₹250', 
+            {
+                name: 'Taj Mahal Tea',
+                price: '₹250',
                 originalPrice: '₹280',
-                discount: '11% OFF', 
+                discount: '11% OFF',
                 description: 'Premium quality tea leaves with exquisite flavor and aroma. The champagne of teas.',
                 image: 'https://via.placeholder.com/300x300?text=Taj+Mahal+Tea'
             }
         ],
         'Sugar': [
-            { 
-                name: 'Dhampur Sugar', 
-                price: '₹45', 
+            {
+                name: 'Dhampur Sugar',
+                price: '₹45',
                 originalPrice: '₹50',
-                discount: '10% OFF', 
+                discount: '10% OFF',
                 description: 'Pure and natural sugar crystals. Free from any additives or artificial colors.',
                 image: 'https://via.placeholder.com/300x300?text=Dhampur+Sugar'
             },
-            { 
-                name: 'Madhur Sugar', 
-                price: '₹48', 
+            {
+                name: 'Madhur Sugar',
+                price: '₹48',
                 originalPrice: '₹55',
-                discount: '13% OFF', 
+                discount: '13% OFF',
                 description: 'Fine quality sugar with uniform crystal size. Dissolves quickly in beverages.',
                 image: 'https://via.placeholder.com/300x300?text=Madhur+Sugar'
             }
         ],
         'Biscuits': [
-            { 
-                name: 'Parle-G Biscuits', 
-                price: '₹10', 
+            {
+                name: 'Parle-G Biscuits',
+                price: '₹10',
                 originalPrice: '₹12',
-                discount: '17% OFF', 
+                discount: '17% OFF',
                 description: 'Iconic glucose biscuits with great taste. Perfect for tea time or as a quick snack.',
                 image: 'https://via.placeholder.com/300x300?text=Parle-G'
             },
-            { 
-                name: 'Britannia Good Day', 
-                price: '₹20', 
+            {
+                name: 'Britannia Good Day',
+                price: '₹20',
                 originalPrice: '₹25',
-                discount: '20% OFF', 
+                discount: '20% OFF',
                 description: 'Butter cookies with cashew bits. Rich and crunchy taste that melts in your mouth.',
                 image: 'https://via.placeholder.com/300x300?text=Good+Day'
             }
         ],
         // Additional categories for the grid view
         'Fresh Fruits': [
-            { 
-                name: 'Apple', 
-                price: '₹120/kg', 
+            {
+                name: 'Apple',
+                price: '₹120/kg',
                 originalPrice: '₹133/kg',
-                discount: '10% OFF', 
+                discount: '10% OFF',
                 description: 'Fresh and juicy apples with crisp texture and sweet-tart flavor.',
                 image: 'https://via.placeholder.com/300x300?text=Apple'
             },
-            { 
-                name: 'Banana', 
-                price: '₹50/dozen', 
+            {
+                name: 'Banana',
+                price: '₹50/dozen',
                 originalPrice: '₹55/dozen',
-                discount: '9% OFF', 
+                discount: '9% OFF',
                 description: 'Fresh bananas with perfect ripeness. Rich in potassium.',
                 image: 'https://via.placeholder.com/300x300?text=Banana'
             }
         ],
         'Fresh Vegetables': [
-            { 
-                name: 'Tomato', 
-                price: '₹40/kg', 
+            {
+                name: 'Tomato',
+                price: '₹40/kg',
                 originalPrice: '₹45/kg',
-                discount: '11% OFF', 
+                discount: '11% OFF',
                 description: 'Fresh and juicy tomatoes perfect for salads and cooking.',
                 image: 'https://via.placeholder.com/300x300?text=Tomato'
             },
-            { 
-                name: 'Potato', 
-                price: '₹30/kg', 
+            {
+                name: 'Potato',
+                price: '₹30/kg',
                 originalPrice: '₹35/kg',
-                discount: '14% OFF', 
+                discount: '14% OFF',
                 description: 'Fresh potatoes ideal for all types of cooking.',
                 image: 'https://via.placeholder.com/300x300?text=Potato'
             }
         ],
         'Organic Produce': [
-            { 
-                name: 'Organic Apple', 
-                price: '₹180/kg', 
+            {
+                name: 'Organic Apple',
+                price: '₹180/kg',
                 originalPrice: '₹200/kg',
-                discount: '10% OFF', 
+                discount: '10% OFF',
                 description: 'Certified organic apples grown without pesticides.',
                 image: 'https://via.placeholder.com/300x300?text=Organic+Apple'
             },
-            { 
-                name: 'Organic Tomato', 
-                price: '₹60/kg', 
+            {
+                name: 'Organic Tomato',
+                price: '₹60/kg',
                 originalPrice: '₹70/kg',
-                discount: '14% OFF', 
+                discount: '14% OFF',
                 description: 'Certified organic tomatoes with natural flavor.',
                 image: 'https://via.placeholder.com/300x300?text=Organic+Tomato'
             }
         ],
         'Exotic Fruits': [
-            { 
-                name: 'Kiwi', 
-                price: '₹100/pack', 
+            {
+                name: 'Kiwi',
+                price: '₹100/pack',
                 originalPrice: '₹120/pack',
-                discount: '17% OFF', 
+                discount: '17% OFF',
                 description: 'Exotic kiwi fruits packed with vitamin C.',
                 image: 'https://via.placeholder.com/300x300?text=Kiwi'
             },
-            { 
-                name: 'Dragon Fruit', 
-                price: '₹150/piece', 
+            {
+                name: 'Dragon Fruit',
+                price: '₹150/piece',
                 originalPrice: '₹180/piece',
-                discount: '17% OFF', 
+                discount: '17% OFF',
                 description: 'Exotic dragon fruit with unique appearance and taste.',
                 image: 'https://via.placeholder.com/300x300?text=Dragon+Fruit'
             }
         ],
         'Mobiles': [
-            { 
-                name: 'iPhone 13', 
-                price: '₹69,999', 
+            {
+                name: 'iPhone 13',
+                price: '₹69,999',
                 originalPrice: '₹79,900',
-                discount: '12% OFF', 
+                discount: '12% OFF',
                 description: 'Latest iPhone with A15 Bionic chip and great camera.',
                 image: 'https://via.placeholder.com/300x300?text=iPhone+13'
             },
-            { 
-                name: 'Samsung Galaxy S21', 
-                price: '₹59,999', 
+            {
+                name: 'Samsung Galaxy S21',
+                price: '₹59,999',
                 originalPrice: '₹69,999',
-                discount: '14% OFF', 
+                discount: '14% OFF',
                 description: 'Powerful Android phone with amazing display.',
                 image: 'https://via.placeholder.com/300x300?text=Galaxy+S21'
             }
         ],
         'Headphones': [
-            { 
-                name: 'Sony WH-1000XM4', 
-                price: '₹24,990', 
+            {
+                name: 'Sony WH-1000XM4',
+                price: '₹24,990',
                 originalPrice: '₹29,990',
-                discount: '17% OFF', 
+                discount: '17% OFF',
                 description: 'Industry-leading noise cancellation headphones.',
                 image: 'https://via.placeholder.com/300x300?text=Sony+Headphones'
             },
-            { 
-                name: 'Boat Rockerz 450', 
-                price: '₹1,499', 
+            {
+                name: 'Boat Rockerz 450',
+                price: '₹1,499',
                 originalPrice: '₹1,999',
-                discount: '25% OFF', 
+                discount: '25% OFF',
                 description: 'Comfortable wireless headphones with good sound.',
                 image: 'https://via.placeholder.com/300x300?text=Boat+Headphones'
             }
         ]
     };
 
+    // 7. Global variables for app state
     let currentCategory = '';
     let currentProduct = null;
     let wishlistItems = [];
     let cartItems = [];
+    let orders = [];
+    let totalAmount = 0;
 
-    // Show products for a specific category
+    // 8. Function to show products for a specific category
     function showProducts(category) {
         currentCategory = category;
         document.body.classList.add('products-page-open');
@@ -2759,30 +3604,35 @@
         document.getElementById('product-detail-page').classList.add('hidden');
         document.getElementById('wishlist-page').classList.add('hidden');
         document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.add('hidden');
         document.getElementById('products-page').classList.remove('hidden');
-        
-        // Set the category title
+
+        document.getElementById('app-footer').style.display = 'none';
+
+        // 8.1 Set the category title
         document.getElementById('product-category-title').textContent = category;
-        
-        // Get the product grid container
+
+        // 8.2 Get the product grid container
         const productGrid = document.getElementById('products-grid');
         productGrid.innerHTML = '';
-        
-        // Check if we have products for this category
+
+        // 8.3 Check if we have products for this category
         if (productsData[category]) {
-            // Add products to the grid
+            // 8.4 Add products to the grid
             productsData[category].forEach((product, index) => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 productCard.onclick = () => showProductDetail(category, index);
-                
-                // Check if product is in wishlist
+
+                // 8.4.1 Check if product is in wishlist
                 const isInWishlist = wishlistItems.some(item => item.name === product.name);
-                
-                // Check if product is in cart
+
+                // 8.4.2 Check if product is in cart
                 const cartItem = cartItems.find(item => item.name === product.name);
                 const quantity = cartItem ? cartItem.quantity : 0;
-                
+
+                // 8.4.3 Create product card HTML
                 productCard.innerHTML = `
                     <button class="wishlist ${isInWishlist ? 'active' : ''}" onclick="toggleWishlist(event, this, '${category}', ${index})" aria-pressed="${isInWishlist}" title="Add to wishlist">
                         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -2800,29 +3650,30 @@
                         <div class="product-price">${product.price}</div>
                         <div class="bottom-row">
                             <span class="discount-text">${product.discount}</span>
-                            ${quantity > 0 ? 
-                              `<div class="qty-control">
+                            ${quantity > 0 ?
+                    `<div class="qty-control">
                                 <button onclick="decreaseQty(event, this, '${product.name}')">-</button>
                                 <span>${quantity}</span>
                                 <button onclick="increaseQty(event, this, '${product.name}')">+</button>
-                              </div>` : 
-                              `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
+                              </div>` :
+                    `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
                         </div>
                     </div>
                 `;
-                
+
                 productGrid.appendChild(productCard);
             });
         } else {
-            // If no products found for this category
+            // 8.5 If no products found for this category
             const emptyState = document.createElement('div');
             emptyState.className = 'empty-state';
             emptyState.textContent = 'No products found for this category.';
             productGrid.appendChild(emptyState);
         }
+        updateCartCount(); // Update visibility
     }
 
-    // Show product detail page
+    // 9. Function to show product detail page
     function showProductDetail(category, productIndex) {
         currentProduct = productsData[category][productIndex];
         document.getElementById('categories-page').classList.add('hidden');
@@ -2830,10 +3681,14 @@
         document.getElementById('products-page').classList.add('hidden');
         document.getElementById('wishlist-page').classList.add('hidden');
         document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.add('hidden');
         document.getElementById('product-detail-page').classList.remove('hidden');
         document.getElementById('header-section').style.display = 'none';
-        
-        // Set product details
+
+        document.getElementById('app-footer').style.display = 'none';
+
+        // 9.1 Set product details
         document.getElementById('detail-product-image').src = currentProduct.image;
         document.getElementById('detail-product-image').alt = currentProduct.name;
         document.getElementById('detail-product-title').textContent = currentProduct.name;
@@ -2841,18 +3696,18 @@
         document.getElementById('detail-product-discount').textContent = currentProduct.discount;
         document.getElementById('detail-product-description').textContent = currentProduct.description;
         document.getElementById('detail-qty').textContent = '1';
-        
-        // Show related products (other products from same category)
+
+        // 9.2 Show related products (other products from same category)
         const relatedProductsGrid = document.getElementById('related-products-grid');
         relatedProductsGrid.innerHTML = '';
-        
+
         if (productsData[category]) {
             productsData[category].forEach((product, index) => {
                 if (product.name !== currentProduct.name) { // Don't show current product in related
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
                     productCard.onclick = () => {
-                        // Update current product details without reloading page
+                        // 9.2.1 Update current product details without reloading page
                         currentProduct = productsData[category][index];
                         document.getElementById('detail-product-image').src = currentProduct.image;
                         document.getElementById('detail-product-image').alt = currentProduct.name;
@@ -2861,15 +3716,15 @@
                         document.getElementById('detail-product-discount').textContent = currentProduct.discount;
                         document.getElementById('detail-product-description').textContent = currentProduct.description;
                         document.getElementById('detail-qty').textContent = '1';
-                        
-                        // Scroll to top of product detail
+
+                        // 9.2.2 Scroll to top of product detail
                         window.scrollTo(0, 0);
                     };
-                    
-                    // Check if product is in cart
+
+                    // 9.2.3 Check if product is in cart
                     const cartItem = cartItems.find(item => item.name === product.name);
                     const quantity = cartItem ? cartItem.quantity : 0;
-                    
+
                     productCard.innerHTML = `
                         <button class="wishlist" onclick="toggleWishlist(event, this, '${category}', ${index})" aria-pressed="false" title="Add to wishlist">
                             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -2887,24 +3742,25 @@
                             <div class="product-price">${product.price}</div>
                             <div class="bottom-row">
                                 <span class="discount-text">${product.discount}</span>
-                                ${quantity > 0 ? 
-                                  `<div class="qty-control">
+                                ${quantity > 0 ?
+                        `<div class="qty-control">
                                     <button onclick="decreaseQty(event, this, '${product.name}')">-</button>
                                     <span>${quantity}</span>
                                     <button onclick="increaseQty(event, this, '${product.name}')">+</button>
-                                  </div>` : 
-                                  `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
+                                  </div>` :
+                        `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
                             </div>
                         </div>
                     `;
-                    
+
                     relatedProductsGrid.appendChild(productCard);
                 }
             });
         }
+        updateCartCount(); // Update visibility
     }
 
-    // Show categories page
+    // 10. Function to show categories page
     function showCategories() {
         document.body.classList.remove('products-page-open');
         document.getElementById('products-page').classList.add('hidden');
@@ -2912,11 +3768,16 @@
         document.getElementById('product-detail-page').classList.add('hidden');
         document.getElementById('wishlist-page').classList.add('hidden');
         document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.add('hidden');
         document.getElementById('categories-page').classList.remove('hidden');
         document.getElementById('header-section').style.display = 'block';
+
+        document.getElementById('app-footer').style.display = 'block';
+        updateCartCount(); // Update visibility
     }
 
-    // Show categories grid page
+    // 11. Function to show categories grid page
     function showCategoriesGrid() {
         document.body.classList.remove('products-page-open');
         document.getElementById('products-page').classList.add('hidden');
@@ -2924,15 +3785,22 @@
         document.getElementById('product-detail-page').classList.add('hidden');
         document.getElementById('wishlist-page').classList.add('hidden');
         document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.add('hidden');
         document.getElementById('categories-grid-page').classList.remove('hidden');
         document.getElementById('header-section').style.display = 'block';
-        
-        // Close menu if open
-        menu.classList.remove('active');
-        overlay.classList.remove('active');
+
+        document.getElementById('app-footer').style.display = 'none';
+
+        // 11.1 Close menu if open
+        if (menu && overlay) {
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        updateCartCount(); // Update visibility
     }
 
-    // Show wishlist page
+    // 12. Function to show wishlist page
     function showWishlist() {
         document.body.classList.add('products-page-open');
         document.getElementById('categories-page').classList.add('hidden');
@@ -2940,19 +3808,25 @@
         document.getElementById('products-page').classList.add('hidden');
         document.getElementById('product-detail-page').classList.add('hidden');
         document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.add('hidden');
         document.getElementById('wishlist-page').classList.remove('hidden');
-        
-        // Close menu if open
-        menu.classList.remove('active');
-        overlay.classList.remove('active');
-        
-        // Update wishlist count
+
+        document.getElementById('app-footer').style.display = 'none';
+
+        // 12.1 Close menu if open
+        if (menu && overlay) {
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // 12.2 Update wishlist count
         document.getElementById('wishlist-count').textContent = wishlistItems.length;
-        
-        // Display wishlist items
+
+        // 12.3 Display wishlist items
         const wishlistGrid = document.getElementById('wishlist-grid');
         wishlistGrid.innerHTML = '';
-        
+
         if (wishlistItems.length === 0) {
             const emptyState = document.createElement('div');
             emptyState.className = 'empty-state';
@@ -2963,7 +3837,7 @@
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 productCard.onclick = () => {
-                    // Find the category of this product
+                    // 12.3.1 Find the category of this product
                     let category = '';
                     for (const cat in productsData) {
                         if (productsData[cat].some(p => p.name === product.name)) {
@@ -2971,18 +3845,18 @@
                             break;
                         }
                     }
-                    
-                    // Find the product index in its category
+
+                    // 12.3.2 Find the product index in its category
                     const productIndex = productsData[category].findIndex(p => p.name === product.name);
-                    
-                    // Show product detail
+
+                    // 12.3.3 Show product detail
                     showProductDetail(category, productIndex);
                 };
-                
-                // Check if product is in cart
+
+                // 12.3.4 Check if product is in cart
                 const cartItem = cartItems.find(item => item.name === product.name);
                 const quantity = cartItem ? cartItem.quantity : 0;
-                
+
                 productCard.innerHTML = `
                     <button class="wishlist active" onclick="toggleWishlist(event, this, '${product.category}', ${product.index})" aria-pressed="true" title="Remove from wishlist">
                         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -3000,23 +3874,24 @@
                         <div class="product-price">${product.price}</div>
                         <div class="bottom-row">
                             <span class="discount-text">${product.discount}</span>
-                            ${quantity > 0 ? 
-                              `<div class="qty-control">
+                            ${quantity > 0 ?
+                    `<div class="qty-control">
                                 <button onclick="decreaseQty(event, this, '${product.name}')">-</button>
                                 <span>${quantity}</span>
                                 <button onclick="increaseQty(event, this, '${product.name}')">+</button>
-                              </div>` : 
-                              `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
+                              </div>` :
+                    `<div class="add-btn" onclick="addToCart(event, this, '${product.name}')">ADD</div>`}
                         </div>
                     </div>
                 `;
-                
+
                 wishlistGrid.appendChild(productCard);
             });
         }
+        updateCartCount(); // Update visibility
     }
 
-    // Show cart page
+    // 13. Function to show cart page
     function showCart() {
         document.body.classList.add('products-page-open');
         document.getElementById('categories-page').classList.add('hidden');
@@ -3024,25 +3899,28 @@
         document.getElementById('products-page').classList.add('hidden');
         document.getElementById('product-detail-page').classList.add('hidden');
         document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.add('hidden');
         document.getElementById('cart-page').classList.remove('hidden');
-        
-        // Close menu if open
-        menu.classList.remove('active');
-        overlay.classList.remove('active');
-        
-        // Update cart count
+
+        document.getElementById('app-footer').style.display = 'none';
+
+        // 13.1 Close menu if open
+        if (menu && overlay) {
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // 13.2 Update cart count
         updateCartCount();
-        
-        // Display cart items
+
+        // 13.3 Display cart items
         const cartContainer = document.getElementById('cart-items');
         cartContainer.innerHTML = '';
-        
+
         if (cartItems.length === 0) {
             cartContainer.innerHTML = `
                 <div class="empty-state">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="#ccc">
-                        <path d="M19 5h-14l1.5-2h11zm1.794 2.808l-1.961-3.203c-.381-.619-1.053-1.058-1.833-1.058h-11c-.78 0-1.452.439-1.833 1.058l-1.961 3.203c-.356.582-.206 1.392.15 2.192.356.8 1.025 1.458 1.734 1.458h14c.709 0 1.378-.658 1.734-1.458.356-.8.506-1.61.15-2.192zm-12.794 11.192c0 1.105-.672 2-1.5 2s-1.5-.895-1.5-2 .672-2 1.5-2 1.5.895 1.5 2zm9 0c0 1.105-.672 2-1.5 2s-1.5-.895-1.5-2 .672-2 1.5-2 1.5.895 1.5 2z"/>
-                    </svg>
                     <p>Your cart is empty</p>
                     <button onclick="showCategories()" class="continue-shopping-btn">Continue Shopping</button>
                 </div>
@@ -3052,17 +3930,17 @@
         } else {
             document.querySelector('.bill-details').style.display = 'block';
             document.querySelector('.checkout-btn').style.display = 'block';
-            
+
             cartItems.forEach((item, index) => {
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.dataset.index = index;
-                
-                // Calculate price for this item
+
+                // 13.3.1 Calculate price for this item
                 const price = parseInt(item.price.replace(/[^0-9]/g, ''));
                 const totalPrice = price * item.quantity;
                 const originalPrice = item.originalPrice ? parseInt(item.originalPrice.replace(/[^0-9]/g, '')) * item.quantity : 0;
-                
+
                 cartItem.innerHTML = `
                     <div class="cart-item-image">
                         <img src="${item.image}" alt="${item.name}">
@@ -3089,22 +3967,41 @@
                         </div>
                     </div>
                 `;
-                
+
                 cartContainer.appendChild(cartItem);
             });
-            
+
             updateCartTotal();
         }
+        updateCartCount(); // Update visibility
     }
 
-    // Add to Cart Function
+    // 14. Function to show payment page
+    function showPayment() {
+        document.body.classList.add('products-page-open');
+        document.getElementById('categories-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.add('hidden');
+        document.getElementById('products-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.remove('hidden');
+
+        document.getElementById('app-footer').style.display = 'none';
+
+        document.querySelector('#payment-page .price').textContent = '₹' + totalAmount;
+        updateCartCount(); // Update visibility
+    }
+
+    // 17. Add to Cart Function
     function addToCart(event, button, productName = null) {
-        event.stopPropagation();
-        
-        // Get product details
+        if (event) event.stopPropagation();
+
+        // 17.1 Get product details
         let product;
         if (productName) {
-            // Find product by name
+            // 17.1.1 Find product by name
             for (const category in productsData) {
                 const found = productsData[category].find(p => p.name === productName);
                 if (found) {
@@ -3120,9 +4017,9 @@
 
         if (!product) return;
 
-        // Check if already in cart
+        // 17.2 Check if already in cart
         const existingItem = cartItems.find(item => item.name === product.name);
-        
+
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
@@ -3132,8 +4029,8 @@
                 size: product.size || '1 unit'
             });
         }
-        
-        // Update button UI
+
+        // 17.3 Update button UI
         if (button) {
             button.outerHTML = `
                 <div class="qty-control">
@@ -3143,12 +4040,12 @@
                 </div>
             `;
         }
-        
+
         updateCartCount();
         showToast(`${product.name} added to cart`);
     }
 
-    // Quantity Controls
+    // 18. Quantity Controls
     function increaseQty(event, btn, productName) {
         event.stopPropagation();
         const item = cartItems.find(item => item.name === productName);
@@ -3162,13 +4059,13 @@
     function decreaseQty(event, btn, productName) {
         event.stopPropagation();
         const itemIndex = cartItems.findIndex(item => item.name === productName);
-        
+
         if (itemIndex >= 0) {
             if (cartItems[itemIndex].quantity <= 1) {
-                // Remove from cart
+                // 18.1 Remove from cart
                 cartItems.splice(itemIndex, 1);
-                
-                // Reset all product buttons
+
+                // 18.2 Reset all product buttons
                 document.querySelectorAll('.product-card').forEach(card => {
                     if (card.querySelector('.product-title')?.textContent === productName) {
                         const qtyControl = card.querySelector('.qty-control');
@@ -3183,7 +4080,7 @@
             }
             updateCartTotal();
         }
-        
+
         if (document.getElementById('cart-page').classList.contains('hidden')) {
             updateCartCount();
         } else {
@@ -3191,13 +4088,13 @@
         }
     }
 
-    // Cart Page Functions
+    // 19. Cart Page Functions
     function removeFromCart(event, index) {
         event.stopPropagation();
         const removedItem = cartItems[index];
         cartItems.splice(index, 1);
-        
-        // Update product cards
+
+        // 19.1 Update product cards
         document.querySelectorAll('.product-card').forEach(card => {
             if (card.querySelector('.product-title')?.textContent === removedItem.name) {
                 const qtyControl = card.querySelector('.qty-control');
@@ -3206,7 +4103,7 @@
                 }
             }
         });
-        
+
         showCart();
     }
 
@@ -3234,38 +4131,54 @@
         }
     }
 
-    // Helper Functions
+    // 20. Helper Functions
     function updateCartCount() {
         const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
         document.getElementById('cart-count').textContent = totalItems;
-        document.getElementById('cart-badge').textContent = totalItems;
+
+        // Update new cart bar
+        const cartBar = document.getElementById('cart-bar');
+        if (cartBar) {
+            if (!document.getElementById('cart-page').classList.contains('hidden') || !document.getElementById('payment-page').classList.contains('hidden') || totalItems === 0) {
+                cartBar.style.display = 'none';
+            } else {
+                cartBar.style.display = 'flex';
+            }
+            const itemsElem = cartBar.querySelector('.items');
+            const priceElem = cartBar.querySelector('.price');
+            if (itemsElem) itemsElem.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
+            if (priceElem) priceElem.textContent = `₹${totalAmount}`;
+        }
     }
 
     function updateCartTotal() {
         let itemsTotal = 0;
         let totalSaved = 0;
-        
-        // Calculate total price and savings
+
+        // 20.1 Calculate total price and savings
         cartItems.forEach(item => {
             const price = parseInt(item.price.replace(/[^0-9]/g, ''));
             itemsTotal += price * item.quantity;
-            
+
             if (item.originalPrice) {
                 const originalPrice = parseInt(item.originalPrice.replace(/[^0-9]/g, ''));
                 totalSaved += (originalPrice - price) * item.quantity;
             }
         });
-        
-        // Define all fees
-        const platformFee = 5;  // प्लेटफॉर्म फी ₹5
-        const deliveryFee = 30; // डिलीवरी फी ₹30
-        const handlingFee = 10; // हैंडलिंग फी ₹10
+
+        // 20.2 Define all fees
+        const platformFee = 5;  // Platform fee ₹5
+        const deliveryFee = 30; // Delivery fee ₹30
+        const handlingFee = 10; // Handling fee ₹10
         const additionalFees = platformFee + deliveryFee + handlingFee;
         const grandTotal = itemsTotal + additionalFees;
-        
-        // Update bill details section
+
+        totalAmount = grandTotal;
+
+        // 20.3 Update bill details section
         const billDetails = document.querySelector('.bill-details');
-        billDetails.innerHTML = `
+        if (billDetails) {
+            billDetails.innerHTML = `
             <div class="bill-row">
                 <span class="bill-label">Items (${cartItems.reduce((total, item) => total + item.quantity, 0)})</span>
                 <span class="bill-value">₹${itemsTotal}</span>
@@ -3291,14 +4204,17 @@
                 <span class="bill-value">₹${grandTotal}</span>
             </div>
         `;
+        }
+        updateCartCount();
     }
 
+    // 21. Toast notification function
     function showToast(message) {
         const toast = document.createElement('div');
         toast.className = 'toast-message';
         toast.textContent = message;
         document.body.appendChild(toast);
-        
+
         setTimeout(() => {
             toast.classList.add('show');
             setTimeout(() => {
@@ -3310,7 +4226,7 @@
         }, 10);
     }
 
-    // Product detail quantity controls
+    // 22. Product detail quantity controls
     function increaseDetailQty() {
         let qty = document.getElementById('detail-qty');
         qty.textContent = parseInt(qty.textContent) + 1;
@@ -3325,65 +4241,68 @@
 
     function addDetailToCart() {
         const quantity = parseInt(document.getElementById('detail-qty').textContent);
-        
+
         for (let i = 0; i < quantity; i++) {
             addToCart(null, null, currentProduct.name);
         }
-        
-        // Show confirmation
+
+        // 22.1 Show confirmation
         showToast(`${quantity} ${currentProduct.name} added to cart!`);
     }
 
+    // 23. Wishlist toggle function
     function toggleWishlist(event, el, category, index) {
         event.stopPropagation();
         el.classList.toggle('active');
         const isActive = el.classList.contains('active');
         el.setAttribute('aria-pressed', isActive);
-        
+
         const product = productsData[category][index];
         const productData = {
             ...product,
             category,
             index
         };
-        
+
         if (isActive) {
-            // Add to wishlist
+            // 23.1 Add to wishlist
             if (!wishlistItems.some(item => item.name === product.name)) {
                 wishlistItems.push(productData);
-                
-                // Show popup
+
+                // 23.2 Show popup
                 showToast("Added to wishlist");
             }
         } else {
-            // Remove from wishlist
+            // 23.3 Remove from wishlist
             wishlistItems = wishlistItems.filter(item => item.name !== product.name);
-            
-            // If we're on the wishlist page, refresh it
+
+            // 23.4 If we're on the wishlist page, refresh it
             if (!document.getElementById('wishlist-page').classList.contains('hidden')) {
                 showWishlist();
             }
         }
     }
 
-    // Search functionality
+    // 24. Search functionality
     const openSearch = document.getElementById("openSearch");
     const closeSearch = document.getElementById("closeSearch");
     const searchOverlay = document.getElementById("searchOverlay");
     const searchInput = document.getElementById("searchInput");
 
-    openSearch.addEventListener("click", () => {
-      searchOverlay.classList.add("active");
-      setTimeout(()=>searchInput.focus(),0);
-    });
+    if (openSearch && closeSearch && searchOverlay && searchInput) {
+        openSearch.addEventListener("click", () => {
+            searchOverlay.classList.add("active");
+            setTimeout(() => searchInput.focus(), 0);
+        });
 
-    closeSearch.addEventListener("click", () => {
-      searchOverlay.classList.remove("active");
-    });
+        closeSearch.addEventListener("click", () => {
+            searchOverlay.classList.remove("active");
+        });
+    }
 
-    // पेज लोड होते ही current location detect करने के लिए
-    document.addEventListener('DOMContentLoaded', function() {
-        if(navigator.geolocation) {
+    // 25. Auto-detect location on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        if (navigator.geolocation && currentAddress) {
             currentAddress.innerHTML = "Detecting location...";
             navigator.geolocation.getCurrentPosition(async pos => {
                 const lat = pos.coords.latitude, lon = pos.coords.longitude;
@@ -3392,7 +4311,7 @@
                     const data = await res.json();
                     currentAddress.innerHTML = data.display_name || "Current location";
                     setHomeIcon();
-                } catch(err) {
+                } catch (err) {
                     console.error(err);
                     currentAddress.innerHTML = "Select your delivery location...";
                 }
@@ -3401,11 +4320,637 @@
                 currentAddress.innerHTML = "Select your delivery location...";
             });
         }
+        
+        // 25.1 Open location popup on page load
+        if (locationPopup) {
+            locationPopup.style.display = "flex";
+        }
+
+        // 25.2 Attach event to checkout button
+        document.getElementById('checkoutBtn').addEventListener('click', showPayment);
+
+        // Call payment init
+        paymentInit();
+
+        // Show footer initially
+        document.getElementById('app-footer').style.display = 'block';
+
+        // Attach onclick to cart bar
+        const cartBar = document.getElementById('cart-bar');
+        if (cartBar) {
+            cartBar.addEventListener('click', showCart);
+        }
     });
-    // पेज लोड होते ही location popup खोलने के लिए
-    document.addEventListener('DOMContentLoaded', function() {
-        locationPopup.style.display = "flex";
+
+    // 26. Modal functions for policies
+    function openModal(type) {
+        const modal = document.getElementById("policyModal");
+        const title = document.getElementById("modalTitle");
+        const content = document.getElementById("modalContent");
+
+        if (modal && title && content) {
+            if (type === "privacy") {
+                title.innerText = "Privacy Policy";
+                content.innerText = "This is a demo Privacy Policy. We respect your privacy and ensure your personal data is kept safe and used only for service improvement right to your doorstep.";
+            }
+            else if (type === "terms") {
+                title.innerText = "Terms & Conditions";
+                content.innerText = "These are demo Terms & Conditions. By using Brixo Mart services, you agree to follow our guidelines and policies for a better experience.";
+            }
+            else if (type === "refund") {
+                title.innerText = "Refund Policy";
+                content.innerText = "This is a demo Refund Policy. Refunds are processed within 5-7 business days subject to eligibility and product condition.";
+            }
+
+            modal.style.display = "flex";
+        }
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("policyModal");
+        if (modal) modal.style.display = "none";
+    }
+
+    // 27. Initialize the app
+    function initApp() {
+        // 27.1 Add event listeners for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                if (target === 'categories') {
+                    showCategories();
+                } else if (target === 'categories-grid') {
+                    showCategoriesGrid();
+                } else if (target === 'wishlist') {
+                    showWishlist();
+                } else if (target === 'cart') {
+                    showCart();
+                }
+            });
+        });
+
+        // 27.2 Add event listeners for category items
+        document.querySelectorAll('.category').forEach(category => {
+            category.addEventListener('click', function() {
+                const categoryName = this.getAttribute('data-category');
+                showProducts(categoryName);
+            });
+        });
+
+        // 27.3 Add event listeners for back buttons
+        document.querySelectorAll('.back-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                if (target === 'categories') {
+                    showCategories();
+                } else if (target === 'categories-grid') {
+                    showCategoriesGrid();
+                } else if (target === 'products') {
+                    showProducts(currentCategory);
+                }
+            });
+        });
+
+        // 27.4 Initialize cart count
+        updateCartCount();
+    }
+
+    // 28. Run initialization when DOM is loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
+
+    // 29. Show Orders Function
+    function showOrders() {
+        document.body.classList.add('products-page-open');
+        document.getElementById('categories-page').classList.add('hidden');
+        document.getElementById('categories-grid-page').classList.add('hidden');
+        document.getElementById('products-page').classList.add('hidden');
+        document.getElementById('product-detail-page').classList.add('hidden');
+        document.getElementById('wishlist-page').classList.add('hidden');
+        document.getElementById('cart-page').classList.add('hidden');
+        document.getElementById('payment-page').classList.add('hidden');
+        document.getElementById('orders-page').classList.remove('hidden');
+
+        document.getElementById('app-footer').style.display = 'none';
+
+        // Close menu if open
+        if (menu && overlay) {
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Update orders count
+        document.getElementById('orders-count').textContent = orders.length;
+
+        // Display orders
+        const ordersList = document.getElementById('orders-list');
+        ordersList.innerHTML = '';
+
+        if (orders.length === 0) {
+            ordersList.innerHTML = `
+                <div class="empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="#666">
+                        <path d="M8 1h8v2H8zM6 5h12v2H6zM4 9h16v2H4zM2 13h20v2H2zM0 17h24v2H0z"/>
+                    </svg>
+                    <p>You have no orders yet</p>
+                    <button onclick="showCategories()" class="continue-shopping-btn">Continue Shopping</button>
+                </div>
+            `;
+        } else {
+            orders.forEach(order => {
+                const orderDiv = document.createElement('div');
+                orderDiv.className = 'order-item';
+
+                let itemsHtml = '';
+                order.items.forEach(item => {
+                    itemsHtml += `
+                        <div class="order-item-detail">
+                            <span>${item.name} x ${item.quantity}</span>
+                            <span>₹${parseInt(item.price.replace(/[^0-9]/g, '')) * item.quantity}</span>
+                        </div>
+                    `;
+                });
+
+                orderDiv.innerHTML = `
+                    <div class="order-header">
+                        <span>Order #${order.id}</span>
+                        <span>${order.date}</span>
+                    </div>
+                    ${itemsHtml}
+                    <div class="order-total">
+                        <span>Total</span>
+                        <span>₹${order.total}</span>
+                    </div>
+                    <div class="order-status">${order.status}</div>
+                `;
+
+                ordersList.appendChild(orderDiv);
+            });
+        }
+        updateCartCount(); // Update visibility
+    }
+// DOM Elements
+const paymentOptions = document.querySelectorAll(".option");
+const paymentLocationPopup = document.getElementById("paymentLocationPopup");
+const paymentConfirmBtn = document.getElementById("paymentConfirmAddress");
+const paymentToast = document.getElementById("paymentToast");
+const paymentToastMessage = document.getElementById("paymentToastMessage");
+const paymentSuccessPage = document.getElementById("paymentSuccessPage");
+const paymentSuccessText = document.getElementById("paymentSuccessText");
+const paymentSuccessSound = document.getElementById("paymentSuccessSound");
+const paymentUseLocation = document.getElementById("paymentUseLocation");
+const paymentPincodeInput = document.getElementById("paymentPincode");
+const paymentSuggestionsBox = document.getElementById("paymentSuggestions");
+const paymentPlaceOrderBtn = document.getElementById("paymentPlaceOrderBtn");
+const paymentLocationLoading = document.getElementById("paymentLocationLoading");
+const paymentLocationMessage = document.getElementById("paymentLocationMessage");
+const paymentMapError = document.getElementById("paymentMapError");
+const paymentClosePopup = document.getElementById("paymentClosePopup");
+const paymentAddressSummary = document.getElementById("paymentAddressSummary");
+const paymentAddressDetails = document.getElementById("paymentAddressDetails");
+const paymentEditAddressBtn = document.getElementById("paymentEditAddress");
+
+// State variables
+let selectedOption = null, paymentMap, paymentMarker, paymentCoords = null, paymentDebounceTimer, paymentCache = {}, paymentSelectedIndex = -1, paymentCurrentSuggestions = [];
+let paymentAddressFieldsFilled = false;
+let confirmedAddress = null;
+
+// Initialize the payment system
+function paymentInit() {
+  // Payment select
+  paymentOptions.forEach(opt => {
+    opt.addEventListener("click", () => {
+      paymentOptions.forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+      selectedOption = opt.querySelector(".option-title").textContent;
+      paymentPlaceOrderBtn.disabled = false;
     });
+  });
+
+  // Close popup handler
+  paymentClosePopup.addEventListener("click", () => {
+    paymentLocationPopup.style.display = "none";
+  });
+
+  // Show address popup when place order is clicked
+  paymentPlaceOrderBtn.addEventListener("click", () => {
+    if (!selectedOption) {
+      paymentShowToast("Please select a payment method first!");
+      return;
+    }
+    
+    // If address is already confirmed, proceed to place order
+    if (confirmedAddress) {
+      placeOrder();
+      return;
+    }
+    
+    // Otherwise, show address popup
+    paymentLocationPopup.style.display = "flex";
+  });
+
+  // Edit address handler
+  paymentEditAddressBtn.addEventListener("click", () => {
+    paymentLocationPopup.style.display = "flex";
+  });
+
+  // Manual location detection
+  paymentUseLocation.addEventListener("click", paymentDetectLocation);
+
+  // Pincode autocomplete
+  paymentPincodeInput.addEventListener("input", paymentHandlePincodeInput);
+
+  // Keyboard navigation for suggestions
+  paymentPincodeInput.addEventListener("keydown", paymentHandlePincodeKeydown);
+
+  // Close suggestions when clicking outside
+  document.addEventListener("click", (e) => {
+    if (e.target !== paymentPincodeInput && e.target.parentNode !== paymentSuggestionsBox) {
+      paymentSuggestionsBox.style.display = "none";
+    }
+  });
+
+  // Check if all address fields are filled
+  document.getElementById("paymentName").addEventListener("input", paymentCheckAddressFields);
+  document.getElementById("paymentMobile").addEventListener("input", paymentCheckAddressFields);
+  document.getElementById("paymentHouse").addEventListener("input", paymentCheckAddressFields);
+  document.getElementById("paymentStreet").addEventListener("input", paymentCheckAddressFields);
+  paymentPincodeInput.addEventListener("input", paymentCheckAddressFields);
+
+  // Confirm Address
+  paymentConfirmBtn.addEventListener("click", paymentConfirmAddress);
+}
+
+// Location detection function
+function paymentDetectLocation() {
+  if (!navigator.geolocation) {
+    paymentShowToast("Geolocation not supported by your browser");
+    return;
+  }
+  
+  paymentLocationLoading.style.display = "block";
+  paymentUseLocation.style.display = "none";
+  paymentLocationMessage.style.display = "block";
+  paymentMapError.style.display = "none";
+  
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      paymentCoords = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+      try {
+        await paymentShowMap(paymentCoords);
+        await paymentFetchAddress(paymentCoords);
+        paymentLocationLoading.style.display = "none";
+        paymentUseLocation.style.display = "flex";
+        paymentLocationMessage.style.display = "none";
+      } catch (error) {
+        console.error("Map error:", error);
+        paymentLocationLoading.style.display = "none";
+        paymentUseLocation.style.display = "flex";
+        paymentLocationMessage.style.display = "none";
+        paymentMapError.style.display = "block";
+      }
+    },
+    (error) => {
+      paymentLocationMessage.textContent = "Location permission denied or unable to get location";
+      console.error("Geolocation error:", error);
+      paymentLocationLoading.style.display = "none";
+      paymentUseLocation.style.display = "flex";
+    },
+    {timeout: 10000, enableHighAccuracy: true}
+  );
+}
+
+// Show map function
+function paymentShowMap({lat, lng}) {
+  return new Promise((resolve, reject) => {
+    try {
+      // Initialize map if not already done
+      if (!paymentMap) {
+        paymentMap = L.map("paymentMap").setView([lat, lng], 15);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(paymentMap);
+
+        // Create a custom icon for the marker
+        const customIcon = L.icon({
+          iconUrl: 'https://unpkg.com/leaflet/dist/images/marker-icon.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+          shadowSize: [41, 41]
+        });
+
+        paymentMarker = L.marker([lat, lng], {icon: customIcon, draggable: true}).addTo(paymentMap);
+        
+        // Update address when marker is dragged
+        paymentMarker.on("dragend", function() {
+          const position = paymentMarker.getLatLng();
+          paymentCoords = {lat: position.lat, lng: position.lng};
+          paymentFetchAddress(paymentCoords);
+        });
+      } else {
+        paymentMap.setView([lat, lng], 15);
+        paymentMarker.setLatLng([lat, lng]);
+      }
+      
+      // Make sure the map container is visible
+      document.getElementById("paymentMap").style.display = "block";
+      
+      // Small delay to ensure map renders properly
+      setTimeout(() => {
+        paymentMap.invalidateSize();
+        resolve();
+      }, 100);
+    } catch (error) {
+      console.error("Error initializing map:", error);
+      paymentMapError.style.display = "block";
+      reject(error);
+    }
+  });
+}
+
+// Fetch address from coordinates
+async function paymentFetchAddress({lat, lng}) {
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`);
+    
+    if (!res.ok) {
+      console.error('Geocoding API error:', res.status);
+      return;
+    }
+    
+    const data = await res.json();
+    
+    if (data && data.address) {
+      document.getElementById("paymentStreet").value = data.address.road || data.address.suburb || '';
+      document.getElementById("paymentPincode").value = data.address.postcode || '';
+      
+      if (data.display_name) {
+        const addressParts = data.display_name.split(',');
+        if (addressParts.length > 0) {
+          document.getElementById("paymentHouse").value = addressParts[0] || '';
+        }
+      }
+    }
+  } catch(err) { 
+    console.error('Error with geocoding API:', err);
+  }
+  
+  // Check if address fields are filled to enable confirm button
+  paymentCheckAddressFields();
+}
+
+// Pincode input handler
+function paymentHandlePincodeInput() {
+  const query = paymentPincodeInput.value.trim.trim();
+  clearTimeout(paymentDebounceTimer);
+  paymentSelectedIndex = -1;
+  
+  // Only allow numeric input
+  paymentPincodeInput.value = paymentPincodeInput.value.replace(/\D/g, '');
+  
+  if (query.length !== 6) { 
+    paymentSuggestionsBox.style.display = "none";
+    paymentSuggestionsBox.innerHTML = ""; 
+    return;
+  }
+  
+  if (paymentCache[query]) { 
+    paymentRenderSuggestions(paymentCache[query]); 
+    return;
+  }
+  
+  paymentDebounceTimer = setTimeout(async () => {
+    try {
+      const res = await fetch(`https://api.postalpincode.in/pincode/${query}`);
+      const data = await res.json();
+      
+      if (data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
+        paymentCache[query] = data[0].PostOffice;
+        paymentRenderSuggestions(data[0].PostOffice);
+      } else {
+        paymentSuggestionsBox.innerHTML = "<div>No results found</div>";
+        paymentSuggestionsBox.style.display = "block";
+      }
+    } catch(err) { 
+      console.error("Pincode API error:", err);
+      paymentSuggestionsBox.innerHTML = "<div>Error fetching data</div>";
+      paymentSuggestionsBox.style.display = "block";
+    }
+  }, 300);
+}
+
+// Render pincode suggestions
+function paymentRenderSuggestions(list) {
+  paymentCurrentSuggestions = list;
+  paymentSuggestionsBox.innerHTML = "";
+  
+  if (list.length === 0) {
+    paymentSuggestionsBox.innerHTML = "<div>No results found</div>";
+    paymentSuggestionsBox.style.display = "block";
+    return;
+  }
+  
+  list.forEach((item, i) => {
+    const div = document.createElement("div");
+    div.textContent = `${item.Name}, ${item.District}, ${item.State}`;
+    div.onclick = () => paymentSelectSuggestion(i);
+    paymentSuggestionsBox.appendChild(div);
+  });
+  
+  paymentSuggestionsBox.style.display = "block";
+}
+
+// Select a suggestion
+function paymentSelectSuggestion(index) {
+  const place = paymentCurrentSuggestions[index];
+  document.getElementById("paymentStreet").value = place.Name;
+  document.getElementById("paymentPincode").value = place.Pincode;
+  paymentSuggestionsBox.style.display = "none";
+  paymentSuggestionsBox.innerHTML = "";
+  
+  // Check if address fields are filled to enable confirm button
+  paymentCheckAddressFields();
+}
+
+// Keyboard navigation for pincode suggestions
+function paymentHandlePincodeKeydown(e) {
+  const items = paymentSuggestionsBox.querySelectorAll("div");
+  if (items.length === 0) return;
+  
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    paymentSelectedIndex = (paymentSelectedIndex + 1) % items.length;
+    paymentUpdateActive(items);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    paymentSelectedIndex = (paymentSelectedIndex - 1 + items.length) % items.length;
+    paymentUpdateActive(items);
+  } else if (e.key === "Enter" && paymentSelectedIndex >= 0) {
+    e.preventDefault();
+    paymentSelectSuggestion(paymentSelectedIndex);
+  } else if (e.key === "Escape") {
+    paymentSuggestionsBox.style.display = "none";
+  }
+}
+
+// Update active suggestion
+function paymentUpdateActive(items) { 
+  items.forEach((item, i) => item.classList.toggle("active", i === paymentSelectedIndex));
+  
+  // Scroll into view
+  if (paymentSelectedIndex >= 0) {
+    items[paymentSelectedIndex].scrollIntoView({block: "nearest"});
+  }
+}
+
+// Check if all address fields are filled
+function paymentCheckAddressFields() {
+  const name = document.getElementById("paymentName").value;
+  const mobile = document.getElementById("paymentMobile").value;
+  const house = document.getElementById("paymentHouse").value;
+  const street = document.getElementById("paymentStreet").value;
+  const pin = document.getElementById("paymentPincode").value;
+
+  paymentAddressFieldsFilled = name && mobile && house && street && pin;
+  paymentConfirmBtn.disabled = !paymentAddressFieldsFilled;
+}
+
+// Toast function
+function paymentShowToast(message) {
+  paymentToastMessage.innerText = message;
+  paymentToast.classList.add("show");
+  setTimeout(() => paymentToast.classList.remove("show"), 2500);
+}
+
+// Confirm Address
+function paymentConfirmAddress() {
+  const name = document.getElementById("paymentName").value;
+  const mobile = document.getElementById("paymentMobile").value;
+  const house = document.getElementById("paymentHouse").value;
+  const street = document.getElementById("paymentStreet").value;
+  const pin = document.getElementById("paymentPincode").value;
+
+  if (!name || !mobile || !house || !street || !pin) { 
+    paymentShowToast("Please fill all address fields!"); 
+    return;
+  }
+
+  // Validate mobile number
+  if (!/^\d{10}$/.test(mobile)) {
+    paymentShowToast("Please enter a valid 10-digit mobile number");
+    return;
+  }
+
+  // Validate pincode
+  if (!/^\d{6}$/.test(pin)) {
+    paymentShowToast("Please enter a valid 6-digit pincode");
+    return;
+  }
+
+  // Save address details
+  confirmedAddress = { name, mobile, house, street, pin };
+  
+  // Update address summary
+  paymentAddressDetails.innerHTML = `
+    <strong>${name}</strong><br>
+    ${house}, ${street}<br>
+    Pincode: ${pin}<br>
+    Mobile: ${mobile}
+  `;
+  
+  // Show address summary
+  paymentAddressSummary.style.display = "block";
+  
+  paymentLocationPopup.style.display = "none";
+  paymentShowToast("Address Saved!");
+  
+  // Now the user can place the order
+  paymentPlaceOrderBtn.disabled = false;
+}
+
+// Place Order
+function placeOrder() {
+  if (!confirmedAddress) {
+    paymentShowToast("Please confirm your address first!");
+    return;
+  }
+  
+  if (!selectedOption) {
+    paymentShowToast("Please select a payment method first!");
+    return;
+  }
+  
+  // Add the order
+  orders.push({
+      id: orders.length + 1,
+      date: new Date().toLocaleString(),
+      items: [...cartItems],
+      total: totalAmount,
+      status: 'Processing'
+  });
+
+  // Clear cart
+  cartItems = [];
+  updateCartCount();
+
+  // Show success page after order is placed
+  paymentSuccessText.innerText = `Order Placed Successfully with ${selectedOption}`;
+  paymentSuccessPage.style.display = "flex";
+  if (paymentSuccessSound) paymentSuccessSound.play();
+  setTimeout(() => {
+    paymentSuccessPage.style.display = "none";
+    // Reset the form after successful order
+    paymentResetForm();
+    showCategories();
+  }, 3000);
+}
+
+// Reset form after successful order
+function paymentResetForm() {
+  paymentAddressSummary.style.display = "none";
+  paymentOptions.forEach(o => o.classList.remove("selected"));
+  selectedOption = null;
+  paymentPlaceOrderBtn.disabled = true;
+  
+  // Clear form fields
+  document.getElementById("paymentName").value = "";
+  document.getElementById("paymentMobile").value = "";
+  document.getElementById("paymentHouse").value = "";
+  document.getElementById("paymentStreet").value = "";
+  document.getElementById("paymentPincode").value = "";
+  
+  confirmedAddress = null;
+}
+
+// Initialize the application when the DOM is loaded
+document.addEventListener('DOMContentLoaded', paymentInit);
   </script>
+  <!-- New Cart Bar HTML -->
+  <div class="cart-bar" id="cart-bar" onclick="showCart()">
+    <div class="left">
+      <div class="icon-square" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+      </div>
+      <div class="info">
+        <div class="items">0 items</div>
+        <div class="price">₹0</div>
+      </div>
+    </div>
+    <div class="view">
+      <div>View Cart</div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+  </div>
 </body>
 </html>
