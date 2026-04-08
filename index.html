@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiderPro - Delivery Boy Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
+        
+        * {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .sidebar {
+            transition: all 0.3s;
+        }
+        
+        .main-content {
+            transition: all 0.3s;
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 25px 25px 50px -12px rgb(249 115 22 / 0.15);
+        }
+        
+        .nav-link {
+            transition: all 0.2s;
+        }
+        
+        .nav-link.active {
+            background-color: #f97316;
+            color: white;
+            border-radius: 9999px;
+        }
+        
+        .fake-map {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+        
+        .status-dot {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- FULL WEBSITE LAYOUT -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar w-72 bg-white border-r border-gray-200 flex flex-col">
+            
+            <!-- Logo -->
+            <div class="px-8 py-6 border-b flex items-center gap-3">
+                <div class="w-10 h-10 bg-orange-500 text-white rounded-2xl flex items-center justify-center text-2xl">🚲</div>
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight text-gray-900">RiderPro</h1>
+                    <p class="text-xs text-orange-500 -mt-1">Delivery Partner</p>
+                </div>
+            </div>
+
+            <!-- Menu -->
+            <div class="flex-1 px-4 py-6 space-y-1">
+                <a onclick="switchPage(0)" id="menu-0" class="nav-link active flex items-center gap-3 px-5 py-4 text-gray-700 hover:bg-orange-50 cursor-pointer">
+                    <i class="fa-solid fa-house w-5"></i>
+                    <span class="font-semibold">Dashboard</span>
+                </a>
+                <a onclick="switchPage(1)" id="menu-1" class="nav-link flex items-center gap-3 px-5 py-4 text-gray-700 hover:bg-orange-50 cursor-pointer">
+                    <i class="fa-solid fa-list-check w-5"></i>
+                    <span class="font-semibold">Orders</span>
+                </a>
+                <a onclick="switchPage(2)" id="menu-2" class="nav-link flex items-center gap-3 px-5 py-4 text-gray-700 hover:bg-orange-50 cursor-pointer">
+                    <i class="fa-solid fa-map-location-dot w-5"></i>
+                    <span class="font-semibold">Live Map</span>
+                </a>
+                <a onclick="switchPage(3)" id="menu-3" class="nav-link flex items-center gap-3 px-5 py-4 text-gray-700 hover:bg-orange-50 cursor-pointer">
+                    <i class="fa-solid fa-clock-rotate-left w-5"></i>
+                    <span class="font-semibold">History</span>
+                </a>
+                <a onclick="switchPage(4)" id="menu-4" class="nav-link flex items-center gap-3 px-5 py-4 text-gray-700 hover:bg-orange-50 cursor-pointer">
+                    <i class="fa-solid fa-headset w-5"></i>
+                    <span class="font-semibold">Support</span>
+                </a>
+            </div>
+
+            <!-- Bottom Profile -->
+            <div onclick="showProfileModal()" class="mx-4 mb-6 bg-orange-50 rounded-3xl p-4 flex items-center gap-4 cursor-pointer hover:bg-orange-100">
+                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-inner">🧔</div>
+                <div class="flex-1">
+                    <p class="font-semibold">Sahidul Islam</p>
+                    <p class="text-xs text-orange-500">Delivery Boy • Online</p>
+                </div>
+                <i class="fa-solid fa-chevron-right text-orange-500"></i>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="main-content flex-1 flex flex-col">
+
+            <!-- Top Navbar -->
+            <div class="h-16 bg-white border-b flex items-center justify-between px-8">
+                <div class="flex items-center gap-4">
+                    <h2 id="page-title" class="text-2xl font-semibold text-gray-800">Dashboard</h2>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <!-- Notification -->
+                    <div onclick="showNotification()" class="relative cursor-pointer">
+                        <i class="fa-solid fa-bell text-2xl text-gray-600"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </div>
+                    
+                    <!-- Current Order Quick Info -->
+                    <div class="flex items-center gap-2 bg-gray-100 rounded-3xl pl-2 pr-5 py-1 cursor-pointer">
+                        <div class="text-emerald-500">
+                            <i class="fa-solid fa-motorcycle"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Current Delivery</p>
+                            <p class="text-sm font-semibold">#15462 • 20-30 min</p>
+                        </div>
+                    </div>
+
+                    <!-- User -->
+                    <div onclick="showProfileModal()" class="flex items-center gap-3 cursor-pointer">
+                        <div class="text-right">
+                            <p class="font-medium text-sm">Sahidul Islam</p>
+                            <p class="text-xs text-orange-500">★ ★ ★ ★ ★</p>
+                        </div>
+                        <div class="w-9 h-9 bg-orange-100 rounded-2xl flex items-center justify-center text-2xl">🧔</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE CONTENTS -->
+
+            <!-- PAGE 1: DASHBOARD -->
+            <div id="page-0" class="flex-1 p-8 overflow-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Stat Cards -->
+                    <div class="card-hover bg-white border border-teal-100 rounded-3xl p-6">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="text-teal-600 text-sm">Completed</p>
+                                <p class="text-6xl font-bold text-teal-700 mt-2">27</p>
+                            </div>
+                            <div class="text-5xl">📦</div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white border border-amber-100 rounded-3xl p-6">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="text-amber-600 text-sm">Pending</p>
+                                <p class="text-6xl font-bold text-amber-700 mt-2">10</p>
+                            </div>
+                            <div class="text-5xl">🚚</div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white border border-pink-100 rounded-3xl p-6">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="text-pink-600 text-sm">Cancelled</p>
+                                <p class="text-6xl font-bold text-pink-700 mt-2">05</p>
+                            </div>
+                            <div class="text-5xl">❌</div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white border border-blue-100 rounded-3xl p-6">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="text-blue-600 text-sm">Return</p>
+                                <p class="text-6xl font-bold text-blue-700 mt-2">16</p>
+                            </div>
+                            <div class="text-5xl">🔄</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Orders -->
+                <div class="mt-10">
+                    <div class="flex justify-between items-baseline mb-5">
+                        <h3 class="text-2xl font-semibold">New Orders</h3>
+                        <a onclick="switchPage(1)" class="text-orange-500 font-medium cursor-pointer">View all orders →</a>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Order 1 -->
+                        <div class="bg-white border border-gray-100 rounded-3xl p-6 flex gap-6">
+                            <div class="text-6xl">👟</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-xl">Lace-Up Boots</h4>
+                                <p class="text-gray-500">2972 Westheimer Rd. Santa Ana</p>
+                                <p class="text-xs text-gray-400 mt-1">03 Jan 2022 • 08:40 AM</p>
+                                <div class="mt-6 flex gap-4">
+                                    <button onclick="acceptOrder(this)" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 rounded-2xl font-semibold">Accept Order</button>
+                                    <button onclick="rejectOrder(this)" class="flex-1 bg-red-500 hover:bg-red-600 text-white py-4 rounded-2xl font-semibold">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Order 2 -->
+                        <div class="bg-white border border-gray-100 rounded-3xl p-6 flex gap-6">
+                            <div class="text-6xl">👟</div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-xl">Lace-Up Boots</h4>
+                                <p class="text-gray-500">2972 Westheimer Rd. Santa Ana</p>
+                                <p class="text-xs text-gray-400 mt-1">03 Jan 2022 • 08:40 AM</p>
+                                <div class="mt-6 flex gap-4">
+                                    <button onclick="acceptOrder(this)" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 rounded-2xl font-semibold">Accept Order</button>
+                                    <button onclick="rejectOrder(this)" class="flex-1 bg-red-500 hover:bg-red-600 text-white py-4 rounded-2xl font-semibold">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 2: ORDERS -->
+            <div id="page-1" class="flex-1 p-8 overflow-auto hidden">
+                <div class="flex border-b mb-8">
+                    <button onclick="switchOrderTab(0)" id="order-tab-0" class="px-8 py-4 font-semibold border-b-2 border-orange-500 text-orange-500">New Orders</button>
+                    <button onclick="switchOrderTab(1)" id="order-tab-1" class="px-8 py-4 font-semibold text-gray-500">Active</button>
+                    <button onclick="switchOrderTab(2)" id="order-tab-2" class="px-8 py-4 font-semibold text-gray-500">Delivered</button>
+                </div>
+
+                <div id="orders-new-list">
+                    <div class="bg-white rounded-3xl p-6 mb-6 flex gap-6">
+                        <div class="text-6xl">👟</div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold">Lace-Up Boots</h4>
+                            <p class="text-gray-500">2972 Westheimer Rd. Santa Ana</p>
+                            <div class="flex gap-4 mt-8">
+                                <button onclick="acceptOrder(this)" class="flex-1 bg-green-500 text-white py-4 rounded-2xl font-semibold">Accept</button>
+                                <button onclick="rejectOrder(this)" class="flex-1 bg-red-500 text-white py-4 rounded-2xl font-semibold">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="orders-delivered-list" class="hidden">
+                    <div class="space-y-8">
+                        <div class="flex justify-between items-center bg-white p-6 rounded-3xl">
+                            <div class="flex items-center gap-6">
+                                <div class="text-5xl">👟</div>
+                                <div>
+                                    <p class="font-medium">Lace-Up Boots</p>
+                                    <p class="text-sm text-gray-400">16 Jan 2022 • 8:00 PM</p>
+                                </div>
+                            </div>
+                            <span class="text-emerald-500 font-semibold px-6 py-2 bg-emerald-100 rounded-2xl">Delivered</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-white p-6 rounded-3xl">
+                            <div class="flex items-center gap-6">
+                                <div class="text-5xl">👕</div>
+                                <div>
+                                    <p class="font-medium">Kidsh Plaid Oxford Shirt</p>
+                                    <p class="text-sm text-gray-400">20 Jan 2022 • 8:00 PM</p>
+                                </div>
+                            </div>
+                            <span class="text-emerald-500 font-semibold px-6 py-2 bg-emerald-100 rounded-2xl">Delivered</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: LIVE MAP -->
+            <div id="page-2" class="flex-1 p-8 hidden">
+                <div class="fake-map flex items-center justify-center relative">
+                    <div class="absolute top-8 left-8 bg-white rounded-3xl shadow-xl p-5 max-w-xs">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl">🧔</div>
+                            <div>
+                                <p class="font-semibold">Sahidul Islam</p>
+                                <p class="text-orange-500">20-30 minutes away</p>
+                            </div>
+                        </div>
+                        <div class="h-3 bg-orange-200 rounded-full relative mb-2">
+                            <div class="absolute left-0 top-0 h-3 bg-orange-500 rounded-full w-3/4"></div>
+                        </div>
+                        <div class="flex justify-between text-xs">
+                            <span>Reade St</span>
+                            <span class="font-semibold text-orange-500">You are here</span>
+                            <span>Chambers St</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-location-dot text-red-500 text-8xl drop-shadow-2xl"></i>
+                        <p class="text-4xl font-semibold text-gray-800 mt-6">Broadway, New York</p>
+                        <p class="text-orange-500 mt-2 flex items-center justify-center gap-2">
+                            <span class="w-3 h-3 bg-emerald-400 rounded-full status-dot"></span>
+                            LIVE TRACKING
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 4: HISTORY -->
+            <div id="page-3" class="flex-1 p-8 hidden">
+                <h3 class="text-2xl font-semibold mb-6">Delivery History</h3>
+                <div class="bg-white rounded-3xl p-8">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-4">Order</th>
+                                <th class="text-left py-4">Address</th>
+                                <th class="text-left py-4">Date</th>
+                                <th class="text-right py-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b">
+                                <td class="py-5">Lace-Up Boots</td>
+                                <td class="py-5 text-gray-500">2972 Westheimer Rd. Santa Ana</td>
+                                <td class="py-5 text-gray-400">16 Jan 2022</td>
+                                <td class="py-5 text-right"><span class="bg-emerald-100 text-emerald-600 px-5 py-1 rounded-3xl text-xs">Delivered</span></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-5">Kidsh Plaid Oxford Shirt</td>
+                                <td class="py-5 text-gray-500">2972 Westheimer Rd. Santa Ana</td>
+                                <td class="py-5 text-gray-400">20 Jan 2022</td>
+                                <td class="py-5 text-right"><span class="bg-emerald-100 text-emerald-600 px-5 py-1 rounded-3xl text-xs">Delivered</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-5">Luxury Watch</td>
+                                <td class="py-5 text-gray-500">2972 Westheimer Rd. Santa Ana</td>
+                                <td class="py-5 text-gray-400">27 Jan 2022</td>
+                                <td class="py-5 text-right"><span class="bg-emerald-100 text-emerald-600 px-5 py-1 rounded-3xl text-xs">Delivered</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PAGE 5: SUPPORT -->
+            <div id="page-4" class="flex-1 p-8 hidden flex items-center justify-center">
+                <div class="max-w-md text-center">
+                    <div class="text-7xl mb-8">🛟</div>
+                    <h2 class="text-4xl font-semibold">Need Help?</h2>
+                    <p class="text-gray-600 mt-4">24×7 Support available for all delivery partners</p>
+                    <button onclick="alert('Support ticket created! Our team will call you in 2 minutes.')" 
+                            class="mt-10 bg-orange-500 text-white px-12 py-5 rounded-3xl text-xl font-semibold shadow-lg shadow-orange-300">
+                        Call Support Now
+                    </button>
+                    <p class="text-xs text-gray-400 mt-8">Or chat with us on WhatsApp</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PROFILE MODAL -->
+    <div onclick="if(event.target.id === 'profileModal')hideProfileModal()" 
+         id="profileModal"
+         class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="bg-white w-full max-w-md mx-4 rounded-3xl p-8">
+            <div class="flex justify-end">
+                <i onclick="hideProfileModal()" class="fa-solid fa-xmark text-3xl cursor-pointer"></i>
+            </div>
+            <div class="text-center">
+                <div class="w-28 h-28 mx-auto bg-orange-100 rounded-3xl flex items-center justify-center text-6xl mb-6">🧔</div>
+                <h3 class="text-3xl font-semibold">Sahidul Islam</h3>
+                <p class="text-orange-500">Delivery Boy • 4.9 Rating</p>
+            </div>
+            <div class="mt-10 space-y-5 text-lg">
+                <div class="flex items-center justify-between py-4 border-b">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-user"></i> Profile</span>
+                </div>
+                <div class="flex items-center justify-between py-4 border-b">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-key"></i> Change Password</span>
+                </div>
+                <div class="flex items-center justify-between py-4 border-b">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-clock-rotate-left"></i> History</span>
+                </div>
+                <div class="flex items-center justify-between py-4 border-b">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-headset"></i> Support</span>
+                </div>
+                <div onclick="logout()" class="flex items-center justify-between py-4 text-red-500 cursor-pointer">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-right-from-bracket"></i> Log Out</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script already loaded via CDN
+        function switchPage(pageIndex) {
+            // Hide all pages
+            document.querySelectorAll('#page-0, #page-1, #page-2, #page-3, #page-4').forEach(page => {
+                page.classList.add('hidden')
+            })
+            
+            // Show selected page
+            document.getElementById('page-' + pageIndex).classList.remove('hidden')
+            
+            // Update title
+            const titles = ["Dashboard", "Orders", "Live Map", "History", "Support"]
+            document.getElementById('page-title').innerText = titles[pageIndex]
+            
+            // Update active menu
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'))
+            document.getElementById('menu-' + pageIndex).classList.add('active')
+        }
+
+        function switchOrderTab(tab) {
+            document.getElementById('orders-new-list').classList.add('hidden')
+            document.getElementById('orders-delivered-list').classList.add('hidden')
+            
+            if (tab === 0) {
+                document.getElementById('orders-new-list').classList.remove('hidden')
+            } else if (tab === 2) {
+                document.getElementById('orders-delivered-list').classList.remove('hidden')
+            }
+            
+            // Update tab styles
+            document.querySelectorAll('#page-1 button').forEach((btn, i) => {
+                if (i === tab) {
+                    btn.classList.add('border-b-2', 'border-orange-500', 'text-orange-500')
+                } else {
+                    btn.classList.remove('border-b-2', 'border-orange-500', 'text-orange-500')
+                }
+            })
+        }
+
+        function acceptOrder(btn) {
+            btn.innerHTML = `✅ Accepted!`
+            btn.classList.add('!bg-emerald-500')
+            setTimeout(() => {
+                alert('🎉 Order accepted successfully! You are now on the way.')
+            }, 300)
+        }
+
+        function rejectOrder(btn) {
+            btn.innerHTML = `❌ Rejected`
+            btn.classList.add('!bg-gray-400')
+            setTimeout(() => {
+                alert('Order rejected.')
+            }, 300)
+        }
+
+        function showProfileModal() {
+            document.getElementById('profileModal').classList.remove('hidden')
+            document.getElementById('profileModal').classList.add('flex')
+        }
+
+        function hideProfileModal() {
+            const modal = document.getElementById('profileModal')
+            modal.classList.add('hidden')
+            modal.classList.remove('flex')
+        }
+
+        function showNotification() {
+            alert('🛎️ 3 new orders received!')
+        }
+
+        function logout() {
+            hideProfileModal()
+            setTimeout(() => {
+                alert('👋 You have been logged out.')
+                window.location.reload()
+            }, 500)
+        }
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
+                const modal = document.getElementById('profileModal')
+                if (modal.classList.contains('flex')) hideProfileModal()
+            }
+        })
+
+        console.log('%c✅ Full Website Ready! RiderPro Delivery Dashboard', 'color:#f97316;font-size:20px;font-weight:bold')
+    </script>
+</body>
+</html>
