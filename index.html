@@ -1,245 +1,361 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>208 Puzzle Game</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102c50">
+<title>Careers | St. Xavier's Public School</title>
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
+:root {
+  --navy:#102c50;
+  --blue:#245da8;
+  --gold:#c7a45b;
+  --ink:#18283c;
+  --muted:#69788a;
+  --line:#e3e9f0;
+  --bg:#f5f7fa;
 }
-
+*{box-sizing:border-box}
 body{
-background:#f5f7fb;
-color:#222;
-line-height:1.7;
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  line-height:1.5
 }
-
-header{
-background:linear-gradient(135deg,#4CAF50,#2E7D32);
-color:#fff;
-padding:70px 20px;
-text-align:center;
+button,input,select,textarea{font:inherit}
+header{background:white;border-bottom:1px solid var(--line)}
+.nav{
+  max-width:1160px;margin:auto;padding:17px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px
 }
-
-header h1{
-font-size:42px;
-margin-bottom:15px;
+.brand{display:flex;align-items:center;gap:13px}
+.crest{
+  width:48px;height:54px;background:var(--navy);color:#fff;
+  clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);
+  display:grid;place-items:center;font-family:Georgia,serif;
+  font-size:22px;font-weight:bold
 }
-
-header p{
-font-size:18px;
-max-width:700px;
-margin:auto;
-opacity:.95;
+.school{font-family:Georgia,serif;font-size:19px;font-weight:bold;color:var(--navy)}
+.school-sub{font-size:10px;letter-spacing:2px;color:#7c6844;margin-top:3px}
+.nav-link{color:var(--navy);text-decoration:none;font-size:13px;font-weight:600}
+main{max-width:1160px;margin:30px auto;padding:0 24px}
+.hero{
+  background:linear-gradient(110deg,#102c50,#1e4777);
+  border-radius:14px;color:white;padding:42px;
+  position:relative;overflow:hidden
 }
-
-nav{
-margin-top:30px;
+.hero:after{
+  content:"X";position:absolute;right:55px;top:-70px;
+  font-family:Georgia,serif;font-size:260px;font-weight:bold;
+  color:#ffffff08;pointer-events:none
 }
-
-nav a{
-display:inline-block;
-padding:12px 24px;
-margin:8px;
-background:#fff;
-color:#2E7D32;
-text-decoration:none;
-border-radius:30px;
-font-weight:bold;
-transition:.3s;
+.eyebrow{color:#e2c68d;font-size:11px;letter-spacing:2.5px;font-weight:700}
+.hero h1{font:normal clamp(30px,4vw,43px)/1.18 Georgia,serif;margin:14px 0}
+.hero p{color:#dbe6f2;max-width:580px;font-size:14px;line-height:1.9}
+.hero-note{display:flex;gap:9px;align-items:center;font-size:12px;color:#e9d8b3;margin-top:22px}
+.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.8fr);gap:24px;margin-top:25px;align-items:start}
+.card{background:white;border:1px solid var(--line);border-radius:12px;padding:27px}
+.card h2{font-size:19px;color:var(--navy);margin:0 0 6px}
+.sub{font-size:12px;color:var(--muted);margin:0 0 24px}
+.section-title{
+  display:flex;align-items:center;gap:10px;margin:24px 0 13px;
+  font-size:12px;letter-spacing:.8px;text-transform:uppercase;
+  font-weight:750;color:var(--navy)
 }
-
-nav a:hover{
-background:#e8f5e9;
-transform:translateY(-2px);
+.section-title:first-of-type{margin-top:0}
+.section-title:after{content:"";height:1px;background:var(--line);flex:1}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field.full{grid-column:1/-1}
+label{display:block;font-size:12px;font-weight:650;margin-bottom:7px}
+.req{color:#b45345}
+input,select,textarea{
+  width:100%;padding:12px 13px;border:1px solid #d7e0e9;
+  border-radius:7px;background:#fff;color:var(--ink);font-size:13px;
+  outline:none;transition:border .15s,box-shadow .15s
 }
-
-section{
-max-width:950px;
-margin:40px auto;
-padding:30px;
-background:#fff;
-border-radius:15px;
-box-shadow:0 8px 25px rgba(0,0,0,.08);
+input:focus,select:focus,textarea:focus{
+  border-color:var(--blue);box-shadow:0 0 0 3px #245da812
 }
-
-h2{
-color:#2E7D32;
-margin-bottom:20px;
+input[type=file]{font-size:12px;background:#fafbfd}
+textarea{resize:vertical;min-height:90px}
+.hint{font-size:11px;color:var(--muted);margin-top:6px}
+.upload{
+  border:1px dashed #b8c9dc;border-radius:8px;padding:16px;
+  background:#f9fbfd
 }
-
-ul{
-padding-left:20px;
+.upload input{border:0;padding:8px 0;background:transparent}
+.consent{display:flex;gap:10px;align-items:flex-start;margin-top:20px}
+.consent input{width:15px;height:15px;flex-shrink:0;margin-top:3px}
+.consent label{font-weight:400;color:#536579;font-size:11px;line-height:1.7}
+.btn{
+  background:var(--navy);color:white;border:0;border-radius:7px;
+  width:100%;padding:14px;margin-top:20px;font-size:13px;
+  font-weight:700;cursor:pointer
 }
-
-li{
-margin-bottom:10px;
+.btn:hover{background:#204773}
+.btn:focus-visible{outline:3px solid #8bb8f0;outline-offset:3px}
+.side{display:grid;gap:16px}
+.side-card{background:white;border:1px solid var(--line);border-radius:12px;padding:22px}
+.side-card h3{font-size:15px;color:var(--navy);margin:0 0 16px}
+.step{display:flex;gap:13px;margin:17px 0}
+.num{
+  flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  display:grid;place-items:center;background:#edf3fa;color:var(--blue);
+  font-size:12px;font-weight:bold
 }
-
-footer{
-margin-top:40px;
-background:#222;
-color:#fff;
-text-align:center;
-padding:25px;
+.step strong{font-size:12px;display:block;margin:2px 0 4px}
+.step p{font-size:11px;color:var(--muted);margin:0;line-height:1.7}
+.trust{background:#f0f5fa;border:1px solid #e0e9f3;border-radius:9px;padding:15px}
+.trust strong{font-size:12px;color:var(--navy)}
+.trust p{font-size:11px;color:#5b6d80;margin:7px 0 0;line-height:1.8}
+footer{margin-top:38px;background:#fff;border-top:1px solid var(--line);padding:23px;text-align:center}
+footer strong{font:normal 15px Georgia,serif;color:var(--navy)}
+footer p{font-size:11px;color:var(--muted);margin:7px 0 0}
+#feedback{display:none;margin-top:16px;padding:12px;border-radius:7px;font-size:12px}
+#feedback.ok{display:block;background:#edf8f0;color:#24633c}
+#feedback.err{display:block;background:#fff1ef;color:#9c3027}
+@media(max-width:760px){
+  main{padding:0 14px;margin:18px auto}
+  .nav{padding:13px 16px}
+  .school{font-size:15px}.school-sub{font-size:9px;letter-spacing:1.4px}
+  .crest{width:41px;height:47px;font-size:19px}
+  .hero{padding:29px 23px}.hero:after{right:-5px;font-size:180px}
+  .layout{grid-template-columns:1fr;gap:16px}
+  .card{padding:20px}
+  .fields{gap:14px}
 }
-
-html{
-scroll-behavior:smooth;
+@media(max-width:430px){
+  .fields{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .nav-link{font-size:11px}
 }
 </style>
 </head>
-
 <body>
-
 <header>
-<h1>208 Puzzle Game</h1>
-
-<p>
-Enjoy the classic number puzzle game. Merge tiles, reach higher scores,
-and challenge your brain with a simple and addictive gameplay experience.
-</p>
-
-<nav>
-<a href="#home">Home</a>
-<a href="#privacy">Privacy Policy</a>
-<a href="#terms">Terms & Conditions</a>
-</nav>
+  <nav class="nav">
+    <div class="brand">
+      <div class="crest" aria-label="School crest placeholder">SX</div>
+      <div>
+        <div class="school">St. Xavier's Public School</div>
+        <div class="school-sub">CAREERS & OPPORTUNITIES</div>
+      </div>
+    </div>
+    <a class="nav-link" href="#application">Apply for a Position ↗</a>
+  </nav>
 </header>
 
-<section id="home">
-<h2>About the Game</h2>
+<main>
+  <section class="hero">
+    <div class="eyebrow">JOIN OUR INSTITUTION</div>
+    <h1>Build a future.<br>Inspire a generation.</h1>
+    <p>
+      We welcome dedicated educators and skilled professionals who
+      believe in the power of education. Share your experience and
+      take the next step in your professional journey.
+    </p>
+    <div class="hero-note">✦ &nbsp; Teaching and non-teaching opportunities</div>
+  </section>
 
-<p>
-208 Puzzle Game is a fun number merging puzzle designed for players of all ages.
-Slide the tiles, combine matching numbers, and achieve the highest score possible.
-The game works offline and offers a smooth, lightweight experience.
-</p>
+  <div class="layout">
+    <section class="card" id="application">
+      <h2>Employment Application</h2>
+      <p class="sub">Complete the details below to submit your application.</p>
 
-<br>
+      <form id="applicationForm">
+        <div class="section-title">Personal information</div>
+        <div class="fields">
+          <div class="field full">
+            <label for="name">Full name <span class="req">*</span></label>
+            <input id="name" name="name" required maxlength="100"
+                   autocomplete="name" placeholder="Enter your full name">
+          </div>
+          <div class="field">
+            <label for="email">Email address <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required
+                   maxlength="150" autocomplete="email" placeholder="name@example.com">
+          </div>
+          <div class="field">
+            <label for="phone">Mobile number <span class="req">*</span></label>
+            <input id="phone" name="phone" type="tel" required
+                   maxlength="20" autocomplete="tel" placeholder="Enter mobile number">
+          </div>
+          <div class="field full">
+            <label for="address">City / current location</label>
+            <input id="address" name="address" maxlength="150"
+                   autocomplete="address-level2" placeholder="City, state">
+          </div>
+        </div>
 
-<ul>
-<li>✔ Easy to Play</li>
-<li>✔ Smooth Animations</li>
-<li>✔ Offline Gameplay</li>
-<li>✔ Lightweight App</li>
-<li>✔ Suitable for All Ages</li>
-</ul>
-</section>
+        <div class="section-title">Position details</div>
+        <div class="fields">
+          <div class="field">
+            <label for="department">Department <span class="req">*</span></label>
+            <select id="department" name="department" required>
+              <option value="">Select department</option>
+              <option>Teaching</option>
+              <option>Administration</option>
+              <option>Accounts & Finance</option>
+              <option>IT & Computer Science</option>
+              <option>Library</option>
+              <option>Sports & Activities</option>
+              <option>Office & Support Staff</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="designation">Position applied for <span class="req">*</span></label>
+            <select id="designation" name="designation" required>
+              <option value="">Select position</option>
+              <option>Principal / Vice Principal</option>
+              <option>PGT Teacher</option>
+              <option>TGT Teacher</option>
+              <option>PRT Teacher</option>
+              <option>Pre-Primary Teacher</option>
+              <option>Computer Teacher</option>
+              <option>Sports Teacher</option>
+              <option>Librarian</option>
+              <option>Accountant</option>
+              <option>Office Staff</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="qualification">Highest qualification <span class="req">*</span></label>
+            <input id="qualification" name="qualification" required
+                   maxlength="150" placeholder="e.g. M.A., B.Ed., B.Com.">
+          </div>
+          <div class="field">
+            <label for="experience">Relevant experience <span class="req">*</span></label>
+            <select id="experience" name="experience" required>
+              <option value="">Select experience</option>
+              <option>Fresher</option>
+              <option>Less than 1 year</option>
+              <option>1–3 years</option>
+              <option>4–6 years</option>
+              <option>7–10 years</option>
+              <option>More than 10 years</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="subject">Subject / area of specialization</label>
+            <input id="subject" name="subject" maxlength="150"
+                   placeholder="e.g. Mathematics, English, Physics">
+          </div>
+        </div>
 
-<section id="privacy">
+        <div class="section-title">Resume & introduction</div>
+        <div class="fields">
+          <div class="field full">
+            <label for="resume">Upload resume <span class="req">*</span></label>
+            <div class="upload">
+              <input id="resume" name="resume" type="file" required
+                     accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+              <div class="hint">PDF or Word document · Maximum 5 MB</div>
+            </div>
+          </div>
+          <div class="field full">
+            <label for="message">Cover letter / additional information</label>
+            <textarea id="message" name="message" maxlength="1500"
+                      placeholder="Tell us about your experience, skills and interest in this position."></textarea>
+          </div>
+        </div>
 
-<h2>Privacy Policy</h2>
+        <div class="consent">
+          <input id="consent" type="checkbox" required>
+          <label for="consent">
+            I confirm that the information provided is accurate and
+            consent to its use for recruitment purposes.
+            <span class="req">*</span>
+          </label>
+        </div>
 
-<p><strong>Last Updated:</strong> July 17, 2026</p>
+        <button class="btn" id="submitBtn" type="submit">
+          Submit Application &nbsp; →
+        </button>
+        <div id="feedback" role="status" aria-live="polite"></div>
+      </form>
+    </section>
 
-<p>
-Your privacy is important to us. This Privacy Policy explains how we collect,
-use, and protect your information when you use the 208 Puzzle Game.
-</p>
+    <aside class="side">
+      <section class="side-card">
+        <h3>Application process</h3>
+        <div class="step">
+          <div class="num">01</div>
+          <div><strong>Complete your details</strong>
+          <p>Provide accurate contact, qualification and position information.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <div><strong>Attach your resume</strong>
+          <p>Upload a current CV with your education and relevant experience.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <div><strong>Application review</strong>
+          <p>The recruitment team can review your application once it is received by the school.</p></div>
+        </div>
+      </section>
 
-<h3>Information We Collect</h3>
-
-<p>
-We do not collect personal information directly. Anonymous analytics,
-crash reports, and advertising identifiers may be collected to improve the app.
-</p>
-
-<h3>Advertising</h3>
-
-<p>
-The game may display ads using Google AdMob or other advertising partners.
-These partners may collect limited device information to show relevant ads.
-</p>
-
-<h3>Children's Privacy</h3>
-
-<p>
-The game is intended for a general audience. We do not knowingly collect
-personal information from children.
-</p>
-
-<h3>Data Security</h3>
-
-<p>
-We take reasonable steps to protect user information. However, no internet
-transmission is completely secure.
-</p>
-
-<h3>Policy Updates</h3>
-
-<p>
-We may update this Privacy Policy from time to time. Changes become effective
-immediately after being published on this page.
-</p>
-
-<h3>Contact</h3>
-
-<p>Email: support@yourdomain.com</p>
-
-</section>
-
-<section id="terms">
-
-<h2>Terms & Conditions</h2>
-
-<p>
-By downloading or using 208 Puzzle Game, you agree to these Terms and Conditions.
-</p>
-
-<h3>Use of the App</h3>
-
-<p>
-The app is provided for personal entertainment purposes only.
-You agree not to misuse, modify, or distribute the application without permission.
-</p>
-
-<h3>Advertisements</h3>
-
-<p>
-The application may contain third-party advertisements.
-We are not responsible for the content of external advertisements.
-</p>
-
-<h3>Intellectual Property</h3>
-
-<p>
-All game graphics, logos, text, and content belong to the developer unless
-otherwise stated.
-</p>
-
-<h3>Disclaimer</h3>
-
-<p>
-The application is provided "AS IS" without warranties of any kind.
-We are not responsible for any loss resulting from the use of this app.
-</p>
-
-<h3>Changes</h3>
-
-<p>
-We reserve the right to modify these Terms at any time.
-Continued use of the app indicates acceptance of the updated Terms.
-</p>
-
-<h3>Contact</h3>
-
-<p>Email: support@yourdomain.com</p>
-
-</section>
+      <section class="side-card">
+        <h3>Before you apply</h3>
+        <div class="trust">
+          <strong>✓ Accuracy matters</strong>
+          <p>Check your contact details, qualifications and resume before submitting.</p>
+        </div>
+        <div class="trust" style="margin-top:10px">
+          <strong>✓ Protect your information</strong>
+          <p>Submit personal documents only through a verified school recruitment channel.</p>
+        </div>
+      </section>
+      <section class="side-card">
+        <h3>Need assistance?</h3>
+        <p style="font-size:12px;color:#69788a;line-height:1.8;margin:0">
+          For application-related questions, contact the school's
+          verified recruitment office using the contact details published
+          on its official website.
+        </p>
+      </section>
+    </aside>
+  </div>
+</main>
 
 <footer>
-
-<h3>208 Puzzle Game</h3>
-
-<p>© 2026 208 Puzzle Game. All Rights Reserved.</p>
-
+  <strong>St. Xavier's Public School</strong>
+  <p>Careers & Opportunities · Recruitment Portal</p>
+  <p>© <span id="year"></span> · All rights reserved</p>
 </footer>
 
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const form = document.getElementById('applicationForm');
+const fileInput = document.getElementById('resume');
+const feedback = document.getElementById('feedback');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  feedback.className = '';
+  feedback.style.display = 'none';
+
+  const file = fileInput.files[0];
+  const allowed = /\.(pdf|doc|docx)$/i;
+
+  if (!file || !allowed.test(file.name)) {
+    feedback.className = 'err';
+    feedback.textContent = 'Please select a PDF or Word resume.';
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    feedback.className = 'err';
+    feedback.textContent = 'Your resume must be 5 MB or smaller.';
+    return;
+  }
+
+  feedback.className = 'ok';
+  feedback.textContent =
+    'The form passed local validation, but your application has NOT been sent. Connect a secure backend to submit and store it.';
+});
+</script>
 </body>
 </html>
