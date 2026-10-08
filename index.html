@@ -3,103 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Career Application | St. Xavier's Public School</title>
+  <title>St. Xavier's Public School | Application Form</title>
 
   <style>
-    :root {
-      --navy: #10294b;
-      --blue: #1d4ed8;
-      --gold: #eabf61;
-      --bg: #f3f6fb;
-      --text: #243247;
-      --muted: #66758a;
-      --border: #dce4ef;
-    }
-
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #173b68;
+      --primary-dark: #102b4c;
+      --accent: #d8b56d;
+      --background: #f5f7fb;
+      --text: #243247;
+      --muted: #718096;
+      --border: #dfe5ed;
     }
 
     body {
-      margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
+      background: var(--background);
       color: var(--text);
       line-height: 1.5;
     }
 
+    .topbar {
+      height: 6px;
+      background: var(--accent);
+    }
+
     header {
-      background: var(--navy);
+      background: var(--primary-dark);
       color: white;
       padding: 28px 16px;
       text-align: center;
-      border-bottom: 4px solid var(--gold);
     }
 
-    .school-mark {
-      width: 58px;
+    .logo {
       height: 58px;
-      margin: 0 auto 10px;
+      width: 58px;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      border-radius: 50%;
       display: grid;
       place-items: center;
-      border: 2px solid var(--gold);
-      border-radius: 50%;
-      color: var(--gold);
       font-size: 22px;
       font-weight: 800;
+      margin: 0 auto 12px;
     }
 
     header h1 {
-      margin: 0;
-      font-size: clamp(22px, 4vw, 32px);
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: 700;
     }
 
     header p {
-      margin: 7px 0 0;
-      color: #dce6f5;
+      margin-top: 6px;
+      color: #d9e4f2;
+      font-size: 14px;
     }
 
     .container {
-      width: min(920px, calc(100% - 28px));
-      margin: 28px auto 45px;
+      max-width: 900px;
+      width: calc(100% - 28px);
+      margin: 30px auto;
     }
 
     .intro {
       text-align: center;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .intro h2 {
-      color: var(--navy);
-      margin-bottom: 6px;
+      font-size: 25px;
+      color: var(--primary-dark);
+      margin-bottom: 7px;
     }
 
     .intro p {
       color: var(--muted);
-      margin-top: 0;
+      font-size: 14px;
     }
 
     .card {
-      background: white;
+      background: #fff;
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: clamp(18px, 4vw, 32px);
+      border-radius: 12px;
+      padding: 25px;
       margin-bottom: 20px;
-      box-shadow: 0 8px 28px rgba(16, 41, 75, 0.05);
+      box-shadow: 0 4px 18px rgba(16, 43, 76, 0.035);
     }
 
     .section-title {
-      color: var(--navy);
-      font-size: 19px;
-      margin: 0 0 20px;
-      padding-bottom: 12px;
+      font-size: 18px;
+      color: var(--primary-dark);
+      padding-bottom: 13px;
       border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
     }
 
-    .grid {
+    .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 17px;
+      gap: 18px;
     }
 
     .field {
@@ -112,154 +120,164 @@
 
     label {
       display: block;
+      font-weight: 600;
       font-size: 14px;
-      font-weight: 700;
       margin-bottom: 7px;
     }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
+      display: block;
       width: 100%;
-      min-height: 45px;
+      border: 1px solid #cfd8e4;
+      border-radius: 7px;
+      background: #fff;
       padding: 11px 12px;
-      border: 1px solid #ccd6e3;
-      border-radius: 8px;
-      background: white;
       color: var(--text);
       font: inherit;
-      outline: none;
+      font-size: 14px;
+      min-height: 44px;
     }
 
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #4679b5;
+      box-shadow: 0 0 0 3px rgba(70, 121, 181, .10);
     }
 
     textarea {
-      min-height: 120px;
+      min-height: 110px;
       resize: vertical;
     }
 
     .hint {
       display: block;
-      margin-top: 5px;
-      font-size: 12px;
       color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
     }
 
-    .fee {
-      background: #f8fbff;
-      border: 1px solid #d5e3fa;
-      border-radius: 12px;
-      padding: 18px;
+    .fee-box {
+      background: #f8faff;
+      border: 1px solid #dbe5f3;
+      border-radius: 9px;
+      padding: 20px;
     }
 
-    .fee-top {
+    .fee-heading {
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       gap: 12px;
     }
 
-    .fee-label {
+    .fee-heading p {
       color: var(--muted);
       font-size: 14px;
     }
 
     .amount {
+      color: var(--primary-dark);
       font-size: 30px;
       font-weight: 800;
-      color: var(--navy);
     }
 
-    .recipient {
-      overflow-wrap: anywhere;
-      margin: 15px 0;
-      padding: 12px;
-      border-radius: 8px;
-      background: white;
+    .payment-recipient {
+      margin-top: 17px;
+      padding: 13px;
+      background: #fff;
       border: 1px solid var(--border);
+      border-radius: 7px;
+      overflow-wrap: anywhere;
     }
 
-    .recipient strong {
-      color: var(--navy);
+    .payment-recipient p + p {
+      margin-top: 4px;
+    }
+
+    .payment-recipient strong {
+      color: var(--primary-dark);
     }
 
     button {
       border: 0;
-      border-radius: 9px;
-      padding: 13px 18px;
-      min-height: 46px;
-      font: inherit;
+      border-radius: 7px;
+      padding: 12px 16px;
+      min-height: 44px;
+      font-size: 14px;
       font-weight: 700;
+      font-family: inherit;
       cursor: pointer;
     }
 
-    .secondary {
-      background: #e7eef9;
-      color: var(--navy);
+    .copy-btn {
+      margin-top: 10px;
+      color: var(--primary);
+      background: #e9eff8;
     }
 
-    .primary {
+    .pay-btn {
       width: 100%;
-      background: var(--navy);
+      margin-top: 15px;
       color: white;
+      background: var(--primary);
+      font-size: 15px;
     }
 
-    .primary:hover {
-      background: #1a3d6d;
+    .pay-btn:hover {
+      background: var(--primary-dark);
     }
 
-    .pay-button {
-      background: #176b43;
-      color: white;
+    .submit-btn {
       width: 100%;
-      margin-top: 12px;
-    }
-
-    .pay-button:hover {
-      background: #125534;
+      background: var(--primary-dark);
+      color: white;
+      margin-top: 16px;
     }
 
     .notice {
-      color: #75551a;
-      background: #fff8e7;
-      border: 1px solid #f0dfb1;
-      border-radius: 9px;
-      padding: 12px;
-      font-size: 13px;
       margin-top: 14px;
+      padding: 12px;
+      background: #fff8e8;
+      border: 1px solid #f0dfb5;
+      border-radius: 7px;
+      color: #75551c;
+      font-size: 12px;
     }
 
-    .check-row {
+    .consent {
       display: flex;
-      gap: 10px;
       align-items: flex-start;
-      margin: 18px 0;
-      font-size: 14px;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 13px;
     }
 
-    .check-row input {
-      width: 18px;
-      height: 18px;
-      min-height: 18px;
+    .consent input {
+      width: 17px;
+      min-height: 17px;
+      height: 17px;
       margin-top: 3px;
       flex: 0 0 auto;
     }
 
-    .check-row label {
+    .consent label {
       font-weight: 400;
       margin: 0;
     }
 
     .status {
       margin-top: 12px;
-      font-size: 14px;
+      font-size: 13px;
       overflow-wrap: anywhere;
     }
 
     .success {
-      color: #176b43;
+      color: #147344;
     }
 
     .error {
@@ -268,77 +286,86 @@
 
     footer {
       text-align: center;
+      padding: 5px 16px 28px;
+      font-size: 12px;
       color: var(--muted);
-      font-size: 13px;
-      padding: 0 16px 26px;
     }
 
-    @media (max-width: 620px) {
-      .grid {
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px auto;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .form-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
       }
 
       .full {
         grid-column: auto;
       }
 
-      .container {
-        margin-top: 18px;
+      .intro h2 {
+        font-size: 22px;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="topbar"></div>
+
   <header>
-    <div class="school-mark" aria-hidden="true">SX</div>
+    <div class="logo">SX</div>
     <h1>St. Xavier's Public School</h1>
-    <p>Career Opportunities &amp; Recruitment Application</p>
+    <p>Career Opportunities &amp; Recruitment</p>
   </header>
 
   <main class="container">
     <div class="intro">
-      <h2>Submit Your Application</h2>
-      <p>Complete the form and provide your resume for consideration.</p>
+      <h2>Application Form</h2>
+      <p>Please complete your details and upload your resume.</p>
     </div>
 
     <form id="applicationForm">
       <section class="card">
-        <h3 class="section-title">1. Personal Information</h3>
+        <h3 class="section-title">Personal Information</h3>
 
-        <div class="grid">
+        <div class="form-grid">
           <div class="field">
-            <label for="fullName">Full Name *</label>
-            <input id="fullName" name="fullName" required
+            <label for="name">Full Name *</label>
+            <input id="name" name="name" required
                    autocomplete="name" placeholder="Enter your full name">
           </div>
 
           <div class="field">
             <label for="email">Email Address *</label>
             <input id="email" name="email" type="email" required
-                   autocomplete="email" placeholder="you@example.com">
+                   autocomplete="email" placeholder="Enter your email">
           </div>
 
           <div class="field">
             <label for="phone">Mobile Number *</label>
             <input id="phone" name="phone" type="tel" required
-                   autocomplete="tel" inputmode="tel"
-                   pattern="[0-9+() -]{10,18}"
-                   placeholder="Enter mobile number">
+                   autocomplete="tel" pattern="[0-9+() -]{10,18}"
+                   placeholder="Enter your mobile number">
           </div>
 
           <div class="field">
             <label for="city">City *</label>
-            <input id="city" name="city" required
-                   placeholder="Enter your city">
+            <input id="city" name="city" required placeholder="Enter your city">
           </div>
         </div>
       </section>
 
       <section class="card">
-        <h3 class="section-title">2. Professional Information</h3>
+        <h3 class="section-title">Professional Information</h3>
 
-        <div class="grid">
+        <div class="form-grid">
           <div class="field">
             <label for="department">Department *</label>
             <select id="department" name="department" required>
@@ -357,7 +384,7 @@
           <div class="field">
             <label for="position">Position Applied For *</label>
             <input id="position" name="position" required
-                   placeholder="e.g. Mathematics Teacher">
+                   placeholder="Enter the position">
           </div>
 
           <div class="field">
@@ -382,74 +409,80 @@
           <div class="field full">
             <label for="specialization">Subject / Specialization</label>
             <input id="specialization" name="specialization"
-                   placeholder="e.g. English, Physics, HR">
+                   placeholder="Enter subject or specialization">
           </div>
         </div>
       </section>
 
       <section class="card">
-        <h3 class="section-title">3. Resume &amp; Cover Letter</h3>
+        <h3 class="section-title">Resume &amp; Cover Letter</h3>
 
-        <div class="grid">
+        <div class="form-grid">
           <div class="field full">
             <label for="resume">Upload Resume *</label>
             <input id="resume" name="resume" type="file"
                    accept=".pdf,.doc,.docx" required>
-            <span class="hint">Accepted formats: PDF, DOC, DOCX. Maximum 5 MB.</span>
+            <span class="hint">PDF, DOC or DOCX · Maximum file size: 5 MB</span>
           </div>
 
           <div class="field full">
             <label for="coverLetter">Cover Letter</label>
             <textarea id="coverLetter" name="coverLetter"
-                      placeholder="Tell us briefly about your experience and suitability for this role."></textarea>
+              placeholder="Briefly describe your experience and suitability for the role."></textarea>
           </div>
         </div>
       </section>
 
       <section class="card">
-        <h3 class="section-title">4. Application Fee</h3>
+        <h3 class="section-title">Application Fee</h3>
 
-        <div class="fee">
-          <div class="fee-top">
+        <div class="fee-box">
+          <div class="fee-heading">
             <div>
-              <div class="fee-label">Application fee</div>
+              <p>Application fee</p>
               <div class="amount">₹999</div>
             </div>
-            <span>INR · One-time payment</span>
+            <p>One-time payment · INR</p>
           </div>
 
-          <div class="recipient">
-            <div><strong>UPI ID:</strong> <span id="upiDisplay">brixoomart@nyes</span></div>
-            <div><strong>Recipient name:</strong> BrixooMart</div>
-            <button type="button" class="secondary" id="copyUpi"
-                    style="margin-top:10px">
+          <div class="payment-recipient">
+            <p><strong>UPI ID:</strong> <span id="upiDisplay">brixoomart@nyes</span></p>
+            <p><strong>Recipient:</strong> BrixooMart</p>
+
+            <button class="copy-btn" type="button" id="copyUpi">
               Copy UPI ID
             </button>
           </div>
 
-          <button type="button" class="pay-button" id="payButton">
-            Pay ₹999 via UPI
+          <button class="pay-btn" type="button" id="payButton">
+            Pay Now — ₹999
           </button>
 
-          <div id="paymentStatus" class="status" role="status" aria-live="polite"></div>
+          <div id="paymentStatus" class="status" role="status"
+               aria-live="polite"></div>
 
           <div class="notice">
-            Important: Confirm that this UPI ID is officially authorized to collect
-            the school's application fee before paying. Opening a UPI app does not
-            confirm that payment has succeeded.
+            Before paying, independently confirm that this UPI ID is authorized
+            to collect the school's application fee. Always check the recipient
+            name and amount inside your UPI app. Returning from the app does not
+            verify successful payment.
           </div>
         </div>
 
-        <div class="check-row">
-          <input id="confirmInfo" type="checkbox" required>
-          <label for="confirmInfo">
-            I confirm that the information provided is accurate and that I have
-            reviewed the application fee recipient details.
+        <div class="consent">
+          <input type="checkbox" id="consent" required>
+          <label for="consent">
+            I confirm that my application information is accurate and that I
+            have reviewed the payment recipient details.
           </label>
         </div>
 
-        <button type="submit" class="primary">Validate Application Form</button>
-        <div id="formStatus" class="status" role="status" aria-live="polite"></div>
+        <button class="submit-btn" type="submit">
+          Validate Application
+        </button>
+
+        <div id="formStatus" class="status" role="status"
+             aria-live="polite"></div>
       </section>
     </form>
   </main>
@@ -457,7 +490,7 @@
   <footer>
     St. Xavier's Public School · Career Application Portal
     <br>
-    Please verify the school's official recruitment and payment details independently.
+    Confirm the school's official recruitment and payment details before submitting.
   </footer>
 
   <script>
@@ -467,12 +500,12 @@
 
     const payButton = document.getElementById("payButton");
     const paymentStatus = document.getElementById("paymentStatus");
-    const copyUpiButton = document.getElementById("copyUpi");
+    const copyButton = document.getElementById("copyUpi");
     const form = document.getElementById("applicationForm");
     const formStatus = document.getElementById("formStatus");
     const resumeInput = document.getElementById("resume");
 
-    // Open a UPI app with recipient and amount prefilled.
+    // Open a compatible UPI app with the recipient and amount prefilled.
     payButton.addEventListener("click", function () {
       const params = new URLSearchParams({
         pa: UPI_ID,
@@ -482,42 +515,42 @@
         tn: "Resume Application Fee"
       });
 
-      const upiLink = "upi://pay?" + params.toString();
+      const upiUrl = "upi://pay?" + params.toString();
 
       paymentStatus.className = "status";
       paymentStatus.textContent =
-        "Opening your UPI app. Check the displayed recipient and amount before authorizing payment.";
+        "Opening UPI app. Please verify the recipient and ₹999 amount before confirming.";
 
-      window.location.href = upiLink;
+      window.location.href = upiUrl;
     });
 
-    // Copy the displayed UPI ID.
-    copyUpiButton.addEventListener("click", async function () {
+    // Copy UPI ID.
+    copyButton.addEventListener("click", async function () {
       try {
         await navigator.clipboard.writeText(UPI_ID);
         paymentStatus.className = "status success";
         paymentStatus.textContent = "UPI ID copied: " + UPI_ID;
       } catch (error) {
-        // Fallback for browsers where Clipboard API is unavailable.
-        const temporaryInput = document.createElement("input");
-        temporaryInput.value = UPI_ID;
-        document.body.appendChild(temporaryInput);
-        temporaryInput.select();
+        const temp = document.createElement("textarea");
+        temp.value = UPI_ID;
+        temp.style.position = "fixed";
+        temp.style.opacity = "0";
+        document.body.appendChild(temp);
+        temp.select();
 
         const copied = document.execCommand("copy");
-        temporaryInput.remove();
+        temp.remove();
 
         paymentStatus.className = copied ? "status success" : "status error";
         paymentStatus.textContent = copied
           ? "UPI ID copied: " + UPI_ID
-          : "Copy failed. Please copy this UPI ID manually: " + UPI_ID;
+          : "Please copy the UPI ID manually: " + UPI_ID;
       }
     });
 
-    // Client-side form validation only. It does not submit/store an application.
+    // Front-end validation only; no application is sent to a server.
     form.addEventListener("submit", function (event) {
       event.preventDefault();
-
       formStatus.className = "status error";
 
       if (!form.checkValidity()) {
@@ -532,26 +565,18 @@
         return;
       }
 
-      const allowedTypes = [
-        "application/pdf",
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ];
-
-      const allowedExtensions = /\.(pdf|doc|docx)$/i;
-
-      if (!allowedExtensions.test(file.name)) {
-        formStatus.textContent = "Upload your resume as a PDF, DOC, or DOCX file.";
+      if (!/\.(pdf|doc|docx)$/i.test(file.name)) {
+        formStatus.textContent = "Upload a PDF, DOC or DOCX resume.";
         return;
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        formStatus.textContent = "Resume must be 5 MB or smaller.";
+        formStatus.textContent = "Your resume must be 5 MB or smaller.";
         return;
       }
 
       formStatus.textContent =
-        "Form validation passed. This demo does not upload or save your application. Connect a secure backend before accepting real applications.";
+        "Form validation successful. This demo does not save or submit applications. A secure backend is required for real submissions.";
     });
   </script>
 </body>
