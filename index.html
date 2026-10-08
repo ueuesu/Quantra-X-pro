@@ -1,237 +1,373 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#102c50">
-<title>St. Xavier's Public School | Careers</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Application | St. Xavier's Public School</title>
 
-<style>
-:root{
-  --navy:#102c50;
-  --blue:#245da8;
-  --gold:#c7a45b;
-  --bg:#f4f7fb;
-  --text:#192b40;
-  --muted:#6b7a8d;
-  --line:#e1e8f0;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-  line-height:1.5;
-}
-header{
-  background:white;
-  border-bottom:1px solid var(--line);
-}
-.nav{
-  max-width:1050px;
-  margin:auto;
-  padding:15px 20px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.crest{
-  width:43px;height:49px;
-  display:grid;place-items:center;
-  color:white;background:var(--navy);
-  clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);
-  font:bold 19px Georgia,serif;
-}
-.school{font:bold 18px Georgia,serif;color:var(--navy)}
-.subbrand{font-size:10px;letter-spacing:1.5px;color:#927544}
-main{max-width:1050px;margin:26px auto;padding:0 18px}
-.hero{
-  background:linear-gradient(120deg,#102c50,#244e7d);
-  color:white;padding:35px;border-radius:13px;
-}
-.hero small{color:#e5c98e;letter-spacing:2px;font-weight:bold}
-.hero h1{font:normal 38px/1.2 Georgia,serif;margin:13px 0}
-.hero p{font-size:14px;color:#dce7f4;max-width:570px}
-.layout{
-  display:grid;
-  grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);
-  gap:20px;margin-top:22px;align-items:start;
-}
-.card{
-  background:white;border:1px solid var(--line);
-  border-radius:12px;padding:23px;margin-bottom:17px;
-}
-h2{font-size:20px;color:var(--navy);margin:0 0 6px}
-.muted{font-size:12px;color:var(--muted);margin:0 0 20px}
-.section{
-  font-size:12px;font-weight:bold;letter-spacing:1px;
-  color:var(--navy);margin:23px 0 13px;
-  padding-bottom:8px;border-bottom:1px solid var(--line);
-}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.full{grid-column:1/-1}
-label{display:block;font-size:12px;font-weight:bold;margin-bottom:6px}
-input,select,textarea{
-  width:100%;padding:12px;border:1px solid #d5deea;
-  border-radius:7px;background:white;color:var(--text);
-  font:13px Arial,sans-serif;
-}
-input:focus,select:focus,textarea:focus{
-  outline:2px solid #b9d5f5;border-color:var(--blue);
-}
-textarea{resize:vertical;min-height:85px}
-.hint{font-size:11px;color:var(--muted);margin-top:6px}
-.check{display:flex;gap:9px;margin-top:17px;align-items:flex-start}
-.check input{width:16px;margin-top:3px}
-.check label{font-weight:normal;font-size:11px;color:var(--muted)}
-button{
-  width:100%;padding:14px;border:0;border-radius:8px;
-  color:white;font-size:14px;font-weight:bold;cursor:pointer;
-}
-button:focus-visible{outline:3px solid #8bb8f0;outline-offset:3px}
-.submit{background:var(--navy);margin-top:18px}
-.submit:hover{background:#244e7d}
-.pay{background:#16834b;margin-top:17px;font-size:16px}
-.pay:hover{background:#116b3d}
-.payment{text-align:center}
-.amount{font-size:38px;font-weight:bold;color:var(--navy);margin:8px 0}
-.upi-label{font-size:12px;color:var(--muted);margin-top:12px}
-.upi-box{
-  display:flex;align-items:center;justify-content:center;
-  gap:8px;flex-wrap:wrap;
-  padding:12px;background:#f4f7fb;
-  border:1px solid var(--line);border-radius:8px;
-  color:var(--navy);font-size:14px;font-weight:bold;
-  overflow-wrap:anywhere;
-}
-.copy{
-  width:auto;padding:7px 10px;background:#e4edf9;
-  color:var(--navy);font-size:11px;
-}
-.notice{
-  background:#fff8e9;color:#78561c;padding:12px;
-  border-radius:7px;font-size:11px;text-align:left;margin-top:13px;
-}
-.status{display:none;padding:12px;margin-top:13px;border-radius:7px;font-size:12px;overflow-wrap:anywhere}
-.status.show{display:block}
-.status.error{background:#fff0ee;color:#9b3025}
-.status.success{background:#edf8f0;color:#21643a}
-.side-title{color:var(--navy);font-size:15px;margin:0 0 12px}
-.step{padding:12px 0;border-bottom:1px solid var(--line)}
-.step:last-child{border-bottom:0}
-.step strong{font-size:12px}
-.step p{font-size:12px;color:var(--muted);margin:4px 0 0}
-footer{text-align:center;background:white;border-top:1px solid var(--line);padding:23px}
-footer strong{font:16px Georgia,serif;color:var(--navy)}
-footer p{font-size:11px;color:var(--muted);margin:5px 0}
-@media(max-width:720px){
-  main{padding:0 12px;margin:16px auto}
-  .layout{grid-template-columns:1fr;gap:0}
-  .hero{padding:26px 21px}
-  .hero h1{font-size:32px}
-  .card{padding:18px}
-  .school{font-size:15px}
-}
-@media(max-width:430px){
-  .fields{grid-template-columns:1fr}
-  .full{grid-column:auto}
-}
-</style>
+  <style>
+    :root {
+      --navy: #10294b;
+      --blue: #1d4ed8;
+      --gold: #eabf61;
+      --bg: #f3f6fb;
+      --text: #243247;
+      --muted: #66758a;
+      --border: #dce4ef;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 28px 16px;
+      text-align: center;
+      border-bottom: 4px solid var(--gold);
+    }
+
+    .school-mark {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      color: var(--gold);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(22px, 4vw, 32px);
+    }
+
+    header p {
+      margin: 7px 0 0;
+      color: #dce6f5;
+    }
+
+    .container {
+      width: min(920px, calc(100% - 28px));
+      margin: 28px auto 45px;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .intro h2 {
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .intro p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(18px, 4vw, 32px);
+      margin-bottom: 20px;
+      box-shadow: 0 8px 28px rgba(16, 41, 75, 0.05);
+    }
+
+    .section-title {
+      color: var(--navy);
+      font-size: 19px;
+      margin: 0 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 45px;
+      padding: 11px 12px;
+      border: 1px solid #ccd6e3;
+      border-radius: 8px;
+      background: white;
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.10);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .hint {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .fee {
+      background: #f8fbff;
+      border: 1px solid #d5e3fa;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .fee-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .fee-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .amount {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .recipient {
+      overflow-wrap: anywhere;
+      margin: 15px 0;
+      padding: 12px;
+      border-radius: 8px;
+      background: white;
+      border: 1px solid var(--border);
+    }
+
+    .recipient strong {
+      color: var(--navy);
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 13px 18px;
+      min-height: 46px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .secondary {
+      background: #e7eef9;
+      color: var(--navy);
+    }
+
+    .primary {
+      width: 100%;
+      background: var(--navy);
+      color: white;
+    }
+
+    .primary:hover {
+      background: #1a3d6d;
+    }
+
+    .pay-button {
+      background: #176b43;
+      color: white;
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .pay-button:hover {
+      background: #125534;
+    }
+
+    .notice {
+      color: #75551a;
+      background: #fff8e7;
+      border: 1px solid #f0dfb1;
+      border-radius: 9px;
+      padding: 12px;
+      font-size: 13px;
+      margin-top: 14px;
+    }
+
+    .check-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 18px 0;
+      font-size: 14px;
+    }
+
+    .check-row input {
+      width: 18px;
+      height: 18px;
+      min-height: 18px;
+      margin-top: 3px;
+      flex: 0 0 auto;
+    }
+
+    .check-row label {
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .success {
+      color: #176b43;
+    }
+
+    .error {
+      color: #b42318;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 0 16px 26px;
+    }
+
+    @media (max-width: 620px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .container {
+        margin-top: 18px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <div class="nav">
-    <div class="crest">SX</div>
-    <div>
-      <div class="school">St. Xavier's Public School</div>
-      <div class="subbrand">CAREERS & OPPORTUNITIES</div>
+  <header>
+    <div class="school-mark" aria-hidden="true">SX</div>
+    <h1>St. Xavier's Public School</h1>
+    <p>Career Opportunities &amp; Recruitment Application</p>
+  </header>
+
+  <main class="container">
+    <div class="intro">
+      <h2>Submit Your Application</h2>
+      <p>Complete the form and provide your resume for consideration.</p>
     </div>
-  </div>
-</header>
 
-<main>
-  <section class="hero">
-    <small>JOIN OUR TEAM</small>
-    <h1>Inspire minds.<br>Shape the future.</h1>
-    <p>
-      Submit your resume and professional details for consideration
-      for teaching and non-teaching positions.
-    </p>
-  </section>
+    <form id="applicationForm">
+      <section class="card">
+        <h3 class="section-title">1. Personal Information</h3>
 
-  <div class="layout">
-    <section class="card">
-      <h2>Employment Application</h2>
-      <p class="muted">Complete all required fields marked with *.</p>
-
-      <form id="applicationForm">
-        <div class="section">Personal information</div>
-        <div class="fields">
-          <div class="full">
-            <label for="name">Full name *</label>
-            <input id="name" name="name" required maxlength="100"
+        <div class="grid">
+          <div class="field">
+            <label for="fullName">Full Name *</label>
+            <input id="fullName" name="fullName" required
                    autocomplete="name" placeholder="Enter your full name">
           </div>
-          <div>
-            <label for="email">Email address *</label>
+
+          <div class="field">
+            <label for="email">Email Address *</label>
             <input id="email" name="email" type="email" required
-                   maxlength="150" placeholder="name@example.com">
+                   autocomplete="email" placeholder="you@example.com">
           </div>
-          <div>
-            <label for="phone">Mobile number *</label>
+
+          <div class="field">
+            <label for="phone">Mobile Number *</label>
             <input id="phone" name="phone" type="tel" required
-                   maxlength="20" placeholder="Enter mobile number">
+                   autocomplete="tel" inputmode="tel"
+                   pattern="[0-9+() -]{10,18}"
+                   placeholder="Enter mobile number">
           </div>
-          <div class="full">
-            <label for="city">City / location</label>
-            <input id="city" name="city" maxlength="100"
-                   placeholder="City, State">
+
+          <div class="field">
+            <label for="city">City *</label>
+            <input id="city" name="city" required
+                   placeholder="Enter your city">
           </div>
         </div>
+      </section>
 
-        <div class="section">Position details</div>
-        <div class="fields">
-          <div>
+      <section class="card">
+        <h3 class="section-title">2. Professional Information</h3>
+
+        <div class="grid">
+          <div class="field">
             <label for="department">Department *</label>
             <select id="department" name="department" required>
               <option value="">Select department</option>
               <option>Teaching</option>
               <option>Administration</option>
-              <option>Accounts & Finance</option>
-              <option>Computer Science / IT</option>
+              <option>Accounts</option>
+              <option>Information Technology</option>
               <option>Library</option>
               <option>Sports</option>
-              <option>Office & Support Staff</option>
-            </select>
-          </div>
-          <div>
-            <label for="position">Position *</label>
-            <select id="position" name="position" required>
-              <option value="">Select position</option>
-              <option>Principal / Vice Principal</option>
-              <option>PGT Teacher</option>
-              <option>TGT Teacher</option>
-              <option>PRT Teacher</option>
-              <option>Pre-Primary Teacher</option>
-              <option>Computer Teacher</option>
-              <option>Sports Teacher</option>
-              <option>Librarian</option>
-              <option>Accountant</option>
-              <option>Office Staff</option>
+              <option>Support Staff</option>
               <option>Other</option>
             </select>
           </div>
-          <div>
-            <label for="qualification">Qualification *</label>
-            <input id="qualification" name="qualification" required
-                   maxlength="150" placeholder="e.g. M.A., B.Ed.">
+
+          <div class="field">
+            <label for="position">Position Applied For *</label>
+            <input id="position" name="position" required
+                   placeholder="e.g. Mathematics Teacher">
           </div>
-          <div>
-            <label for="experience">Experience *</label>
+
+          <div class="field">
+            <label for="qualification">Highest Qualification *</label>
+            <input id="qualification" name="qualification" required
+                   placeholder="e.g. B.Ed., M.A.">
+          </div>
+
+          <div class="field">
+            <label for="experience">Work Experience *</label>
             <select id="experience" name="experience" required>
               <option value="">Select experience</option>
               <option>Fresher</option>
@@ -242,171 +378,181 @@ footer p{font-size:11px;color:var(--muted);margin:5px 0}
               <option>More than 10 years</option>
             </select>
           </div>
-          <div class="full">
-            <label for="subject">Subject / specialization</label>
-            <input id="subject" name="subject" maxlength="150"
-                   placeholder="e.g. English, Mathematics">
+
+          <div class="field full">
+            <label for="specialization">Subject / Specialization</label>
+            <input id="specialization" name="specialization"
+                   placeholder="e.g. English, Physics, HR">
           </div>
         </div>
+      </section>
 
-        <div class="section">Resume</div>
-        <div class="fields">
-          <div class="full">
-            <label for="resume">Upload resume *</label>
+      <section class="card">
+        <h3 class="section-title">3. Resume &amp; Cover Letter</h3>
+
+        <div class="grid">
+          <div class="field full">
+            <label for="resume">Upload Resume *</label>
             <input id="resume" name="resume" type="file"
                    accept=".pdf,.doc,.docx" required>
-            <div class="hint">PDF or Word document · Maximum 5 MB</div>
+            <span class="hint">Accepted formats: PDF, DOC, DOCX. Maximum 5 MB.</span>
           </div>
-          <div class="full">
-            <label for="message">Additional information</label>
-            <textarea id="message" name="message" maxlength="1500"
-                      placeholder="Describe your skills and experience"></textarea>
+
+          <div class="field full">
+            <label for="coverLetter">Cover Letter</label>
+            <textarea id="coverLetter" name="coverLetter"
+                      placeholder="Tell us briefly about your experience and suitability for this role."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3 class="section-title">4. Application Fee</h3>
+
+        <div class="fee">
+          <div class="fee-top">
+            <div>
+              <div class="fee-label">Application fee</div>
+              <div class="amount">₹999</div>
+            </div>
+            <span>INR · One-time payment</span>
+          </div>
+
+          <div class="recipient">
+            <div><strong>UPI ID:</strong> <span id="upiDisplay">brixoomart@nyes</span></div>
+            <div><strong>Recipient name:</strong> BrixooMart</div>
+            <button type="button" class="secondary" id="copyUpi"
+                    style="margin-top:10px">
+              Copy UPI ID
+            </button>
+          </div>
+
+          <button type="button" class="pay-button" id="payButton">
+            Pay ₹999 via UPI
+          </button>
+
+          <div id="paymentStatus" class="status" role="status" aria-live="polite"></div>
+
+          <div class="notice">
+            Important: Confirm that this UPI ID is officially authorized to collect
+            the school's application fee before paying. Opening a UPI app does not
+            confirm that payment has succeeded.
           </div>
         </div>
 
-        <div class="check">
-          <input id="consent" type="checkbox" required>
-          <label for="consent">
-            I confirm that the information provided is accurate and
-            consent to its use for recruitment.
+        <div class="check-row">
+          <input id="confirmInfo" type="checkbox" required>
+          <label for="confirmInfo">
+            I confirm that the information provided is accurate and that I have
+            reviewed the application fee recipient details.
           </label>
         </div>
 
-        <button class="submit" type="submit">Continue to Payment →</button>
+        <button type="submit" class="primary">Validate Application Form</button>
         <div id="formStatus" class="status" role="status" aria-live="polite"></div>
-      </form>
-    </section>
-
-    <aside>
-      <section class="card">
-        <h3 class="side-title">Application process</h3>
-        <div class="step">
-          <strong>01 · Complete your details</strong>
-          <p>Enter your contact and qualification details.</p>
-        </div>
-        <div class="step">
-          <strong>02 · Upload your resume</strong>
-          <p>Attach your latest CV in PDF or Word format.</p>
-        </div>
-        <div class="step">
-          <strong>03 · Payment</strong>
-          <p>Review the official fee policy and verify the recipient before paying.</p>
-        </div>
       </section>
+    </form>
+  </main>
 
-      <section class="card payment" id="payment">
-        <h2>Application Fee</h2>
-        <div class="amount">₹999</div>
-        <p class="muted">One-time application fee</p>
+  <footer>
+    St. Xavier's Public School · Career Application Portal
+    <br>
+    Please verify the school's official recruitment and payment details independently.
+  </footer>
 
-        <div class="upi-label">UPI ID / Payment recipient</div>
-        <div class="upi-box">
-          <span id="upiText">brixoomart@nyes</span>
-          <button class="copy" id="copyUpi" type="button">Copy UPI ID</button>
-        </div>
+  <script>
+    const UPI_ID = "brixoomart@nyes";
+    const RECIPIENT_NAME = "BrixooMart";
+    const APPLICATION_FEE = "999.00";
 
-        <button class="pay" id="payButton" type="button">
-          Pay Now · ₹999
-        </button>
+    const payButton = document.getElementById("payButton");
+    const paymentStatus = document.getElementById("paymentStatus");
+    const copyUpiButton = document.getElementById("copyUpi");
+    const form = document.getElementById("applicationForm");
+    const formStatus = document.getElementById("formStatus");
+    const resumeInput = document.getElementById("resume");
 
-        <div id="paymentStatus" class="status" role="status" aria-live="polite"></div>
+    // Open a UPI app with recipient and amount prefilled.
+    payButton.addEventListener("click", function () {
+      const params = new URLSearchParams({
+        pa: UPI_ID,
+        pn: RECIPIENT_NAME,
+        am: APPLICATION_FEE,
+        cu: "INR",
+        tn: "Resume Application Fee"
+      });
 
-        <div class="notice">
-          Verify that the school has authorized this fee and UPI recipient
-          before accepting payments. Opening a UPI app does not confirm payment.
-        </div>
-      </section>
-    </aside>
-  </div>
-</main>
+      const upiLink = "upi://pay?" + params.toString();
 
-<footer>
-  <strong>St. Xavier's Public School</strong>
-  <p>Careers & Opportunities</p>
-  <p>© <span id="year"></span> · All rights reserved</p>
-</footer>
+      paymentStatus.className = "status";
+      paymentStatus.textContent =
+        "Opening your UPI app. Check the displayed recipient and amount before authorizing payment.";
 
-<script>
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+      window.location.href = upiLink;
+    });
 
-const form = document.getElementById("applicationForm");
-const formStatus = document.getElementById("formStatus");
-const paymentStatus = document.getElementById("paymentStatus");
-const payButton = document.getElementById("payButton");
-const resumeInput = document.getElementById("resume");
+    // Copy the displayed UPI ID.
+    copyUpiButton.addEventListener("click", async function () {
+      try {
+        await navigator.clipboard.writeText(UPI_ID);
+        paymentStatus.className = "status success";
+        paymentStatus.textContent = "UPI ID copied: " + UPI_ID;
+      } catch (error) {
+        // Fallback for browsers where Clipboard API is unavailable.
+        const temporaryInput = document.createElement("input");
+        temporaryInput.value = UPI_ID;
+        document.body.appendChild(temporaryInput);
+        temporaryInput.select();
 
-/*
-  DEMO NOTE:
-  This form does not upload resumes to a server.
-  Connect a backend to save applications and verify payments.
-*/
-let formValidated = false;
+        const copied = document.execCommand("copy");
+        temporaryInput.remove();
 
-form.addEventListener("submit", function(event) {
-  event.preventDefault();
+        paymentStatus.className = copied ? "status success" : "status error";
+        paymentStatus.textContent = copied
+          ? "UPI ID copied: " + UPI_ID
+          : "Copy failed. Please copy this UPI ID manually: " + UPI_ID;
+      }
+    });
 
-  formStatus.className = "status";
-  paymentStatus.className = "status";
+    // Client-side form validation only. It does not submit/store an application.
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-  const file = resumeInput.files[0];
+      formStatus.className = "status error";
 
-  if (!file || !/\.(pdf|doc|docx)$/i.test(file.name)) {
-    formStatus.className = "status error show";
-    formStatus.textContent = "Please select a PDF or Word resume.";
-    return;
-  }
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
 
-  if (file.size > 5 * 1024 * 1024) {
-    formStatus.className = "status error show";
-    formStatus.textContent = "Resume must be 5 MB or smaller.";
-    return;
-  }
+      const file = resumeInput.files[0];
 
-  formValidated = true;
-  formStatus.className = "status success show";
-  formStatus.textContent =
-    "Form validated on this device. Your application has not yet been sent to a server.";
+      if (!file) {
+        formStatus.textContent = "Please upload your resume.";
+        return;
+      }
 
-  document.getElementById("payment").scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
-});
+      const allowedTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ];
 
-document.getElementById("copyUpi").addEventListener("click", async function() {
-  const upi = document.getElementById("upiText").textContent;
+      const allowedExtensions = /\.(pdf|doc|docx)$/i;
 
-  try {
-    await navigator.clipboard.writeText(upi);
-    paymentStatus.className = "status success show";
-    paymentStatus.textContent = "UPI ID copied: " + upi;
-  } catch (error) {
-    paymentStatus.className = "status show";
-    paymentStatus.textContent = "UPI ID: " + upi + " — select and copy it manually.";
-  }
-});
+      if (!allowedExtensions.test(file.name)) {
+        formStatus.textContent = "Upload your resume as a PDF, DOC, or DOCX file.";
+        return;
+      }
 
-payButton.addEventListener("click", function() {
-  if (!formValidated || !form.checkValidity()) {
-    paymentStatus.className = "status error show";
-    paymentStatus.textContent =
-      "Please complete all required application fields and upload your resume first.";
-    form.reportValidity();
-    return;
-  }
+      if (file.size > 5 * 1024 * 1024) {
+        formStatus.textContent = "Resume must be 5 MB or smaller.";
+        return;
+      }
 
-  /*
-    Replace this with the school's verified, authorized UPI details.
-    Do not treat the return from a UPI app as proof of payment.
-  */
-  const upiId = "brixoomart@nyes";
-  const recipientName = "Authorized Merchant";
-
-  paymentStatus.className = "status error show";
-  paymentStatus.textContent =
-    "Payment recipient must be verified and authorized before payment can be initiated.";
-});
-</script>
+      formStatus.textContent =
+        "Form validation passed. This demo does not upload or save your application. Connect a secure backend before accepting real applications.";
+    });
+  </script>
 </body>
 </html>
