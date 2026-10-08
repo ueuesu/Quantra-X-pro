@@ -3,209 +3,343 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#102c50">
 <title>Careers | St. Xavier's Public School</title>
+
 <style>
 :root {
   --navy:#102c50;
   --blue:#245da8;
   --gold:#c7a45b;
-  --ink:#18283c;
+  --text:#18283c;
   --muted:#69788a;
   --line:#e3e9f0;
   --bg:#f5f7fa;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  line-height:1.5
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6;
 }
-button,input,select,textarea{font:inherit}
-header{background:white;border-bottom:1px solid var(--line)}
-.nav{
-  max-width:1160px;margin:auto;padding:17px 24px;
-  display:flex;align-items:center;justify-content:space-between;gap:20px
+header {
+  background:white;
+  border-bottom:1px solid var(--line);
 }
-.brand{display:flex;align-items:center;gap:13px}
-.crest{
-  width:48px;height:54px;background:var(--navy);color:#fff;
+.nav {
+  max-width:1100px;
+  margin:auto;
+  padding:16px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.brand { display:flex; align-items:center; gap:12px; }
+.crest {
+  height:48px;
+  width:43px;
+  background:var(--navy);
+  color:white;
+  display:grid;
+  place-items:center;
   clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);
-  display:grid;place-items:center;font-family:Georgia,serif;
-  font-size:22px;font-weight:bold
+  font-family:Georgia,serif;
+  font-weight:bold;
 }
-.school{font-family:Georgia,serif;font-size:19px;font-weight:bold;color:var(--navy)}
-.school-sub{font-size:10px;letter-spacing:2px;color:#7c6844;margin-top:3px}
-.nav-link{color:var(--navy);text-decoration:none;font-size:13px;font-weight:600}
-main{max-width:1160px;margin:30px auto;padding:0 24px}
-.hero{
-  background:linear-gradient(110deg,#102c50,#1e4777);
-  border-radius:14px;color:white;padding:42px;
-  position:relative;overflow:hidden
+.school {
+  color:var(--navy);
+  font:bold 18px Georgia,serif;
 }
-.hero:after{
-  content:"X";position:absolute;right:55px;top:-70px;
-  font-family:Georgia,serif;font-size:260px;font-weight:bold;
-  color:#ffffff08;pointer-events:none
+.subtitle {
+  font-size:10px;
+  letter-spacing:1.7px;
+  color:#8b7041;
 }
-.eyebrow{color:#e2c68d;font-size:11px;letter-spacing:2.5px;font-weight:700}
-.hero h1{font:normal clamp(30px,4vw,43px)/1.18 Georgia,serif;margin:14px 0}
-.hero p{color:#dbe6f2;max-width:580px;font-size:14px;line-height:1.9}
-.hero-note{display:flex;gap:9px;align-items:center;font-size:12px;color:#e9d8b3;margin-top:22px}
-.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.8fr);gap:24px;margin-top:25px;align-items:start}
-.card{background:white;border:1px solid var(--line);border-radius:12px;padding:27px}
-.card h2{font-size:19px;color:var(--navy);margin:0 0 6px}
-.sub{font-size:12px;color:var(--muted);margin:0 0 24px}
-.section-title{
-  display:flex;align-items:center;gap:10px;margin:24px 0 13px;
-  font-size:12px;letter-spacing:.8px;text-transform:uppercase;
-  font-weight:750;color:var(--navy)
+.nav a {
+  text-decoration:none;
+  color:var(--navy);
+  font-size:13px;
+  font-weight:bold;
 }
-.section-title:first-of-type{margin-top:0}
-.section-title:after{content:"";height:1px;background:var(--line);flex:1}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.field.full{grid-column:1/-1}
-label{display:block;font-size:12px;font-weight:650;margin-bottom:7px}
-.req{color:#b45345}
-input,select,textarea{
-  width:100%;padding:12px 13px;border:1px solid #d7e0e9;
-  border-radius:7px;background:#fff;color:var(--ink);font-size:13px;
-  outline:none;transition:border .15s,box-shadow .15s
+main {
+  max-width:1100px;
+  margin:28px auto;
+  padding:0 20px;
 }
-input:focus,select:focus,textarea:focus{
-  border-color:var(--blue);box-shadow:0 0 0 3px #245da812
+.hero {
+  padding:38px;
+  color:white;
+  background:linear-gradient(115deg,#102c50,#245080);
+  border-radius:14px;
 }
-input[type=file]{font-size:12px;background:#fafbfd}
-textarea{resize:vertical;min-height:90px}
-.hint{font-size:11px;color:var(--muted);margin-top:6px}
-.upload{
-  border:1px dashed #b8c9dc;border-radius:8px;padding:16px;
-  background:#f9fbfd
+.eyebrow {
+  color:#e4c88d;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:2px;
 }
-.upload input{border:0;padding:8px 0;background:transparent}
-.consent{display:flex;gap:10px;align-items:flex-start;margin-top:20px}
-.consent input{width:15px;height:15px;flex-shrink:0;margin-top:3px}
-.consent label{font-weight:400;color:#536579;font-size:11px;line-height:1.7}
-.btn{
-  background:var(--navy);color:white;border:0;border-radius:7px;
-  width:100%;padding:14px;margin-top:20px;font-size:13px;
-  font-weight:700;cursor:pointer
+.hero h1 {
+  font:normal clamp(30px,4vw,42px)/1.2 Georgia,serif;
+  margin:13px 0;
 }
-.btn:hover{background:#204773}
-.btn:focus-visible{outline:3px solid #8bb8f0;outline-offset:3px}
-.side{display:grid;gap:16px}
-.side-card{background:white;border:1px solid var(--line);border-radius:12px;padding:22px}
-.side-card h3{font-size:15px;color:var(--navy);margin:0 0 16px}
-.step{display:flex;gap:13px;margin:17px 0}
-.num{
-  flex-shrink:0;width:30px;height:30px;border-radius:50%;
-  display:grid;place-items:center;background:#edf3fa;color:var(--blue);
-  font-size:12px;font-weight:bold
+.hero p {
+  color:#dce6f1;
+  font-size:14px;
+  max-width:600px;
 }
-.step strong{font-size:12px;display:block;margin:2px 0 4px}
-.step p{font-size:11px;color:var(--muted);margin:0;line-height:1.7}
-.trust{background:#f0f5fa;border:1px solid #e0e9f3;border-radius:9px;padding:15px}
-.trust strong{font-size:12px;color:var(--navy)}
-.trust p{font-size:11px;color:#5b6d80;margin:7px 0 0;line-height:1.8}
-footer{margin-top:38px;background:#fff;border-top:1px solid var(--line);padding:23px;text-align:center}
-footer strong{font:normal 15px Georgia,serif;color:var(--navy)}
-footer p{font-size:11px;color:var(--muted);margin:7px 0 0}
-#feedback{display:none;margin-top:16px;padding:12px;border-radius:7px;font-size:12px}
-#feedback.ok{display:block;background:#edf8f0;color:#24633c}
-#feedback.err{display:block;background:#fff1ef;color:#9c3027}
-@media(max-width:760px){
-  main{padding:0 14px;margin:18px auto}
-  .nav{padding:13px 16px}
-  .school{font-size:15px}.school-sub{font-size:9px;letter-spacing:1.4px}
-  .crest{width:41px;height:47px;font-size:19px}
-  .hero{padding:29px 23px}.hero:after{right:-5px;font-size:180px}
-  .layout{grid-template-columns:1fr;gap:16px}
-  .card{padding:20px}
-  .fields{gap:14px}
+.layout {
+  display:grid;
+  grid-template-columns:minmax(0,1.5fr) minmax(250px,.8fr);
+  gap:22px;
+  margin-top:22px;
+  align-items:start;
 }
-@media(max-width:430px){
-  .fields{grid-template-columns:1fr}
-  .field.full{grid-column:auto}
-  .nav-link{font-size:11px}
+.card {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:25px;
+}
+h2 {
+  color:var(--navy);
+  font-size:20px;
+  margin:0 0 6px;
+}
+.intro {
+  color:var(--muted);
+  font-size:12px;
+  margin:0 0 22px;
+}
+.section {
+  color:var(--navy);
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin:23px 0 14px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:8px;
+}
+.section:first-of-type { margin-top:0; }
+.fields {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+.full { grid-column:1/-1; }
+label {
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+.required { color:#bd4339; }
+input,select,textarea {
+  width:100%;
+  border:1px solid #d7e0e9;
+  border-radius:7px;
+  background:white;
+  padding:12px;
+  color:var(--text);
+  font:13px Arial,sans-serif;
+}
+input:focus,select:focus,textarea:focus {
+  outline:2px solid #b8d3f5;
+  border-color:var(--blue);
+}
+input[type=file] { font-size:12px; }
+textarea { resize:vertical; min-height:90px; }
+.hint {
+  color:var(--muted);
+  font-size:11px;
+  margin-top:6px;
+}
+.check {
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:18px;
+}
+.check input { width:16px; margin-top:4px; }
+.check label {
+  color:#536579;
+  font-size:11px;
+  font-weight:normal;
+}
+button {
+  cursor:pointer;
+  border:0;
+  border-radius:7px;
+  font-weight:bold;
+}
+.submit,.pay {
+  width:100%;
+  padding:14px;
+  font-size:14px;
+  margin-top:18px;
+  background:var(--navy);
+  color:white;
+}
+.submit:hover,.pay:hover { background:#204773; }
+.pay {
+  background:#167344;
+  font-size:15px;
+}
+.pay:hover { background:#105c35; }
+button:disabled { opacity:.55; cursor:not-allowed; }
+.status {
+  display:none;
+  padding:12px;
+  border-radius:7px;
+  font-size:12px;
+  margin-top:14px;
+  overflow-wrap:anywhere;
+}
+.status.error { display:block; background:#fff1ef; color:#9c3027; }
+.status.success { display:block; background:#edf8f0; color:#24633c; }
+.side { display:grid; gap:16px; }
+.side .card { padding:21px; }
+.side h3 { font-size:15px; color:var(--navy); margin:0 0 12px; }
+.side p,.side li { font-size:12px; color:var(--muted); }
+.side ul { padding-left:18px; }
+.fee {
+  background:#f0f5fa;
+  border:1px solid #e0e9f3;
+  border-radius:9px;
+  padding:15px;
+  margin-top:15px;
+}
+.fee strong { color:var(--navy); }
+.fee p { margin:5px 0 0; }
+.payment { text-align:center; }
+.amount {
+  font:bold 38px Arial,sans-serif;
+  color:var(--navy);
+  margin:8px 0;
+}
+.upi {
+  border:1px solid var(--line);
+  background:#fafbfd;
+  padding:11px;
+  border-radius:7px;
+  font-size:12px;
+  overflow-wrap:anywhere;
+}
+.warning {
+  text-align:left;
+  font-size:11px;
+  color:#865b17;
+  background:#fff8e9;
+  padding:11px;
+  border-radius:7px;
+  margin-top:13px;
+}
+footer {
+  background:white;
+  border-top:1px solid var(--line);
+  padding:25px 15px;
+  text-align:center;
+}
+footer strong { color:var(--navy); font:16px Georgia,serif; }
+footer p { color:var(--muted); font-size:11px; margin:6px 0 0; }
+@media(max-width:720px) {
+  main { padding:0 13px; margin:17px auto; }
+  .nav { padding:13px; }
+  .school { font-size:14px; }
+  .subtitle { font-size:9px; letter-spacing:1px; }
+  .crest { width:37px; height:43px; }
+  .nav a { font-size:11px; }
+  .hero { padding:27px 22px; }
+  .layout { grid-template-columns:1fr; }
+  .card { padding:19px; }
+}
+@media(max-width:420px) {
+  .fields { grid-template-columns:1fr; }
+  .full { grid-column:auto; }
 }
 </style>
 </head>
+
 <body>
 <header>
   <nav class="nav">
     <div class="brand">
-      <div class="crest" aria-label="School crest placeholder">SX</div>
+      <div class="crest">SX</div>
       <div>
         <div class="school">St. Xavier's Public School</div>
-        <div class="school-sub">CAREERS & OPPORTUNITIES</div>
+        <div class="subtitle">CAREERS & OPPORTUNITIES</div>
       </div>
     </div>
-    <a class="nav-link" href="#application">Apply for a Position ↗</a>
+    <a href="#application">Apply Now ↗</a>
   </nav>
 </header>
 
 <main>
   <section class="hero">
-    <div class="eyebrow">JOIN OUR INSTITUTION</div>
-    <h1>Build a future.<br>Inspire a generation.</h1>
+    <div class="eyebrow">CAREER OPPORTUNITIES</div>
+    <h1>Inspire minds.<br>Shape the future.</h1>
     <p>
-      We welcome dedicated educators and skilled professionals who
-      believe in the power of education. Share your experience and
-      take the next step in your professional journey.
+      Explore career opportunities and share your professional
+      experience with our recruitment team. Complete the form below
+      to prepare your application.
     </p>
-    <div class="hero-note">✦ &nbsp; Teaching and non-teaching opportunities</div>
   </section>
 
   <div class="layout">
     <section class="card" id="application">
       <h2>Employment Application</h2>
-      <p class="sub">Complete the details below to submit your application.</p>
+      <p class="intro">Fields marked * are required.</p>
 
       <form id="applicationForm">
-        <div class="section-title">Personal information</div>
+        <div class="section">Personal information</div>
         <div class="fields">
-          <div class="field full">
-            <label for="name">Full name <span class="req">*</span></label>
+          <div class="full">
+            <label for="name">Full name *</label>
             <input id="name" name="name" required maxlength="100"
-                   autocomplete="name" placeholder="Enter your full name">
+                   autocomplete="name" placeholder="Enter full name">
           </div>
-          <div class="field">
-            <label for="email">Email address <span class="req">*</span></label>
+          <div>
+            <label for="email">Email address *</label>
             <input id="email" name="email" type="email" required
-                   maxlength="150" autocomplete="email" placeholder="name@example.com">
+                   maxlength="150" autocomplete="email"
+                   placeholder="name@example.com">
           </div>
-          <div class="field">
-            <label for="phone">Mobile number <span class="req">*</span></label>
+          <div>
+            <label for="phone">Mobile number *</label>
             <input id="phone" name="phone" type="tel" required
-                   maxlength="20" autocomplete="tel" placeholder="Enter mobile number">
+                   maxlength="20" autocomplete="tel"
+                   placeholder="Enter phone number">
           </div>
-          <div class="field full">
-            <label for="address">City / current location</label>
-            <input id="address" name="address" maxlength="150"
-                   autocomplete="address-level2" placeholder="City, state">
+          <div class="full">
+            <label for="city">City / location</label>
+            <input id="city" name="city" maxlength="100"
+                   placeholder="City, State">
           </div>
         </div>
 
-        <div class="section-title">Position details</div>
+        <div class="section">Position details</div>
         <div class="fields">
-          <div class="field">
-            <label for="department">Department <span class="req">*</span></label>
+          <div>
+            <label for="department">Department *</label>
             <select id="department" name="department" required>
-              <option value="">Select department</option>
+              <option value="">Choose department</option>
               <option>Teaching</option>
               <option>Administration</option>
               <option>Accounts & Finance</option>
-              <option>IT & Computer Science</option>
+              <option>Computer Science / IT</option>
               <option>Library</option>
-              <option>Sports & Activities</option>
+              <option>Sports</option>
               <option>Office & Support Staff</option>
             </select>
           </div>
-          <div class="field">
-            <label for="designation">Position applied for <span class="req">*</span></label>
-            <select id="designation" name="designation" required>
-              <option value="">Select position</option>
+          <div>
+            <label for="position">Position *</label>
+            <select id="position" name="position" required>
+              <option value="">Choose position</option>
               <option>Principal / Vice Principal</option>
               <option>PGT Teacher</option>
               <option>TGT Teacher</option>
@@ -219,15 +353,15 @@ footer p{font-size:11px;color:var(--muted);margin:7px 0 0}
               <option>Other</option>
             </select>
           </div>
-          <div class="field">
-            <label for="qualification">Highest qualification <span class="req">*</span></label>
+          <div>
+            <label for="qualification">Highest qualification *</label>
             <input id="qualification" name="qualification" required
-                   maxlength="150" placeholder="e.g. M.A., B.Ed., B.Com.">
+                   maxlength="150" placeholder="e.g. M.A., B.Ed.">
           </div>
-          <div class="field">
-            <label for="experience">Relevant experience <span class="req">*</span></label>
+          <div>
+            <label for="experience">Work experience *</label>
             <select id="experience" name="experience" required>
-              <option value="">Select experience</option>
+              <option value="">Choose experience</option>
               <option>Fresher</option>
               <option>Less than 1 year</option>
               <option>1–3 years</option>
@@ -236,83 +370,86 @@ footer p{font-size:11px;color:var(--muted);margin:7px 0 0}
               <option>More than 10 years</option>
             </select>
           </div>
-          <div class="field full">
-            <label for="subject">Subject / area of specialization</label>
-            <input id="subject" name="subject" maxlength="150"
-                   placeholder="e.g. Mathematics, English, Physics">
+          <div class="full">
+            <label for="specialization">Subject / specialization</label>
+            <input id="specialization" name="specialization"
+                   maxlength="150" placeholder="e.g. Mathematics, English">
           </div>
         </div>
 
-        <div class="section-title">Resume & introduction</div>
+        <div class="section">Resume & introduction</div>
         <div class="fields">
-          <div class="field full">
-            <label for="resume">Upload resume <span class="req">*</span></label>
-            <div class="upload">
-              <input id="resume" name="resume" type="file" required
-                     accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-              <div class="hint">PDF or Word document · Maximum 5 MB</div>
-            </div>
+          <div class="full">
+            <label for="resume">Upload resume *</label>
+            <input id="resume" name="resume" type="file" required
+                   accept=".pdf,.doc,.docx">
+            <div class="hint">PDF or Word file · Maximum 5 MB</div>
           </div>
-          <div class="field full">
-            <label for="message">Cover letter / additional information</label>
+          <div class="full">
+            <label for="message">Additional information</label>
             <textarea id="message" name="message" maxlength="1500"
-                      placeholder="Tell us about your experience, skills and interest in this position."></textarea>
+                      placeholder="Briefly describe your skills and experience"></textarea>
           </div>
         </div>
 
-        <div class="consent">
+        <div class="check">
           <input id="consent" type="checkbox" required>
           <label for="consent">
-            I confirm that the information provided is accurate and
-            consent to its use for recruitment purposes.
-            <span class="req">*</span>
+            I confirm that the details supplied are accurate and
+            consent to their use for recruitment purposes.
           </label>
         </div>
 
-        <button class="btn" id="submitBtn" type="submit">
-          Submit Application &nbsp; →
-        </button>
-        <div id="feedback" role="status" aria-live="polite"></div>
+        <button class="submit" type="submit">Continue to Application Fee →</button>
+        <div id="formStatus" class="status" role="status" aria-live="polite"></div>
       </form>
     </section>
 
     <aside class="side">
-      <section class="side-card">
+      <section class="card">
         <h3>Application process</h3>
-        <div class="step">
-          <div class="num">01</div>
-          <div><strong>Complete your details</strong>
-          <p>Provide accurate contact, qualification and position information.</p></div>
-        </div>
-        <div class="step">
-          <div class="num">02</div>
-          <div><strong>Attach your resume</strong>
-          <p>Upload a current CV with your education and relevant experience.</p></div>
-        </div>
-        <div class="step">
-          <div class="num">03</div>
-          <div><strong>Application review</strong>
-          <p>The recruitment team can review your application once it is received by the school.</p></div>
+        <p>01 · Complete your personal details.</p>
+        <p>02 · Select your desired position.</p>
+        <p>03 · Attach your current resume.</p>
+        <p>04 · Review the school's official fee policy before paying.</p>
+        <div class="fee">
+          <strong>Application fee: ₹999</strong>
+          <p>This fee must be officially authorized by the school before collection.</p>
         </div>
       </section>
 
-      <section class="side-card">
-        <h3>Before you apply</h3>
-        <div class="trust">
-          <strong>✓ Accuracy matters</strong>
-          <p>Check your contact details, qualifications and resume before submitting.</p>
+      <section class="card payment" id="payment">
+        <h3>Application payment</h3>
+        <div class="amount">₹999</div>
+        <p>One-time application fee</p>
+
+        <div class="upi">
+          UPI recipient: <strong>brixoomart@nyes</strong>
         </div>
-        <div class="trust" style="margin-top:10px">
-          <strong>✓ Protect your information</strong>
-          <p>Submit personal documents only through a verified school recruitment channel.</p>
+
+        <div class="warning">
+          This recipient has not been verified as belonging to the school.
+          Confirm authorization and the fee with the school before enabling
+          payment collection.
         </div>
+
+        <button id="payButton" class="pay" type="button">
+          Pay Now · ₹999
+        </button>
+
+        <div id="paymentStatus" class="status"
+             role="status" aria-live="polite"></div>
+
+        <p style="font-size:11px">
+          Payment is not confirmed just because a UPI app opens.
+        </p>
       </section>
-      <section class="side-card">
-        <h3>Need assistance?</h3>
-        <p style="font-size:12px;color:#69788a;line-height:1.8;margin:0">
-          For application-related questions, contact the school's
-          verified recruitment office using the contact details published
-          on its official website.
+
+      <section class="card">
+        <h3>Application assistance</h3>
+        <p>
+          For recruitment and payment questions, contact the school
+          using the contact information on its verified official website.
         </p>
       </section>
     </aside>
@@ -321,41 +458,73 @@ footer p{font-size:11px;color:var(--muted);margin:7px 0 0}
 
 <footer>
   <strong>St. Xavier's Public School</strong>
-  <p>Careers & Opportunities · Recruitment Portal</p>
+  <p>Careers & Opportunities</p>
   <p>© <span id="year"></span> · All rights reserved</p>
 </footer>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 
-const form = document.getElementById('applicationForm');
-const fileInput = document.getElementById('resume');
-const feedback = document.getElementById('feedback');
+const form = document.getElementById("applicationForm");
+const formStatus = document.getElementById("formStatus");
+const paymentStatus = document.getElementById("paymentStatus");
+const payButton = document.getElementById("payButton");
+const resumeInput = document.getElementById("resume");
 
-form.addEventListener('submit', function(event) {
+/*
+  FRONT-END DEMO ONLY.
+  Connect a secure server to store applications and resumes.
+  Never trust browser-side payment confirmation.
+*/
+
+let formValidated = false;
+
+form.addEventListener("submit", function(event) {
   event.preventDefault();
-  feedback.className = '';
-  feedback.style.display = 'none';
+  formStatus.className = "status";
+  paymentStatus.className = "status";
 
-  const file = fileInput.files[0];
-  const allowed = /\.(pdf|doc|docx)$/i;
+  const file = resumeInput.files[0];
+  const validExtension = file &&
+    /\.(pdf|doc|docx)$/i.test(file.name);
 
-  if (!file || !allowed.test(file.name)) {
-    feedback.className = 'err';
-    feedback.textContent = 'Please select a PDF or Word resume.';
+  if (!file || !validExtension) {
+    formStatus.className = "status error";
+    formStatus.textContent =
+      "Please upload a PDF or Word resume.";
     return;
   }
 
   if (file.size > 5 * 1024 * 1024) {
-    feedback.className = 'err';
-    feedback.textContent = 'Your resume must be 5 MB or smaller.';
+    formStatus.className = "status error";
+    formStatus.textContent =
+      "Your resume must be 5 MB or smaller.";
     return;
   }
 
-  feedback.className = 'ok';
-  feedback.textContent =
-    'The form passed local validation, but your application has NOT been sent. Connect a secure backend to submit and store it.';
+  formValidated = true;
+  formStatus.className = "status success";
+  formStatus.textContent =
+    "Form details validated locally. Your application has not been sent or saved to a server. Payment must be authorized before continuing.";
+  document.getElementById("payment").scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 });
+
+payButton.addEventListener("click", function() {
+  paymentStatus.className = "status error";
+  paymentStatus.textContent =
+    "Payment is disabled until the school confirms the fee and authorizes the UPI recipient. No payment has been initiated.";
+});
+
+/*
+  After the school authorizes the payment account, a UPI intent
+  may be created with a verified merchant VPA, amount, and
+  unique transaction reference. Verify payment server-side
+  before marking any application paid.
+*/
 </script>
 </body>
 </html>
